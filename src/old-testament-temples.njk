@@ -1,0 +1,219 @@
+---
+title: Old Testament Temples – LDS Faith
+navPage: old-testament-temples
+navGroup: lds-faith
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue:    #1a4f8a;
+    --gold:    #c8972b;
+    --green:   #2d7a4f;
+    --red:     #8a1a1a;
+    --bg:      #f5f3ee;
+    --card:    #ffffff;
+    --text:    #1e1e1e;
+    --muted:   #5c5c5c;
+    --radius:  10px;
+    --shadow:  0 2px 12px rgba(0,0,0,0.09);
+  }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+  .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+  .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+  .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+  .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-group { position: relative; display: flex; align-items: stretch; }
+  .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+  .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+  .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+  .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+  .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+  .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+  .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nav-dropdown a:last-child { border-bottom: none; }
+  .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+  header { background: linear-gradient(135deg, #6b4a10 0%, #2e1e04 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+  header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+  header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+  header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+  main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+  .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; font-size: 1rem; color: var(--muted); }
+  .intro-banner strong { color: var(--text); }
+
+  .section-head { font-size: 1.2rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .section-head::after { content:''; flex:1; height:2px; background:var(--blue); opacity:0.15; border-radius:2px; }
+
+  .narrative { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem 1.7rem; margin-bottom: 1.5rem; }
+  .narrative p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 0.8rem; }
+  .narrative p:last-child { margin-bottom: 0; }
+  .narrative p strong { color: var(--text); }
+
+  .temple-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
+  .temple-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; border-top: 4px solid var(--gold); }
+  .temple-card .tc-period { font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; display: block; }
+  .temple-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .temple-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+  .scripture-block { background: #fdf8ef; border-left: 4px solid var(--gold); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; font-style: italic; color: #5a3e00; font-size: 0.97rem; line-height: 1.8; }
+  .scripture-block cite { display: block; margin-top: 0.5rem; font-style: normal; font-size: 0.82rem; color: var(--muted); font-family: system-ui, sans-serif; }
+
+  .feature-list { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+  .feat-item { display: flex; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid #eceae4; align-items: flex-start; }
+  .feat-item:last-child { border-bottom: none; }
+  .feat-icon { font-size: 1.4rem; color: var(--gold); min-width: 2rem; text-align: center; margin-top: 0.1rem; }
+  .feat-body h4 { font-size: 0.96rem; color: var(--text); margin-bottom: 0.15rem; font-weight: 700; }
+  .feat-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+  .connect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem; }
+  .connect-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; }
+  .connect-box h3 { font-size: 1rem; font-weight: 700; color: var(--blue); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+  .connect-box p { font-size: 0.89rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.6rem; }
+  .connect-box p:last-child { margin-bottom: 0; }
+
+  footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+  @media (max-width: 600px) { .connect-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-building-columns"></i></span>
+  <h1>Old Testament Temples</h1>
+  <p>From the portable Tabernacle in the wilderness to Solomon's magnificent house of the Lord — the ancient temples of Israel and what Latter-day Saints believe they foreshadow.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>A thread running through all of scripture.</strong> The temple is not a uniquely LDS invention. Sacred spaces set apart for God's presence appear throughout the Old Testament — from the Tabernacle Moses built at Sinai to the temples of Solomon and Zerubbabel. Latter-day Saints view these ancient structures not as relics of a superseded religion, but as types and shadows of the same covenant worship God restored in the latter days.
+  </div>
+
+  <!-- The temples of the Old Testament -->
+  <div class="section-head"><i class="fa-solid fa-landmark"></i> &nbsp;The Temples of Ancient Israel</div>
+  <div class="temple-grid">
+    <div class="temple-card">
+      <span class="tc-period">~1446 BC</span>
+      <h3>The Tabernacle (Mishkan)</h3>
+      <p>The portable sanctuary Moses built at God's command during the Exodus. Constructed in the wilderness, it was the first dedicated space for Israel's formal worship — a tent of meeting where the divine presence (the <em>shekinah</em>) could dwell among the people. It contained the Holy of Holies, the Ark of the Covenant, the altar of incense, and the menorah.</p>
+    </div>
+    <div class="temple-card">
+      <span class="tc-period">~959 BC</span>
+      <h3>Solomon's Temple (First Temple)</h3>
+      <p>Built by King Solomon on Mount Moriah in Jerusalem, this was the permanent house of the Lord Israel had longed for. Cedar-lined, overlaid with gold, and staffed by a professional priesthood, it stood as the center of Israelite worship for nearly four centuries until Nebuchadnezzar destroyed it in 587 BC when Judah was carried captive to Babylon.</p>
+    </div>
+    <div class="temple-card">
+      <span class="tc-period">~516 BC</span>
+      <h3>Zerubbabel's Temple (Second Temple)</h3>
+      <p>Built after the return from Babylon under the leadership of Zerubbabel and Joshua the priest. A humbler structure than Solomon's, it lacked the Ark of the Covenant (which had been lost or hidden). The prophet Haggai rebuked those who called it inferior and promised the Lord would fill it with glory.</p>
+    </div>
+    <div class="temple-card">
+      <span class="tc-period">~19 BC – AD 70</span>
+      <h3>Herod's Temple</h3>
+      <p>A massive expansion and beautification of Zerubbabel's temple undertaken by Herod the Great. This is the temple Jesus walked in, overturned the money changers' tables in, and taught in. It was destroyed by the Romans in AD 70 — the same destruction Jesus predicted in Matthew 24 — ending sacrificial temple worship in Jerusalem.</p>
+    </div>
+  </div>
+
+  <!-- What made the temple sacred -->
+  <div class="section-head"><i class="fa-solid fa-star"></i> &nbsp;What Made the Temple Sacred</div>
+  <div class="feature-list">
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fa-solid fa-fire"></i></div>
+      <div class="feat-body">
+        <h4>The Divine Presence</h4>
+        <p>The temple was distinguished above all as the place where God chose to dwell — not as a symbol, but as a literal reality. At the dedication of Solomon's Temple, a cloud filled the house so that the priests could not stand to minister (1 Kings 8:10–11). The inner chamber, the Holy of Holies, was God's throne room on earth.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fa-solid fa-user-shield"></i></div>
+      <div class="feat-body">
+        <h4>Restricted Access</h4>
+        <p>Not everyone could enter the temple, and those who could enter were restricted by courts of increasing holiness. Gentiles were permitted only in the outer court. Israelites could proceed further. Only priests could enter the sanctuary. And only the high priest — and only once a year on Yom Kippur — could enter the Holy of Holies. Access to God required preparation and purity.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fa-solid fa-droplet"></i></div>
+      <div class="feat-body">
+        <h4>Ordinances and Sacrifice</h4>
+        <p>The temple was the site of ordained, prescribed ritual — daily burnt offerings, the annual Day of Atonement, the offering of firstfruits, and the elaborate Passover observances. These were not invented by Israel but commanded by God with specific instructions about who, how, and when. The New Testament interprets all of these as typological anticipations of Christ's atoning sacrifice.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fa-solid fa-scroll"></i></div>
+      <div class="feat-body">
+        <h4>Covenants and the Ark</h4>
+        <p>The Ark of the Covenant — housed in the Holy of Holies — contained the tablets of the law, a jar of manna, and Aaron's rod. It was the physical sign of God's covenant with Israel. The whole temple was oriented around covenant: Israel's obligations to God, God's promises to Israel, and the mediating priesthood that maintained the relationship between them.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+      <div class="feat-body">
+        <h4>Sacred Architecture</h4>
+        <p>The temple's design was not arbitrary. God gave Moses the pattern on the mount (Exodus 25:9, 40), and David received the blueprint for Solomon's Temple "by the spirit" (1 Chronicles 28:12). The layout — outer court, inner court, holy place, Holy of Holies — mirrored the structure of the Tabernacle and symbolized graduated degrees of holiness and approach to God.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key scripture -->
+  <div class="section-head"><i class="fa-solid fa-quote-left"></i> &nbsp;The Temple in the Psalms</div>
+  <div class="scripture-block">
+    "One thing have I desired of the Lord, that will I seek after; that I may dwell in the house of the Lord all the days of my life, to behold the beauty of the Lord, and to enquire in his temple."
+    <cite>— Psalm 27:4</cite>
+  </div>
+  <div class="scripture-block">
+    "Lord, I have loved the habitation of thy house, and the place where thine honour dwelleth."
+    <cite>— Psalm 26:8</cite>
+  </div>
+  <div class="narrative">
+    <p>The Psalms are saturated with longing for the temple. For ancient Israel, the temple was not merely a religious building — it was the axis of the world, the place where heaven and earth met, and the source of Israel's identity as God's covenant people. Pilgrimage to Jerusalem for the great feasts was one of the defining rhythms of Israelite life.</p>
+    <p>The destruction of the First Temple in 587 BC was not merely a political catastrophe — it was a theological crisis. Psalm 137 ("By the rivers of Babylon, there we sat down, yea, we wept, when we remembered Zion") captures the grief of a people who had lost the place where God dwelled among them.</p>
+  </div>
+
+  <!-- LDS connection -->
+  <div class="section-head"><i class="fa-solid fa-link"></i> &nbsp;How LDS Theology Connects to the Old Testament Temple</div>
+  <div class="connect-grid">
+    <div class="connect-box">
+      <h3><i class="fa-solid fa-rotate"></i> Restoration, Not Invention</h3>
+      <p>Latter-day Saints see their temple practice not as a novelty but as a restoration of the ancient covenant worship God established with Israel. Joseph Smith taught that the same priesthood authority, the same ordinances, and the same covenantal structure that operated in ancient temples was lost during the apostasy and restored through him.</p>
+      <p>The first LDS temple, built in Kirtland, Ohio in 1836, was dedicated with language drawn directly from Solomon's dedicatory prayer in 1 Kings 8 — a deliberate echo of the ancient pattern.</p>
+    </div>
+    <div class="connect-box">
+      <h3><i class="fa-solid fa-layer-group"></i> Types and Antitypes</h3>
+      <p>LDS theology reads the Old Testament temple as typological — pointing forward to both Christ and to the restored gospel. The high priest entering the Holy of Holies once a year foreshadows Christ entering the heavenly sanctuary. The washings, anointings, and priestly garments of Aaron's day are understood as precursors to similar ordinances performed in LDS temples today.</p>
+      <p>This reading is consistent with the New Testament's own use of temple typology, particularly the book of Hebrews, which frames Christ's atonement as the ultimate fulfillment of the Day of Atonement ritual.</p>
+    </div>
+  </div>
+  <div class="connect-grid">
+    <div class="connect-box">
+      <h3><i class="fa-solid fa-vial"></i> Baptism for the Dead</h3>
+      <p>One of the most distinctive LDS temple ordinances — proxy baptism for deceased ancestors — is rooted in Paul's enigmatic reference in 1 Corinthians 15:29: "Else what shall they do which are baptized for the dead, if the dead rise not at all?" LDS theology interprets this as evidence of a practice the early church understood and that connects to the covenant inclusion of all Israel — including the dead.</p>
+    </div>
+    <div class="connect-box">
+      <h3><i class="fa-solid fa-house-chimney"></i> Zion and the Last Days</h3>
+      <p>Old Testament prophecy repeatedly envisions a final temple in the last days. Isaiah sees "the mountain of the Lord's house" established above all mountains, with all nations flowing to it (Isaiah 2:2–3). Ezekiel's final chapters describe an enormous eschatological temple in extraordinary detail. LDS theology reads these as anticipating the role temples will play in the Millennium — an era when the earth will be filled with temple-centered covenant worship.</p>
+    </div>
+  </div>
+
+  <!-- Mainstream Christian contrast -->
+  <div class="section-head"><i class="fa-solid fa-scale-balanced"></i> &nbsp;How Mainstream Christianity Reads the Old Testament Temple</div>
+  <div class="narrative">
+    <p><strong>Fulfillment, not restoration.</strong> Most Protestant, Catholic, and Orthodox theologians read the Old Testament temple as pointing forward to Christ, who fulfilled and therefore superseded it. The tearing of the temple veil at the crucifixion (Matthew 27:51) signifies that the barrier between God and humanity is removed in Christ — not that a new physical temple must be built. The book of Hebrews argues at length that Christ is the great high priest whose one sacrifice made the Levitical priesthood and its rituals obsolete (Hebrews 7–10).</p>
+    <p><strong>The church as temple.</strong> Paul's statement that believers are "the temple of the Holy Ghost" (1 Corinthians 6:19) and that the church collectively is "a holy temple in the Lord" (Ephesians 2:21) is the direction mainstream Christianity takes: the living community of believers replaces the physical structure. No building is necessary because God now dwells in his people.</p>
+    <p><strong>The LDS counter-reading.</strong> Latter-day Saints accept that Christ fulfilled the law of Moses and the sacrificial system, but argue that the covenant ordinances of the temple are distinct from the Mosaic sacrifices — they predate Moses and were never meant to be done away. Just as baptism survived the Atonement, temple covenants continue as part of God's eternal plan. The earthly temple is not superseded but restored, with Christ's atonement as its foundation rather than its replacement.</p>
+  </div>
+
+</main>
+
+<footer>
+  This page is for educational and informational purposes. Old Testament temple history is summarized from scriptural and historical sources; LDS perspectives are drawn from official church teachings. &copy; 2026
+</footer>
+{% endblock %}

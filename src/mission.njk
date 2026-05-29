@@ -1,0 +1,363 @@
+---
+title: "Serving a Two-Year LDS Mission"
+navPage: mission
+navGroup: lds-faith
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #7a5c1a 0%, #3a2a08 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; font-size: 1rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    .section-head { font-size: 1.2rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .section-head::after { content:''; flex:1; height:2px; background:var(--blue); opacity:0.15; border-radius:2px; }
+
+    .narrative { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem 1.7rem; margin-bottom: 1.5rem; }
+    .narrative p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 0.8rem; }
+    .narrative p:last-child { margin-bottom: 0; }
+    .narrative p strong { color: var(--text); }
+
+    /* Stat bar */
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .stat-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.3rem; text-align: center; border-top: 4px solid var(--gold); }
+    .stat-box .stat-num { font-size: 1.9rem; font-weight: 700; color: var(--gold); font-family: system-ui, sans-serif; display: block; }
+    .stat-box .stat-label { font-size: 0.82rem; color: var(--muted); font-family: system-ui, sans-serif; line-height: 1.4; margin-top: 0.2rem; }
+
+    /* Daily schedule */
+    .step-list { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+    .step-item { display: grid; grid-template-columns: 80px 1fr; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid #eceae4; align-items: start; }
+    .step-item:last-child { border-bottom: none; }
+    .step-time { font-family: system-ui, sans-serif; font-weight: 700; font-size: 0.8rem; color: var(--green); padding-top: 0.15rem; }
+    .step-body h4 { font-size: 0.96rem; color: var(--text); margin-bottom: 0.15rem; }
+    .step-body p { font-size: 0.89rem; color: var(--muted); line-height: 1.6; }
+
+    /* Two-column comparison (men vs women) */
+    .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem; }
+    .vs-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; border-top: 5px solid var(--blue); }
+    .vs-box.women { border-top-color: var(--gold); }
+    .vs-box h3 { font-size: 1.05rem; font-weight: 700; color: var(--blue); margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .vs-box.women h3 { color: #8a6000; }
+    .vs-box .vs-sub { font-family: system-ui, sans-serif; font-size: 0.76rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem; display: block; }
+    .vs-box ul { padding-left: 1.2rem; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+    .vs-box ul li { margin-bottom: 0.4rem; }
+
+    /* Reality cards */
+    .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.1rem; margin-bottom: 2.5rem; }
+    .practice-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.4rem; }
+    .practice-card .pc-icon { font-size: 1.6rem; color: var(--gold); margin-bottom: 0.4rem; display: block; }
+    .practice-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .practice-card p { font-size: 0.89rem; color: var(--muted); line-height: 1.6; }
+
+    /* Quote block */
+    .quote-block { background: #fff8e8; border-left: 4px solid var(--gold); border-radius: var(--radius); padding: 1.3rem 1.6rem; margin-bottom: 2.5rem; }
+    .quote-block p { font-size: 1rem; color: var(--text); line-height: 1.75; font-style: italic; margin-bottom: 0.5rem; }
+    .quote-block cite { font-size: 0.84rem; color: var(--muted); font-style: normal; font-family: system-ui, sans-serif; }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .vs-grid { grid-template-columns: 1fr; } .step-item { grid-template-columns: 70px 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-person-walking-luggage"></i></span>
+  <h1>Serving a Two-Year Mission</h1>
+  <p>What it actually looks like to leave home, live by a strict schedule, and spend two years knocking doors and teaching strangers about the gospel.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>A defining rite of passage.</strong> For many Latter-day Saints, especially young men, a full-time mission is the single most formative experience of early adulthood — more disruptive, more demanding, and more transformative than most outsiders expect. This page describes the full arc, from the moment of decision to the day a missionary comes home.
+  </div>
+
+  <!-- Scale -->
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="stat-num">~70k</span>
+      <span class="stat-label">Full-time missionaries serving worldwide at any given time</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">400+</span>
+      <span class="stat-label">Missions worldwide, covering most countries on earth</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">2 yrs</span>
+      <span class="stat-label">Standard length for young men (18 months for young women)</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">~$500</span>
+      <span class="stat-label">Monthly cost paid by the missionary or their family</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">0</span>
+      <span class="stat-label">Salary received — it is entirely volunteer service</span>
+    </div>
+  </div>
+
+  <!-- Who goes -->
+  <div class="section-head"><i class="fa-solid fa-people-group"></i> &nbsp;Who Serves, and Why</div>
+  <div class="narrative">
+    <p><strong>Young men are strongly expected to go.</strong> In Latter-day Saint culture, missionary service is not quite mandatory, but for a young man in a devout family, not going requires a significant explanation. It is treated as the natural next step after high school graduation, and the social expectation is powerful.</p>
+    <p><strong>Young women may serve, but are not pressured.</strong> Women who choose to serve are welcomed and their contributions are equally valued, but the expectation is entirely optional. In recent years the number of sister missionaries has grown substantially.</p>
+    <p><strong>Senior couples also serve.</strong> Retired couples frequently serve 18-month or shorter missions focused on humanitarian work, temple service, or leadership support rather than proselytizing.</p>
+    <p><strong>It is a personal decision ratified by church leaders.</strong> Prospective missionaries submit a formal application, meet with their bishop and stake president, and receive a medical and dental clearance. Church headquarters then issues an official "call letter" that reveals the assigned mission — an event often treated as a family celebration.</p>
+  </div>
+
+  <!-- Men vs Women -->
+  <div class="section-head"><i class="fa-solid fa-scale-balanced"></i> &nbsp;Men vs. Women: Key Differences</div>
+  <div class="vs-grid">
+    <div class="vs-box">
+      <h3><i class="fa-solid fa-person"></i> Elders (Young Men)</h3>
+      <span class="vs-sub">The standard mission experience</span>
+      <ul>
+        <li>Eligible from age 18</li>
+        <li>Serve for 24 months</li>
+        <li>Called "Elder" regardless of age</li>
+        <li>Strong cultural expectation to serve</li>
+        <li>Typically wear white dress shirts and ties; dark suits or slacks</li>
+        <li>Usually assigned proselytizing work (finding and teaching investigators)</li>
+      </ul>
+    </div>
+    <div class="vs-box women">
+      <h3><i class="fa-solid fa-person-dress"></i> Sisters (Young Women)</h3>
+      <span class="vs-sub">Voluntary, equally respected</span>
+      <ul>
+        <li>Eligible from age 19</li>
+        <li>Serve for 18 months</li>
+        <li>Called "Sister"</li>
+        <li>Service is entirely optional — no cultural pressure</li>
+        <li>Modest professional dress, skirts or slacks</li>
+        <li>Same proselytizing work; often perceived as especially effective teachers</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- The Call -->
+  <div class="section-head"><i class="fa-solid fa-envelope-open-text"></i> &nbsp;The Call Letter</div>
+  <div class="narrative">
+    <p><strong>One of the most anticipated envelopes in a young Latter-day Saint's life.</strong> After the application is processed by church headquarters, a physical letter arrives addressed from the President of the Church. It names the mission — which could be anywhere on earth — and the language the missionary will learn if they are not already fluent in it.</p>
+    <p><strong>Opening the call is an event.</strong> Most families gather friends and extended family to watch the missionary read the assignment aloud. The destination is genuinely unknown until that moment. Reactions range from awe to tears to laughter — a call to rural Ecuador and a call to downtown Chicago carry equal spiritual weight but very different practical implications.</p>
+    <p><strong>Missions are assigned, not chosen.</strong> Missionaries express no preference and receive no input on where they go. This is regarded theologically as evidence that the church is led by inspiration: the right person is sent to the right place.</p>
+  </div>
+
+  <!-- MTC -->
+  <div class="section-head"><i class="fa-solid fa-school"></i> &nbsp;The MTC: Missionary Training Center</div>
+  <div class="narrative">
+    <p><strong>Before entering the field, missionaries spend time at an MTC.</strong> The largest is in Provo, Utah (adjacent to BYU), but regional MTCs operate on every continent. For missionaries learning a new language, the stay is typically eight to twelve weeks; for English-speaking domestic missions, often just three weeks.</p>
+    <p><strong>The MTC is an immersive, structured boot camp.</strong> Days run from 6:30 a.m. to 10:30 p.m. and are filled with language study, gospel instruction, role-played teaching practice, and devotionals. Missionaries are paired with a companion from day one and are rarely alone. Phone and internet use is severely restricted — some MTCs allow brief weekly video calls home; otherwise contact is by email or letter.</p>
+    <p><strong>The culture shock begins here.</strong> Many missionaries arrive fresh from high school, some never having lived away from home. The MTC confronts them with a rigid schedule, constant supervision, and the sudden reality that the next two years will look nothing like ordinary life.</p>
+  </div>
+
+  <!-- Daily life -->
+  <div class="section-head"><i class="fa-solid fa-calendar-day"></i> &nbsp;A Missionary's Daily Schedule</div>
+  <p style="font-size:0.95rem; color:var(--muted); margin-bottom:1.2rem; line-height:1.7;">Every missionary follows the same basic schedule, six days a week, in nearly every mission worldwide. Monday is "P-Day" (preparation day) — the one day off for errands, laundry, email, and recreation.</p>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-time">6:30 am</div>
+      <div class="step-body">
+        <h4>Wake Up</h4>
+        <p>Missionaries share apartments or houses with their companion and often one or two other missionary pairs. Personal grooming and apartment tidying happen before anything else.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">7:00 am</div>
+      <div class="step-body">
+        <h4>Personal Study</h4>
+        <p>One hour of individual scripture study, language review, and preparation. Missionaries read from the scriptures and preach-my-gospel manual independently.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">8:00 am</div>
+      <div class="step-body">
+        <h4>Companion Study</h4>
+        <p>One hour studying together — planning lessons, practicing teaching, reviewing language, and coordinating the day's work.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">9:00 am</div>
+      <div class="step-body">
+        <h4>Language Study (if applicable)</h4>
+        <p>Missionaries assigned to a foreign-language mission spend an additional 30–60 minutes on language. Those already fluent use this time for extra teaching preparation.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">10:00 am</div>
+      <div class="step-body">
+        <h4>Into the Field</h4>
+        <p>The bulk of the day — finding, teaching, and following up with people. This may involve door-to-door contacting, street conversations, church-member referrals, appointments at investigators' homes, or service projects. The work and pace vary enormously by mission.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">~6:00 pm</div>
+      <div class="step-body">
+        <h4>Dinner</h4>
+        <p>Many missions involve local members feeding missionaries dinner — one of the most human and culturally rich parts of the experience. In missions with fewer members, missionaries cook for themselves.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">9:00 pm</div>
+      <div class="step-body">
+        <h4>Return Home</h4>
+        <p>Missionaries must be in their apartment by 9:00 p.m. and in bed by 10:30 p.m. Evening hours are used for planning the next day, reporting progress to leadership, and winding down.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-time">10:30 pm</div>
+      <div class="step-body">
+        <h4>Lights Out</h4>
+        <p>No exceptions. The schedule is enforced not by surveillance but by internalized discipline and the companion accountability system.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Companion -->
+  <div class="section-head"><i class="fa-solid fa-user-group"></i> &nbsp;The Companion System</div>
+  <div class="narrative">
+    <p><strong>Missionaries are never alone.</strong> Every missionary is assigned a companion, and the two are together 24 hours a day, seven days a week, with almost no exceptions. They sleep in the same room, eat every meal together, and are within sight of each other during all hours of the day.</p>
+    <p><strong>Companions are assigned, not chosen.</strong> A mission president reassigns companions — called "transfers" — roughly every six to twelve weeks. Over two years, a missionary typically serves with eight to twelve different companions. Learning to work, live, and teach with a stranger under high stress is itself regarded as a core part of the mission experience.</p>
+    <p><strong>Companion friction is common and instructive.</strong> Many missionaries describe navigating difficult companion relationships as one of the hardest and most growth-producing aspects of the experience. The forced proximity with no opt-out tends to surface every interpersonal weakness and build significant emotional maturity.</p>
+  </div>
+
+  <!-- The actual work -->
+  <div class="section-head"><i class="fa-solid fa-door-open"></i> &nbsp;The Actual Work: What Missionaries Do All Day</div>
+  <div class="practice-grid">
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-hand-point-up"></i></span>
+      <h3>Finding Investigators</h3>
+      <p>Much of the work is finding people willing to listen. This means knocking on doors, starting conversations with strangers on streets or buses, following up on referrals from members, and responding to internet inquiries. In many areas, the acceptance rate at the door is very low.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-book-open"></i></span>
+      <h3>Teaching Lessons</h3>
+      <p>When someone agrees to learn, missionaries teach a structured series of discussions covering the Restoration, the Plan of Salvation, the Gospel of Jesus Christ, commandments, and preparing for baptism. Lessons are taught in people's homes, at the church, or wherever is comfortable.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-church"></i></span>
+      <h3>Sunday Attendance</h3>
+      <p>A key milestone for investigators is attending church. Missionaries spend significant effort helping people they are teaching attend sacrament meeting, because church attendance is both a commitment and a predictor of retention.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-hands-helping"></i></span>
+      <h3>Serving Members</h3>
+      <p>Missionaries also support the local ward: helping inactive members reconnect, assisting with service projects, and coordinating with local leaders. This "ward mission" work became more central in recent years.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-water"></i></span>
+      <h3>Baptisms</h3>
+      <p>The visible metric of missionary success. A baptism requires that an investigator has attended church, stopped smoking or drinking, and committed to live the commandments. Baptism rates vary wildly by mission — some missionaries baptize dozens, others baptize none at all over two years.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-language"></i></span>
+      <h3>Language Immersion</h3>
+      <p>In foreign-language missions, virtually every conversation is in the assigned language. Many missionaries arrive knowing almost none of it and leave with functional fluency — an outcome produced by the sheer volume of daily practice under real social pressure.</p>
+    </div>
+  </div>
+
+  <!-- The hard parts -->
+  <div class="section-head"><i class="fa-solid fa-mountain"></i> &nbsp;The Hard Parts Nobody Warns You About</div>
+  <div class="narrative">
+    <p><strong>Rejection is constant.</strong> On a door-to-door day, most doors go unanswered or close quickly. Missionaries are trained to view rejection as normal and not personal, but developing that resilience takes time and takes a toll.</p>
+    <p><strong>Homesickness is real and managed, not eliminated.</strong> Contact with family is deliberately restricted — in most missions, phone or video calls home are permitted only on Christmas and Mother's Day (though policies have relaxed in recent years to allow weekly calls). The purpose is immersion. The effect is acute homesickness, especially in the first three months.</p>
+    <p><strong>Many missionaries experience a faith crisis.</strong> Immersion in the doctrines and history of the church, combined with the isolation and introspection of mission life, causes some missionaries to encounter troubling historical questions or doubt for the first time. How they resolve — or don't resolve — those questions shapes their relationship with the church afterward.</p>
+    <p><strong>Mental health challenges are increasingly acknowledged.</strong> Anxiety, depression, and burnout are more common than the church's official image suggests. In recent years the church has worked to improve mental health resources and has released missionaries home early when medically necessary, rather than stigmatizing early returns as they once were.</p>
+    <p><strong>Safety varies by mission.</strong> Some missions are in areas with political instability, crime, or extreme poverty. Missionaries are briefed on local dangers and restricted from high-risk areas, but the work inherently puts them in unfamiliar environments and unpredictable situations.</p>
+  </div>
+
+  <!-- A quote -->
+  <div class="quote-block">
+    <p>"I hated it and I loved it and I would do it again. Nothing before or since has asked that much of me every single day."</p>
+    <cite>— A common sentiment among returned missionaries, expressed in countless forms across journals, talks, and interviews</cite>
+  </div>
+
+  <!-- Returning home -->
+  <div class="section-head"><i class="fa-solid fa-house-return"></i> &nbsp;Coming Home: "Re-Entry"</div>
+  <div class="narrative">
+    <p><strong>The return is its own adjustment.</strong> After two years of complete structure, constant purpose, and a compressed social world of fellow missionaries, coming home can feel disorienting. Many returned missionaries describe a period of weeks or months where ordinary life — college, dating, jobs — feels shallow or strange by comparison.</p>
+    <p><strong>The social and romantic calendar moves fast.</strong> Mormon culture expects returned missionaries to quickly re-enter the normal rhythm of LDS young adult life: attending a singles ward, pursuing education, and moving toward marriage. For many, the transition pressure feels abrupt.</p>
+    <p><strong>The cultural status conferred is significant.</strong> Within active LDS communities, having served a mission confers social credibility, especially for young men. A returned missionary (colloquially "RM") is seen as mature, committed, and a desirable partner. Those who did not serve sometimes feel the absence keenly.</p>
+    <p><strong>Language skills are kept or lost.</strong> Missionaries who return to using a foreign language in church, community, or professional settings often retain high fluency for life. Those who do not use it regularly tend to lose conversational ability within a few years, though the foundation usually makes relearning significantly faster.</p>
+  </div>
+
+  <!-- Long-term impact -->
+  <div class="section-head"><i class="fa-solid fa-seedling"></i> &nbsp;Long-Term Impact</div>
+  <div class="practice-grid">
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-brain"></i></span>
+      <h3>Accelerated Maturity</h3>
+      <p>Managing schedules, navigating interpersonal conflict, handling rejection, living independently, and making hundreds of small decisions without parental guidance produces measurable growth. Many returned missionaries describe feeling five years older than their peers.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-comments"></i></span>
+      <h3>Communication and Leadership</h3>
+      <p>Two years of daily teaching, listening, and persuading — often in a second language — builds communication skills that transfer directly to professional life. Mission leadership roles (district leader, zone leader, assistant to the president) provide management experience.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-earth-americas"></i></span>
+      <h3>Cross-Cultural Exposure</h3>
+      <p>Living in a foreign country, speaking a different language, eating unfamiliar food, and forming relationships across cultural lines reshapes how missionaries see the world — and themselves — in ways that rarely fade.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-heart-crack"></i></span>
+      <h3>Not Everyone Returns the Same Believer</h3>
+      <p>A significant minority of missionaries return with weakened faith, unresolved questions, or quiet disillusionment — a reality the church is increasingly open about. Mission does not automatically deepen testimony; for some it surfaces doubts that were never addressed.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-ring"></i></span>
+      <h3>Marriage Timing</h3>
+      <p>LDS culture strongly encourages marriage after a mission, and the median marriage age for returned missionaries is notably younger than the national average. The mission is often the direct lead-up to courtship in a singles ward.</p>
+    </div>
+    <div class="practice-card">
+      <span class="pc-icon"><i class="fa-solid fa-church"></i></span>
+      <h3>Lifelong Church Involvement</h3>
+      <p>Having served a mission correlates strongly with continued church activity, willingness to accept callings, and financial contributions to the church. The mission instills the habits and identity of a committed Latter-day Saint.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  This page is for educational and informational purposes. Details are summarized in good faith from official church sources, missionary handbooks, and published first-person accounts. Individual experiences vary widely by mission, companion, and personal circumstance. &copy; 2026
+</footer>
+{% endblock %}

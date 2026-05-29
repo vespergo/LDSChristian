@@ -1,0 +1,220 @@
+---
+title: "The LDS Temple – Sacred Ordinances & Eternal Covenants"
+navPage: temple
+navGroup: lds-faith
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #8a6b00 0%, #3d2e00 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; font-size: 1rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    .section-head { font-size: 1.2rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .section-head::after { content:''; flex:1; height:2px; background:var(--blue); opacity:0.15; border-radius:2px; }
+
+    .narrative { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem 1.7rem; margin-bottom: 1.5rem; }
+    .narrative p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 0.8rem; }
+    .narrative p:last-child { margin-bottom: 0; }
+    .narrative p strong { color: var(--text); }
+
+    .ordinance-list { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+    .ord-item { display: flex; gap: 1.1rem; padding: 1rem 0; border-bottom: 1px solid #eceae4; align-items: flex-start; }
+    .ord-item:last-child { border-bottom: none; }
+    .ord-icon { font-size: 1.5rem; color: var(--gold); min-width: 2.2rem; text-align: center; margin-top: 0.1rem; }
+    .ord-body h4 { font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; font-weight: 700; }
+    .ord-body p { font-size: 0.89rem; color: var(--muted); line-height: 1.65; }
+
+    .recommend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .req-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.3rem; border-left: 4px solid var(--blue); }
+    .req-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .req-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem; }
+    .compare-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; }
+    .compare-box h3 { font-size: 1rem; font-weight: 700; color: var(--blue); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+    .compare-box p { font-size: 0.89rem; color: var(--muted); line-height: 1.65; }
+
+    .stat-row { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .stat-box { flex: 1; min-width: 160px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem; text-align: center; }
+    .stat-box .stat-num { font-size: 2rem; font-weight: 700; color: var(--gold); display: block; line-height: 1; margin-bottom: 0.3rem; }
+    .stat-box .stat-label { font-family: system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-place-of-worship"></i></span>
+  <h1>The LDS Temple</h1>
+  <p>Not the chapel where members worship on Sundays, but something far more sacred — the house of the Lord, where eternal ordinances bind families together and individuals make their highest covenants with God.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>Frequently misunderstood.</strong> The LDS temple is one of the most discussed and least understood aspects of Latter-day Saint practice. Closed to non-members and to members who do not hold a current "temple recommend," it has inspired both reverence and curiosity. This page explains what temples are for, what happens inside, what they require, and how they compare to sacred spaces in other Christian traditions.
+  </div>
+
+  <!-- Scale -->
+  <div class="section-head"><i class="fa-solid fa-globe"></i> &nbsp;The Temples Today</div>
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="stat-num">350+</span>
+      <span class="stat-label">Temples operating, under construction, or announced worldwide (2026)</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">180+</span>
+      <span class="stat-num" style="font-size:1.2rem;color:var(--muted)">countries</span>
+      <span class="stat-label">Nations with an operating or announced temple</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">1836</span>
+      <span class="stat-label">Year the first LDS temple was dedicated, in Kirtland, Ohio</span>
+    </div>
+  </div>
+  <div class="narrative">
+    <p>A temple is not a meetinghouse. Ordinary Sunday worship happens at the local chapel, which anyone may attend. Temples serve an entirely different function and are open only to members who hold a current temple recommend — a certificate issued after an interview confirming their faithfulness and commitment to LDS principles. There is no admission fee.</p>
+    <p>Unlike a Sunday chapel, a temple is not used for weekly congregational worship. It is a dedicated space for specific sacred ordinances that, in LDS theology, have eternal consequences. Members describe a sense of peace and spiritual power inside that they rarely find elsewhere.</p>
+  </div>
+
+  <!-- Ordinances -->
+  <div class="section-head"><i class="fa-solid fa-scroll"></i> &nbsp;What Happens Inside: The Ordinances</div>
+  <p style="font-size:0.95rem; color:var(--muted); margin-bottom:1.2rem; line-height:1.7;">Temples are dedicated to four primary sacred ordinances. Members keep the specific ritual details sacred and do not discuss them publicly — a practice often mistaken for secrecy but understood by members as appropriate reverence, similar to how some Christian traditions treat confession or private liturgy.</p>
+  <div class="ordinance-list">
+    <div class="ord-item">
+      <div class="ord-icon"><i class="fa-solid fa-droplet"></i></div>
+      <div class="ord-body">
+        <h4>Baptism for the Dead</h4>
+        <p>Based on 1 Corinthians 15:29, members are baptized on behalf of deceased ancestors and others who never had the opportunity to hear the gospel. This proxy ordinance is understood as <em>offering</em> the ordinance — individuals who have died retain full agency to accept or reject it. It is why LDS members are so active in genealogical research: they seek to identify every ancestor who might benefit.</p>
+      </div>
+    </div>
+    <div class="ord-item">
+      <div class="ord-icon"><i class="fa-solid fa-hands-praying"></i></div>
+      <div class="ord-body">
+        <h4>Initiatory</h4>
+        <p>A preparatory ordinance performed before the endowment. It includes symbolic washing and anointing of the body, representing the cleansing and setting apart of the individual for sacred service. Members receive promises associated with faithfulness to their covenants. It is brief and private, performed in a small room by a temple worker of the same sex.</p>
+      </div>
+    </div>
+    <div class="ord-item">
+      <div class="ord-icon"><i class="fa-solid fa-star"></i></div>
+      <div class="ord-body">
+        <h4>The Endowment</h4>
+        <p>The central temple experience for adult members. It includes ritual washings and anointings, the donning of sacred garments, instruction in God's plan of salvation presented through narrative and symbol, and the making of covenants — commitments of obedience, sacrifice, chastity, and consecration. It is typically received before a mission or before temple marriage.</p>
+      </div>
+    </div>
+    <div class="ord-item">
+      <div class="ord-icon"><i class="fa-solid fa-ring"></i></div>
+      <div class="ord-body">
+        <h4>Sealing (Eternal Marriage)</h4>
+        <p>Couples are married — "sealed" — in the temple by an authorized sealer acting under the LDS priesthood's "sealing power." Unlike civil or church marriages, which bind partners "till death do us part," the sealing is understood to be an eternal bond that continues beyond death if both spouses remain faithful. Children can also be sealed to their parents in a separate ceremony.</p>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Temple recommend -->
+  <div class="section-head"><i class="fa-solid fa-id-card"></i> &nbsp;The Temple Recommend</div>
+  <div class="narrative">
+    <p>To enter a temple, a member must hold a current temple recommend — a small card valid for two years, issued only after a two-part interview. Members meet first with their bishop (local congregation leader) and then with a member of the stake presidency (regional leader). The interviews are private and confidential.</p>
+    <p>The questions assess not membership status but personal commitment and lifestyle. Holding a recommend is therefore a significant spiritual marker within LDS culture — a measure of active devotion rather than mere attendance.</p>
+  </div>
+  <div class="recommend-grid">
+    <div class="req-card">
+      <h4>Faith &amp; Testimony</h4>
+      <p>Belief in God, Christ, the Holy Ghost, and the restored gospel. Testimony of Joseph Smith as a prophet and of the Book of Mormon.</p>
+    </div>
+    <div class="req-card">
+      <h4>Tithing</h4>
+      <p>Payment of a full tithe (10% of income) to the church. One of the most concrete behavioral requirements.</p>
+    </div>
+    <div class="req-card">
+      <h4>Chastity</h4>
+      <p>Living the Law of Chastity — sexual relations only within opposite-sex marriage. Members in same-sex relationships are not eligible for a recommend.</p>
+    </div>
+    <div class="req-card">
+      <h4>Word of Wisdom</h4>
+      <p>Abstaining from alcohol, tobacco, coffee, tea, and illicit drugs. This is assessed as a lifestyle commitment, not a single incident.</p>
+    </div>
+    <div class="req-card">
+      <h4>Support for Church Leadership</h4>
+      <p>Not opposing the church or its leaders publicly. Members who publicly advocate positions contrary to church teachings may be at risk of losing their recommend.</p>
+    </div>
+    <div class="req-card">
+      <h4>No Serious Unresolved Sin</h4>
+      <p>Ongoing repentance and a clear conscience. Members with significant unresolved transgressions work through a bishop's repentance process before receiving a recommend.</p>
+    </div>
+  </div>
+
+  <!-- The garment -->
+  <div class="section-head"><i class="fa-solid fa-shirt"></i> &nbsp;The Temple Garment</div>
+  <div class="narrative">
+    <p>Adults who have received the endowment wear a sacred temple garment — a simple, white undergarment — under their clothing at all times, except while bathing, swimming, or in other appropriate circumstances. This is one of the most misunderstood aspects of LDS practice.</p>
+    <p><strong>What it is.</strong> Members describe the garment as a tangible reminder of the covenants made in the temple — a constant physical prompt toward faithfulness, similar in purpose (though not identical in form) to the prayer shawl fringes commanded in Numbers 15 or the scapular worn by some Catholics. It is not believed to be magical or bulletproof, as popular culture sometimes suggests.</p>
+    <p><strong>Why it is private.</strong> The garment is an intimate, personal religious symbol. Members are instructed not to show it disrespectfully or mock it. The LDS Church published an official explanation in 2014 specifically to counter misunderstandings from popular media.</p>
+  </div>
+
+  <!-- Comparison with other traditions -->
+  <div class="section-head"><i class="fa-solid fa-scale-balanced"></i> &nbsp;Comparing Sacred Spaces Across Traditions</div>
+  <div class="compare-grid">
+    <div class="compare-box">
+      <h3><i class="fa-solid fa-cross"></i> Catholic &amp; Orthodox</h3>
+      <p>Both have inner sanctuaries (the sanctuary or altar area) restricted from lay access, especially during certain liturgies. Orthodox churches have the iconostasis, a screen separating the nave from the altar where laypeople may not enter. Neither has a parallel to proxy baptism or eternal marriage sealing, but the concept of sacred space reserved for specific rituals is shared.</p>
+    </div>
+    <div class="compare-box">
+      <h3><i class="fa-solid fa-bible"></i> Protestant</h3>
+      <p>Most Protestant traditions have no restricted sacred space beyond the church building itself, which is open to all. The concept of ordinances with eternal consequences performed in a dedicated building is foreign to most Protestant theology, which tends to see salvation as entirely a matter of faith and grace rather than physical rites.</p>
+    </div>
+  </div>
+  <div class="narrative">
+    <p><strong>The deeper theological divide.</strong> Mainstream Christians generally hold that the atonement of Christ secures salvation entirely, with physical ordinances (like baptism) serving as signs or responses rather than conditions of salvation. LDS theology holds that specific ordinances — performed with proper authority in a dedicated space — are necessary steps in an eternal progression. The temple is the apex of that ordinance-based theology, which is why it has no true parallel in any other Christian tradition.</p>
+  </div>
+
+</main>
+
+<footer>
+  This page is for educational and informational purposes. Temple practices are summarized from official LDS sources (Gospel Topics Essays, churchofjesuschrist.org) and may evolve over time. &copy; 2026
+</footer>
+{% endblock %}

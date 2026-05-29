@@ -1,0 +1,303 @@
+---
+title: "Are LDS Members Christians?"
+navPage: are-lds-christian
+navGroup: lds-faith
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #2a3a5a 0%, #0d1a30 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    /* Quick answer box */
+    .quick-answer { border-radius: var(--radius); padding: 1.8rem 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow); }
+    .quick-answer.nuanced { background: #fff8e8; border-left: 5px solid var(--gold); }
+    .quick-answer h2 { font-size: 1.1rem; font-family: system-ui, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #8a6000; margin-bottom: 0.6rem; }
+    .quick-answer p { font-size: 1.02rem; color: var(--text); line-height: 1.75; }
+
+    /* Perspective blocks */
+    .perspective { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 1.5rem; overflow: hidden; }
+    .perspective-header { padding: 1.1rem 1.4rem; display: flex; align-items: center; gap: 0.8rem; }
+    .perspective-header.lds    { background: linear-gradient(135deg, #1a4f8a, #0d2f57); color: #fff; }
+    .perspective-header.main   { background: linear-gradient(135deg, #6b1a1a, #3a0a0a); color: #fff; }
+    .perspective-header.nuance { background: linear-gradient(135deg, #2a5a3a, #0a2a1a); color: #fff; }
+    .perspective-header.hist   { background: linear-gradient(135deg, #3a2a6b, #1a0a3a); color: #fff; }
+    .perspective-header .ph-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .perspective-header h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.1rem; }
+    .perspective-header .ph-sub { font-size: 0.82rem; opacity: 0.8; }
+    .perspective-body { padding: 1.3rem 1.5rem; }
+    .perspective-body p { font-size: 0.94rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.8rem; }
+    .perspective-body p:last-child { margin-bottom: 0; }
+    .perspective-body p strong { color: var(--text); }
+    .perspective-body ul { padding-left: 1.3rem; font-size: 0.93rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.8rem; }
+    .perspective-body ul li { margin-bottom: 0.3rem; }
+    .perspective-body blockquote { border-left: 3px solid var(--gold); padding-left: 1rem; margin: 0.8rem 0; font-style: italic; color: var(--text); font-size: 0.93rem; }
+
+    /* Definition box */
+    .def-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .def-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.3rem; }
+    .def-box h4 { font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .def-box.broad h4 { color: var(--green); }
+    .def-box.narrow h4 { color: var(--red); }
+    .def-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+    .def-box .verdict { display: inline-block; font-family: system-ui, sans-serif; font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; margin-top: 0.6rem; }
+    .def-box.broad .verdict { background: #d6efe2; color: var(--green); }
+    .def-box.narrow .verdict { background: #f7d6d6; color: var(--red); }
+
+    /* Section headers */
+    .section-head { font-size: 1.2rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .section-head::after { content:''; flex:1; height:2px; background:var(--blue); opacity:0.15; border-radius:2px; }
+
+    /* Timeline */
+    .timeline { margin-bottom: 2.5rem; }
+    .tl-item { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; margin-bottom: 1rem; align-items: start; }
+    .tl-year { font-family: system-ui, sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--blue); background: var(--card); border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center; box-shadow: var(--shadow); }
+    .tl-body { background: var(--card); border-radius: 8px; padding: 0.8rem 1rem; box-shadow: var(--shadow); font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+    .tl-body strong { color: var(--text); }
+
+    /* Final take */
+    .final-take { background: linear-gradient(135deg, #0d2f57, #1a4f8a); color: #fff; border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
+    .final-take h2 { font-size: 1.1rem; font-family: system-ui, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.75; margin-bottom: 0.8rem; }
+    .final-take p { font-size: 0.97rem; line-height: 1.75; opacity: 0.92; margin-bottom: 0.7rem; }
+    .final-take p:last-child { margin-bottom: 0; }
+    .final-take p strong { color: #ffd080; opacity: 1; }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .def-grid { grid-template-columns: 1fr; } .tl-item { grid-template-columns: 70px 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-circle-question"></i></span>
+  <h1>Are LDS Members Christians?</h1>
+  <p>One of the most debated questions in American religion. The answer depends entirely on how you define the word "Christian" — and who gets to decide.</p>
+</header>
+
+<main>
+
+  <!-- Quick answer -->
+  <div class="quick-answer nuanced">
+    <h2><i class="fa-solid fa-lightbulb"></i> &nbsp;The Short Answer</h2>
+    <p><strong>It depends on your definition.</strong> By the broadest definition — anyone who believes in Jesus Christ as Savior — LDS members clearly qualify. By the narrower creedal definition used by Catholic, Orthodox, and most mainline Protestant churches — adherence to the Nicene Trinity and closed canon — LDS theology places the church outside traditional Christianity. Both positions are defensible; the disagreement is fundamentally about who holds definitional authority over the word "Christian."</p>
+  </div>
+
+  <!-- The definition problem -->
+  <div class="section-head"><i class="fa-solid fa-book-open"></i> &nbsp;The Definitional Problem</div>
+  <p style="font-size:0.95rem; color:var(--muted); margin-bottom:1.2rem; line-height:1.7;">Before the question can be answered, it must be asked: <em>what does "Christian" mean?</em> Two honest, well-informed people can reach opposite conclusions simply because they're using different definitions.</p>
+
+  <div class="def-grid">
+    <div class="def-box broad">
+      <h4><i class="fa-solid fa-expand"></i> &nbsp;Broad Definition</h4>
+      <p>A Christian is anyone who <strong>believes in Jesus Christ</strong> as Lord and Savior, seeks to follow His teachings, and identifies as His disciple. This is how many sociologists, historians, and the LDS Church itself define the term.</p>
+      <span class="verdict"><i class="fa-solid fa-check"></i> LDS = Christian</span>
+    </div>
+    <div class="def-box narrow">
+      <h4><i class="fa-solid fa-compress"></i> &nbsp;Creedal Definition</h4>
+      <p>A Christian is someone who affirms the <strong>Nicene Creed's</strong> definition of God — one substance, three co-equal persons — and accepts the closed biblical canon as the complete word of God. This is how most Catholic, Orthodox, and mainline Protestant bodies define it.</p>
+      <span class="verdict"><i class="fa-solid fa-not-equal"></i> LDS = Non-creedal</span>
+    </div>
+  </div>
+
+  <!-- Perspectives -->
+  <div class="section-head"><i class="fa-solid fa-people-group"></i> &nbsp;Four Perspectives</div>
+
+  <!-- LDS self-view -->
+  <div class="perspective">
+    <div class="perspective-header lds">
+      <span class="ph-icon"><i class="fa-solid fa-cross"></i></span>
+      <div>
+        <h3>The LDS Church's Own Position: Absolutely Yes</h3>
+        <span class="ph-sub">Official LDS stance and self-identification</span>
+      </div>
+    </div>
+    <div class="perspective-body">
+      <p>The Church of Jesus Christ of Latter-day Saints considers itself unambiguously Christian — indeed, it considers itself the <em>restored</em> Church of Jesus Christ. The church's very name includes "Jesus Christ." LDS members center their faith on His atoning sacrifice, resurrection, and teachings.</p>
+      <p><strong>Key LDS arguments for Christian identity:</strong></p>
+      <ul>
+        <li>Jesus Christ is the central figure of LDS theology, worship, and scripture</li>
+        <li>LDS baptism, confirmation, and sacrament are all performed in the name of Jesus Christ</li>
+        <li>The Book of Mormon's full title includes "Another Testament of Jesus Christ"</li>
+        <li>LDS members pray to God the Father in the name of Jesus Christ</li>
+        <li>The Atonement of Jesus Christ is the foundational doctrine of the faith</li>
+        <li>The church teaches that salvation is possible only through Christ</li>
+      </ul>
+      <blockquote>"We worship God the Eternal Father, and His Son, Jesus Christ, and the Holy Ghost. How can anyone say we are not Christians?" — President Gordon B. Hinckley (1995)</blockquote>
+      <p>The LDS Church also notes that many doctrines now considered "traditional Christianity" — the Nicene Trinity, original sin as Catholics define it, sola fide — were themselves later theological developments that LDS believes departed from original apostolic Christianity. From this view, LDS is <em>more</em> authentically Christian than creedal Christianity.</p>
+    </div>
+  </div>
+
+  <!-- Mainstream Christian view -->
+  <div class="perspective">
+    <div class="perspective-header main">
+      <span class="ph-icon"><i class="fa-solid fa-church"></i></span>
+      <div>
+        <h3>Mainstream Christianity's Position: Not in the Traditional Sense</h3>
+        <span class="ph-sub">Catholic, Orthodox, and many Protestant bodies</span>
+      </div>
+    </div>
+    <div class="perspective-body">
+      <p>Most Catholic, Orthodox, and mainline Protestant institutions do not classify LDS as Christian in the creedal sense — meaning they do not regard LDS theology as falling within historic, Trinitarian Christianity. This is not simply a political position; it reflects genuine theological convictions about what the term "Christian" means.</p>
+      <p><strong>Key objections raised by mainstream Christianity:</strong></p>
+      <ul>
+        <li><strong>The Trinity:</strong> LDS does not affirm one God in three co-equal persons of the same substance — the definition established at Nicaea (325 AD) and affirmed by virtually all Christian traditions. LDS teaches three separate beings, which critics call "tritheism."</li>
+        <li><strong>A different Jesus:</strong> The LDS Jesus, some theologians argue, is ontologically different — a separate being from the Father, not co-eternal in the Nicene sense, and the spirit-brother of humanity in the pre-mortal world.</li>
+        <li><strong>Additional scripture:</strong> The closed biblical canon is considered a mark of Christian identity by most traditions. LDS acceptance of additional revelatory texts is seen as a departure from Christian boundaries.</li>
+        <li><strong>Different God:</strong> LDS teaches God the Father has a physical body and was once as humans now are. Mainstream Christianity holds God is eternal, immutable spirit who has always been God.</li>
+        <li><strong>Institutional recognition:</strong> In 2001, the Vatican ruled that LDS baptism is not valid Christian baptism and cannot be recognized. Converts from LDS must be baptized to enter the Catholic Church.</li>
+      </ul>
+      <blockquote>"The differences are so fundamental that one must say that, with all due respect, LDS doctrine is not Christian doctrine." — Rev. Richard John Neuhaus, Catholic theologian</blockquote>
+      <p>It is important to note that this position is not about dismissing LDS sincerity or the morality of its members — mainstream Christians often acknowledge LDS as sincere, moral, and Christ-focused. The objection is specifically theological and definitional.</p>
+    </div>
+  </div>
+
+  <!-- Nuanced scholarly view -->
+  <div class="perspective">
+    <div class="perspective-header nuance">
+      <span class="ph-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+      <div>
+        <h3>The Scholarly / Academic View: A New Religious Tradition</h3>
+        <span class="ph-sub">Religion historians and non-LDS scholars</span>
+      </div>
+    </div>
+    <div class="perspective-body">
+      <p>Many religion scholars who study LDS from outside the faith propose a third framing: LDS is neither simply Christian nor non-Christian, but rather a <strong>new religious tradition that emerged from Christianity</strong> — in the same way Christianity emerged from Second Temple Judaism.</p>
+      <blockquote>"The Latter-day Saints are not Protestant, not Catholic, not Orthodox. They are something new. Their tradition has Christianity as its parent, but it is not Christianity." — Jan Shipps, historian of American religion</blockquote>
+      <p><strong>The analogy to early Christianity is illuminating:</strong> First-century Christians were not considered Jews by the Jewish establishment, even though they affirmed the Hebrew scriptures, revered Abraham and Moses, and identified as Israel's fulfillment. Similarly, LDS emerged from 19th-century Protestant America but developed doctrines (additional scripture, the Godhead, pre-mortal existence, eternal progression) that placed it outside creedal Christianity's boundaries.</p>
+      <p>This framing is neither a compliment nor an insult — it simply observes that LDS represents something genuinely new in religious history. Scholars like Terryl Givens, Phillip Barlow, and Richard Bushman (LDS scholars) and Jan Shipps, Rodney Stark, and Harold Bloom (non-LDS) have all engaged seriously with this framework.</p>
+      <blockquote>"The Book of Mormon is neither Protestant nor Catholic. It is Mormon." — Harold Bloom, The American Religion (1992)</blockquote>
+    </div>
+  </div>
+
+  <!-- Historical development view -->
+  <div class="perspective">
+    <div class="perspective-header hist">
+      <span class="ph-icon"><i class="fa-solid fa-scroll"></i></span>
+      <div>
+        <h3>The Historical View: What Did Early Christians Believe?</h3>
+        <span class="ph-sub">Pre-Nicene Christianity and the Restoration argument</span>
+      </div>
+    </div>
+    <div class="perspective-body">
+      <p>LDS scholars and apologists frequently make a historical argument: the Nicene Creed (325 AD) was itself a departure from the <em>original</em> beliefs of the earliest Christians. They argue that pre-Nicene Christians held beliefs much closer to LDS theology.</p>
+      <p><strong>LDS points to early Christian sources that align with LDS theology:</strong></p>
+      <ul>
+        <li>Irenaeus of Lyon (c. 180 AD): "God became man that man might become God" — parallel to LDS exaltation</li>
+        <li>Justin Martyr (c. 150 AD): Described the Father and Son as numerically distinct beings</li>
+        <li>Origen (c. 230 AD): Taught the pre-existence of souls — parallel to LDS pre-mortal life</li>
+        <li>Clement of Alexandria: Referred to the possibility of humans becoming gods</li>
+        <li>The Didache (c. 100 AD): Instructed baptism to be by immersion if possible</li>
+      </ul>
+      <p>Critics of this argument note that cherry-picking early sources proves little — early Christianity was highly diverse and many of these figures were later declared heretical. The Nicene Council's role was precisely to define orthodoxy from among competing early Christian voices.</p>
+      <p><strong>The LDS response:</strong> This is exactly what the Apostasy and Restoration narrative says — the Council of Nicaea represented the institutionalization of apostasy, not a legitimate theological clarification. This makes the historical debate circular: it only resolves if you accept or reject the Apostasy as a premise.</p>
+    </div>
+  </div>
+
+  <!-- Institutional rulings timeline -->
+  <div class="section-head"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp;Key Institutional Decisions</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1831</div>
+      <div class="tl-body">The Church of Christ (later renamed Church of Jesus Christ of Latter-day Saints) is organized. Joseph Smith teaches it is the restored church of Christ — distinct from all existing denominations.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1843</div>
+      <div class="tl-body">Joseph Smith publicly teaches the Godhead as three separate beings, having already received the First Vision (1820) in which God and Jesus appeared as distinct persons. This definitively separates LDS from Trinitarian Christianity.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1960s</div>
+      <div class="tl-body"><strong>National Council of Churches</strong> declines LDS membership application, citing doctrinal differences with creedal Christianity as the grounds for exclusion.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1997</div>
+      <div class="tl-body">The <strong>Southern Baptist Convention</strong> launches a major mission effort to share the gospel with LDS members, explicitly classifying LDS as a non-Christian religion in need of evangelization.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2001</div>
+      <div class="tl-body">The <strong>Vatican</strong> (Congregation for the Doctrine of the Faith) officially rules that LDS baptism is invalid and does not constitute Christian baptism. LDS converts to Catholicism must be re-baptized.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2001</div>
+      <div class="tl-body">President <strong>Gordon B. Hinckley</strong> responds: "We are Christians in a very real sense… We worship Him as our Savior and our Redeemer." LDS members consistently self-identify as Christian in surveys.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2018</div>
+      <div class="tl-body">President <strong>Russell M. Nelson</strong> emphasizes use of the full name "The Church of Jesus Christ of Latter-day Saints," discouraging the nickname "Mormon," to reinforce the church's Christ-centered identity.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Today</div>
+      <div class="tl-body"><strong>Pew Research Center</strong> surveys consistently show that about 50–55% of Americans consider LDS to be Christian, while approximately 32% do not. LDS members overwhelmingly self-identify as Christian (97%+).</div>
+    </div>
+  </div>
+
+  <!-- What LDS and mainstream Christians agree Jesus IS -->
+  <div class="section-head"><i class="fa-solid fa-hands-praying"></i> &nbsp;What LDS and Mainstream Christians Agree Jesus Is</div>
+  <div style="background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.4rem 1.6rem; margin-bottom:2.5rem;">
+    <p style="font-size:0.94rem; color:var(--muted); margin-bottom:0.8rem;">Despite deep theological differences, both LDS and mainstream Christianity agree on the following affirmations about Jesus Christ:</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem 1.5rem; font-size:0.91rem; color:var(--text);">
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He is the literal Son of God</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He was born of a virgin</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He lived a sinless life</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He performed miracles</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He died on the cross for our sins</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He rose bodily from the dead</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He is the only path to salvation</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He ascended to Heaven</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He will return in glory</div>
+      <div><i class="fa-solid fa-check" style="color:var(--green); margin-right:0.4rem;"></i>He taught love of God and neighbor</div>
+    </div>
+  </div>
+
+  <!-- Final take -->
+  <div class="final-take">
+    <h2><i class="fa-solid fa-scale-balanced"></i> &nbsp;A Measured Conclusion</h2>
+    <p>The question "Are LDS Christians?" is not resolvable by facts alone — it is a question about definitions and authority. <strong>LDS members are Christians by their own sincere, deeply-held identity.</strong> Jesus Christ is the center of their worship, scripture, ordinances, and hope for eternal life.</p>
+    <p>At the same time, <strong>mainstream Christianity is not wrong to distinguish LDS theology from Trinitarian Christianity.</strong> The LDS Godhead, open canon, pre-mortal existence, and temple ordinances represent genuine departures from the doctrinal boundaries that Catholic, Orthodox, and Protestant traditions have long used to define Christianity.</p>
+    <p>Perhaps the most honest answer is this: <strong>LDS members are Christians by devotion, but Latter-day Saints by theology.</strong> They follow Jesus of Nazareth with sincerity and conviction — but the theological framework in which they do so differs from historic creedal Christianity in ways that are not minor or negotiable.</p>
+    <p>The debate itself may say as much about Christianity's definitional boundaries as it does about LDS theology. Who gets to define "Christian" — a council of theologians, an individual's conscience, or Christ Himself — is a question every tradition answers differently.</p>
+  </div>
+
+</main>
+
+<footer>
+  Content is for educational purposes and represents multiple perspectives. No single answer is presented as definitive. &copy; 2026
+</footer>
+{% endblock %}

@@ -1,0 +1,570 @@
+---
+title: "Key LDS Scripture Verses — All Standard Works"
+navPage: scriptures
+navGroup: reference
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+
+      --bible:   #1a6b5a;
+      --bom:     #7a3a1a;
+      --dc:      #1a4f8a;
+      --pgp:     #5a1a6b;
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #3a1a5a 0%, #1a0830 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; font-size: 0.98rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    /* Source legend */
+    .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .legend-chip { font-family: system-ui, sans-serif; font-size: 0.78rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; display: flex; align-items: center; gap: 0.4rem; }
+    .legend-chip.bible { background: #d6efea; color: var(--bible); }
+    .legend-chip.bom   { background: #f5e2d4; color: var(--bom); }
+    .legend-chip.dc    { background: #d6e4f7; color: var(--dc); }
+    .legend-chip.pgp   { background: #ead6f5; color: var(--pgp); }
+
+    /* Search + filter bar */
+    .controls { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
+    .search-wrap { position: relative; }
+    .search-wrap i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); }
+    #scripture-search { width: 100%; font-family: system-ui, sans-serif; font-size: 0.95rem; padding: 0.75rem 1rem 0.75rem 2.6rem; border: 1px solid #ddd6cc; border-radius: var(--radius); background: var(--card); color: var(--text); box-shadow: var(--shadow); }
+    #scripture-search:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+    .filter-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-btn { font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.9rem; border-radius: 999px; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; background: var(--card); }
+    .filter-btn.all   { border-color: #aaa; color: #555; }
+    .filter-btn.bible { border-color: var(--bible); color: var(--bible); }
+    .filter-btn.bom   { border-color: var(--bom);   color: var(--bom); }
+    .filter-btn.dc    { border-color: var(--dc);    color: var(--dc); }
+    .filter-btn.pgp   { border-color: var(--pgp);   color: var(--pgp); }
+    .filter-btn.active, .filter-btn:hover { color: #fff; }
+    .filter-btn.all.active,   .filter-btn.all:hover   { background: #555;         border-color: #555; }
+    .filter-btn.bible.active, .filter-btn.bible:hover { background: var(--bible); }
+    .filter-btn.bom.active,   .filter-btn.bom:hover   { background: var(--bom); }
+    .filter-btn.dc.active,    .filter-btn.dc:hover    { background: var(--dc); }
+    .filter-btn.pgp.active,   .filter-btn.pgp:hover   { background: var(--pgp); }
+
+    /* Section heads */
+    .section-head { font-size: 1.15rem; font-family: system-ui, sans-serif; font-weight: 700; margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.6rem; scroll-margin-top: 1rem; }
+    .section-head::after { content:''; flex:1; height:2px; opacity:0.2; border-radius:2px; }
+    .section-head.bible { color: var(--bible); }  .section-head.bible::after { background: var(--bible); }
+    .section-head.bom   { color: var(--bom); }    .section-head.bom::after   { background: var(--bom); }
+    .section-head.dc    { color: var(--dc); }     .section-head.dc::after    { background: var(--dc); }
+    .section-head.pgp   { color: var(--pgp); }    .section-head.pgp::after   { background: var(--pgp); }
+
+    /* Scripture cards */
+    .verse-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 1.1rem; margin-bottom: 0.5rem; }
+    .verse-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.5rem; border-left: 5px solid var(--blue); display: flex; flex-direction: column; gap: 0.55rem; }
+    .verse-card.bible { border-left-color: var(--bible); }
+    .verse-card.bom   { border-left-color: var(--bom); }
+    .verse-card.dc    { border-left-color: var(--dc); }
+    .verse-card.pgp   { border-left-color: var(--pgp); }
+    .verse-card[hidden] { display: none; }
+
+    .vc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+    .vc-ref { font-family: system-ui, sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .vc-badge { font-family: system-ui, sans-serif; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+    .vc-badge.bible { background: #d6efea; color: var(--bible); }
+    .vc-badge.bom   { background: #f5e2d4; color: var(--bom); }
+    .vc-badge.dc    { background: #d6e4f7; color: var(--dc); }
+    .vc-badge.pgp   { background: #ead6f5; color: var(--pgp); }
+
+    .vc-verse { font-size: 0.97rem; color: var(--text); line-height: 1.7; font-style: italic; }
+    .vc-why { font-size: 0.88rem; color: var(--muted); line-height: 1.6; padding-top: 0.4rem; border-top: 1px solid #eceae4; }
+    .vc-why strong { color: var(--text); }
+    .vc-topic { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.1rem; }
+    .vc-topic span { font-family: system-ui, sans-serif; font-size: 0.68rem; font-weight: 600; padding: 0.1rem 0.45rem; background: var(--bg); border-radius: 4px; color: var(--muted); }
+
+    .no-results { display: none; text-align: center; font-family: system-ui, sans-serif; color: var(--muted); padding: 3rem 1rem; }
+    .no-results i { font-size: 2rem; opacity: 0.3; display: block; margin-bottom: 0.5rem; }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 640px) { .verse-grid { grid-template-columns: 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-scroll"></i></span>
+  <h1>Key LDS Scripture Verses</h1>
+  <p>The most theologically significant passages across all four standard works — the Bible, Book of Mormon, Doctrine &amp; Covenants, and Pearl of Great Price.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>Four standard works, one canon.</strong> Latter-day Saints accept the Bible (King James Version as the official English text), the Book of Mormon, the Doctrine &amp; Covenants, and the Pearl of Great Price as scripture. The verses below are selected because they are frequently cited in LDS teaching, shape distinctive doctrines, or explain LDS beliefs that differ from mainstream Christianity.
+  </div>
+
+  <div class="legend">
+    <span class="legend-chip bible"><i class="fa-solid fa-bible"></i> Bible (KJV)</span>
+    <span class="legend-chip bom"><i class="fa-solid fa-book"></i> Book of Mormon</span>
+    <span class="legend-chip dc"><i class="fa-solid fa-book-open"></i> Doctrine &amp; Covenants</span>
+    <span class="legend-chip pgp"><i class="fa-solid fa-star"></i> Pearl of Great Price</span>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search" id="scripture-search" placeholder="Search by reference, keyword, or topic…" autocomplete="off" />
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn all active" data-filter="all">All Sources</button>
+      <button class="filter-btn bible" data-filter="bible"><i class="fa-solid fa-bible"></i> Bible</button>
+      <button class="filter-btn bom"   data-filter="bom"><i class="fa-solid fa-book"></i> Book of Mormon</button>
+      <button class="filter-btn dc"    data-filter="dc"><i class="fa-solid fa-book-open"></i> D&amp;C</button>
+      <button class="filter-btn pgp"   data-filter="pgp"><i class="fa-solid fa-star"></i> Pearl of Great Price</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       BIBLE
+  ══════════════════════════════════════════ -->
+  <div class="section-head bible" data-section="bible"><i class="fa-solid fa-bible"></i> Bible — King James Version</div>
+  <div class="verse-grid" id="grid-bible">
+
+    <div class="verse-card bible" data-source="bible" data-text="james 1:5 wisdom lack ask god liberally">
+      <div class="vc-top"><span class="vc-ref">James 1:5</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> This is the verse Joseph Smith said prompted him to pray as a 14-year-old, leading directly to the First Vision of 1820 — the founding event of the church.</div>
+      <div class="vc-topic"><span>First Vision</span><span>Revelation</span><span>Prayer</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="amos 3:7 surely lord god will do nothing secret servants prophets">
+      <div class="vc-top"><span class="vc-ref">Amos 3:7</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"Surely the Lord God will do nothing, but he revealeth his secret unto his servants the prophets."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Central to the LDS belief in a living prophet. The church teaches that God still communicates through prophets today, making a modern President–Prophet both necessary and biblical.</div>
+      <div class="vc-topic"><span>Living Prophet</span><span>Revelation</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="acts 3:21 restitution all things spoken prophets since world began">
+      <div class="vc-top"><span class="vc-ref">Acts 3:20–21</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"…whom the heaven must receive until the times of restitution of all things, which God hath spoken by the mouth of all his holy prophets since the world began."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> LDS theology centers on the "Restoration" — that the original church was lost (the Great Apostasy) and restored through Joseph Smith. This verse is read as a prophecy of that event.</div>
+      <div class="vc-topic"><span>Restoration</span><span>Apostasy</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="john 17:3 eternal life know thee only true god jesus christ sent">
+      <div class="vc-top"><span class="vc-ref">John 17:3</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"And this is life eternal, that they might know thee the only true God, and Jesus Christ, whom thou hast sent."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> LDS theology reads this as Jesus distinguishing himself from the Father — the Father is the "only true God," and Jesus is separately identified as sent. This supports the LDS view of God and Christ as distinct, separate beings.</div>
+      <div class="vc-topic"><span>Godhead</span><span>Eternal Life</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="matthew 16:19 keys kingdom heaven bind loose earth heaven">
+      <div class="vc-top"><span class="vc-ref">Matthew 16:18–19</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"…upon this rock I will build my church; and the gates of hell shall not prevail against it. And I will give unto thee the keys of the kingdom of heaven."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> LDS doctrine holds that the priesthood "keys" given to Peter were later lost (the Great Apostasy) and restored to Joseph Smith by Peter, James, and John as resurrected beings. The sealing power referenced here underlies temple ordinances.</div>
+      <div class="vc-topic"><span>Priesthood Keys</span><span>Restoration</span><span>Temple</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="1 corinthians 15:29 baptized dead why baptism for the dead">
+      <div class="vc-top"><span class="vc-ref">1 Corinthians 15:29</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"Else what shall they do which are baptized for the dead, if the dead rise not at all? why are they then baptized for the dead?"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The LDS practice of vicarious baptism for deceased ancestors — a signature temple ordinance — is directly grounded in this verse. Critics debate Paul's meaning; LDS reads it plainly as proxy baptism.</div>
+      <div class="vc-topic"><span>Temple</span><span>Baptism for the Dead</span><span>Salvation</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="1 corinthians 15:40-42 celestial terrestrial bodies glory sun moon stars">
+      <div class="vc-top"><span class="vc-ref">1 Corinthians 15:40–42</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"There are also celestial bodies, and bodies terrestrial… There is one glory of the sun, and another glory of the moon, and another glory of the stars: for one star differeth from another star in glory."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The foundation for the LDS doctrine of three degrees of glory — celestial, terrestrial, and telestial kingdoms — which replaces the traditional heaven/hell binary with a graduated afterlife.</div>
+      <div class="vc-topic"><span>Degrees of Glory</span><span>Afterlife</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="john 10:16 other sheep not of this fold hear my voice one fold one shepherd">
+      <div class="vc-top"><span class="vc-ref">John 10:16</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"And other sheep I have, which are not of this fold: them also I must bring, and they shall hear my voice; and there shall be one fold, and one shepherd."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The Book of Mormon records Christ visiting the Nephites in the Americas after his resurrection (3 Nephi 11–26). LDS reads this verse as Christ's own prediction of that visit — the "other sheep" being the peoples of the Book of Mormon.</div>
+      <div class="vc-topic"><span>Book of Mormon</span><span>Christ's Ministry</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="ezekiel 37:16-17 stick judah stick joseph ephraim two sticks one">
+      <div class="vc-top"><span class="vc-ref">Ezekiel 37:15–17</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"…take thee one stick, and write upon it, For Judah… then take another stick, and write upon it, For Joseph, the stick of Ephraim… and they shall become one in thine hand."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> LDS interprets the "stick of Judah" as the Bible and the "stick of Joseph" as the Book of Mormon, with the two becoming "one" — united scripture — as fulfillment of this prophecy.</div>
+      <div class="vc-topic"><span>Book of Mormon</span><span>Prophecy</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="malachi 4:5-6 elijah turn hearts fathers children">
+      <div class="vc-top"><span class="vc-ref">Malachi 4:5–6</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"Behold, I will send you Elijah the prophet before the coming of the great and dreadful day of the Lord: And he shall turn the heart of the fathers to the children, and the heart of the children to their fathers…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Moroni quoted this passage to Joseph Smith in 1823. LDS doctrine teaches that Elijah appeared in the Kirtland Temple in 1836 (D&amp;C 110) and restored the sealing keys — the authority that binds families together in temple ordinances, connecting the living to their deceased ancestors through genealogy and proxy work.</div>
+      <div class="vc-topic"><span>Temple</span><span>Sealing</span><span>Family History</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="revelation 14:6 angel fly everlasting gospel preach earth">
+      <div class="vc-top"><span class="vc-ref">Revelation 14:6</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"And I saw another angel fly in the midst of heaven, having the everlasting gospel to preach unto them that dwell on the earth, and to every nation, and kindred, and tongue, and people."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> LDS teaches this as a prophecy of the angel Moroni — a resurrected being who delivered the gold plates to Joseph Smith, restoring the "everlasting gospel" to the earth. The angel Moroni stands atop many LDS temples.</div>
+      <div class="vc-topic"><span>Restoration</span><span>Moroni</span><span>Prophecy</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="genesis 1:27 image god created man male female">
+      <div class="vc-top"><span class="vc-ref">Genesis 1:27</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"So God created man in his own image, in the image of God created he him; male and female created he them."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Taken literally: LDS teaches that God the Father has a tangible, glorified, physical body (D&amp;C 130:22). This verse is read as confirmation — humans look like God because God literally has a form like ours, not metaphorically.</div>
+      <div class="vc-topic"><span>Nature of God</span><span>Godhead</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="acts 2:38 repent baptized every one name jesus christ remission sins gift holy ghost">
+      <div class="vc-top"><span class="vc-ref">Acts 2:38</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"…Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The LDS baptismal and confirmation ordinance follows exactly this pattern: baptism by immersion for remission of sins, then a separate laying-on-of-hands to confer the gift of the Holy Ghost. LDS argues this is the New Testament pattern — and that confirmation as a separate ordinance distinguishes the LDS practice from most Protestant traditions.</div>
+      <div class="vc-topic"><span>Baptism</span><span>Holy Ghost</span><span>Ordinances</span></div>
+    </div>
+
+    <div class="verse-card bible" data-source="bible" data-text="isaiah 29:11-12 sealed book vision deliver learned read sealed cannot">
+      <div class="vc-top"><span class="vc-ref">Isaiah 29:11–12</span><span class="vc-badge bible">Bible</span></div>
+      <div class="vc-verse">"And the vision of all is become unto you as the words of a book that is sealed, which men deliver to one that is learned, saying, Read this, I pray thee: and he saith, I cannot; for it is sealed: And the book is delivered to him that is not learned…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> LDS reads this as a prophecy of the gold plates. The "learned man" is Martin Harris showing a copy of characters to scholar Charles Anthon; the "not learned" is Joseph Smith, who translated by divine gift rather than academic training.</div>
+      <div class="vc-topic"><span>Book of Mormon</span><span>Prophecy</span><span>Joseph Smith</span></div>
+    </div>
+
+  </div><!-- /grid-bible -->
+
+
+  <!-- ══════════════════════════════════════════
+       BOOK OF MORMON
+  ══════════════════════════════════════════ -->
+  <div class="section-head bom" data-section="bom"><i class="fa-solid fa-book"></i> Book of Mormon</div>
+  <div class="verse-grid" id="grid-bom">
+
+    <div class="verse-card bom" data-source="bom" data-text="moroni 10:4-5 ask sincerely heart real intent receive holy ghost manifest truth">
+      <div class="vc-top"><span class="vc-ref">Moroni 10:4–5</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And when ye shall receive these things, I would exhort you that ye would ask God, the Eternal Father, in the name of Christ, if these things are not true; and if ye shall ask with a sincere heart, with real intent, having faith in Christ, he will manifest the truth of it unto you, by the power of the Holy Ghost."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Called "Moroni's Promise" — the Book of Mormon's own closing invitation to test its truthfulness by prayer. Every missionary uses this as the culminating challenge to investigators.</div>
+      <div class="vc-topic"><span>Testimony</span><span>Prayer</span><span>Holy Ghost</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="2 nephi 25:26 talk christ rejoice christ preach christ prophesy christ">
+      <div class="vc-top"><span class="vc-ref">2 Nephi 25:26</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And we talk of Christ, we rejoice in Christ, we preach of Christ, we prophesy of Christ, and we write according to our prophecies, that our children may know to what source they may look for a remission of their sins."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Frequently quoted when LDS members respond to the claim that they are not Christian. The Book of Mormon is explicitly and emphatically Christ-centered. This verse encapsulates that centrality.</div>
+      <div class="vc-topic"><span>Jesus Christ</span><span>Christian Identity</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="2 nephi 2:25 adam fell that men might be men are that they might have joy">
+      <div class="vc-top"><span class="vc-ref">2 Nephi 2:25</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"Adam fell that men might be; and men are, that they might have joy."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> One of the most quoted verses in the entire LDS canon. It reframes the Fall of Adam not as a tragedy to be mourned but as a necessary and redemptive step in God's plan — enabling human experience, agency, and the possibility of joy. This view of the Fall differs significantly from traditional Christian original-sin theology.</div>
+      <div class="vc-topic"><span>Plan of Salvation</span><span>Fall of Adam</span><span>Joy</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="mosiah 3:17 no other name given salvation come only through christ jesus">
+      <div class="vc-top"><span class="vc-ref">Mosiah 3:17</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And moreover, I say unto you, that there shall be no other name given nor any other way nor means whereby salvation can come unto the children of men, only in and through the name of Christ, the Lord Omnipotent."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Affirms that LDS salvation theology is Christ-exclusive — salvation comes only through Christ, not through works alone or alternate means. Directly addresses the misconception that LDS members earn their way to heaven.</div>
+      <div class="vc-topic"><span>Salvation</span><span>Jesus Christ</span><span>Atonement</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="alma 7:11-12 take upon pains sicknesses infirmities death suffering christ atonement">
+      <div class="vc-top"><span class="vc-ref">Alma 7:11–12</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And he shall go forth, suffering pains and afflictions and temptations of every kind… that he may know according to the flesh how to succor his people according to their infirmities."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Expands the LDS concept of the Atonement beyond sin-payment. Christ suffered not only for sins but for all human pain, sickness, and affliction — enabling him to perfectly empathize and minister. This expansive view of the Atonement is distinctive and central to LDS pastoral theology.</div>
+      <div class="vc-topic"><span>Atonement</span><span>Suffering</span><span>Compassion</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="3 nephi 11:10-11 behold I am jesus christ whom prophets testified come world">
+      <div class="vc-top"><span class="vc-ref">3 Nephi 11:10–11</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"Behold, I am Jesus Christ, whom the prophets testified shall come into the world. And behold, I am the light and the life of the world; and I have drunk out of that bitter cup which the Father hath given me, and have glorified the Father in taking upon me the sins of the world."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The resurrected Christ's self-introduction to the Nephite people in the Americas — the climax of the Book of Mormon narrative. LDS regards this as a second witness of Christ's resurrection, alongside the New Testament accounts.</div>
+      <div class="vc-topic"><span>Jesus Christ</span><span>Resurrection</span><span>Second Witness</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="mosiah 18:8-10 baptism covenant bear one another burdens mourners comforted witnesses god">
+      <div class="vc-top"><span class="vc-ref">Mosiah 18:8–10</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"…to bear one another's burdens, that they may be light; Yea, and are willing to mourn with those that mourn… and witness before him that ye have entered into a covenant with him, that ye will serve him and keep his commandments…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The baptismal covenant — spoken by Alma before he baptized the first converts in the Waters of Mormon. LDS members renew these covenants weekly through the sacrament (communion).</div>
+      <div class="vc-topic"><span>Baptism</span><span>Covenant</span><span>Community</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="ether 12:27 weakness make strong grace sufficient humble">
+      <div class="vc-top"><span class="vc-ref">Ether 12:27</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> A key LDS grace passage — often cited to show that the Book of Mormon and LDS theology do teach grace, not only works. God gives weakness on purpose, and his grace is the answer to it.</div>
+      <div class="vc-topic"><span>Grace</span><span>Humility</span><span>Weakness</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="helaman 5:12 rock redeemer christ foundation devil shafts wind mighty storm">
+      <div class="vc-top"><span class="vc-ref">Helaman 5:12</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And now, my sons, remember, remember that it is upon the rock of our Redeemer, who is Christ, the Son of God, that ye must build your foundation…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> One of the most memorized and quoted scriptures in LDS youth culture. The image of building on Christ as a rock — enduring all storms — is a foundational metaphor in LDS teaching and testimony.</div>
+      <div class="vc-topic"><span>Faith</span><span>Jesus Christ</span><span>Foundation</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="alma 32:21 faith things hoped not seen true">
+      <div class="vc-top"><span class="vc-ref">Alma 32:21</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And now as I said concerning faith — faith is not to have a perfect knowledge of things; therefore if ye have faith ye hope for things which are not seen, which are true."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Alma's extended sermon on faith — comparing it to planting and growing a seed — is the LDS canon's most systematic treatment of faith as a principle. This verse is the chapter's doctrinal anchor.</div>
+      <div class="vc-topic"><span>Faith</span><span>Knowledge</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="2 nephi 31 doctrine of christ baptism holy ghost endure to end">
+      <div class="vc-top"><span class="vc-ref">2 Nephi 31:17–20</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"…repentance and baptism by water… and then cometh the baptism of fire and of the Holy Ghost… Wherefore, ye must press forward with a steadfastness in Christ… enduring to the end."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Nephi's articulation of the "Doctrine of Christ" — the foundational pattern of faith, repentance, baptism, Holy Ghost, and enduring to the end. This is the curriculum framework behind missionary discussions and LDS conversion.</div>
+      <div class="vc-topic"><span>Doctrine of Christ</span><span>Salvation</span><span>Baptism</span></div>
+    </div>
+
+    <div class="verse-card bom" data-source="bom" data-text="1 nephi 3:7 commandment lord prepare way accomplish">
+      <div class="vc-top"><span class="vc-ref">1 Nephi 3:7</span><span class="vc-badge bom">Book of Mormon</span></div>
+      <div class="vc-verse">"And it came to pass that I, Nephi, said unto my father: I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Perhaps the most recognized verse in the Book of Mormon — "I will go and do." It expresses the LDS ethic of faithful obedience and trust that God enables what he commands. Quoted constantly in talks, lessons, and youth programs.</div>
+      <div class="vc-topic"><span>Obedience</span><span>Faith</span><span>Nephi</span></div>
+    </div>
+
+  </div><!-- /grid-bom -->
+
+
+  <!-- ══════════════════════════════════════════
+       DOCTRINE & COVENANTS
+  ══════════════════════════════════════════ -->
+  <div class="section-head dc" data-section="dc"><i class="fa-solid fa-book-open"></i> Doctrine &amp; Covenants</div>
+  <div class="verse-grid" id="grid-dc">
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 1:30 only true living church upon earth lord well pleased">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 1:30</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"…the only true and living church upon the face of the whole earth, with which I, the Lord, am well pleased, speaking unto the church collectively and not individually."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The church's foundational self-claim, and the single most contested statement in LDS doctrine from an ecumenical standpoint. LDS does not teach that all other Christians are damned, but does claim to be the restored church with full priesthood authority — a distinction that matters enormously in interfaith dialogue.</div>
+      <div class="vc-topic"><span>Restoration</span><span>Church Authority</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 130:22 father son bodies parts passions spirit holy ghost">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 130:22–23</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"The Father has a body of flesh and bones as tangible as man's; the Son also; but the Holy Ghost has not a body of flesh and bones, but is a personage of Spirit."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The most explicit doctrinal statement of LDS anthropomorphic theology. God the Father has a physical, glorified, immortal body. This is the single greatest theological departure from creedal Christianity's definition of God as incorporeal spirit.</div>
+      <div class="vc-topic"><span>Nature of God</span><span>Godhead</span><span>Distinctive Doctrine</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 76 vision three degrees glory celestial terrestrial telestial sons perdition">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 76 (The Vision)</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"We saw the glory of the celestial… We saw the glory of the terrestrial… We saw the glory of the telestial…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Received in 1832, Section 76 details the three kingdoms of glory in the afterlife and who inherits each — replacing the binary heaven/hell with a graduated, detailed post-mortal existence. Joseph Smith said early members were astonished; many found it more merciful than traditional doctrine. The "sons of perdition" who inherit no kingdom are a very small exception.</div>
+      <div class="vc-topic"><span>Degrees of Glory</span><span>Afterlife</span><span>Salvation</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 89 word of wisdom alcohol tobacco coffee tea health">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 89 (Word of Wisdom)</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"…hot drinks are not for the body or belly… tobacco is not for the body… strong drinks are not for the belly…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The revelation underlying the LDS health code — no alcohol, tobacco, coffee, or tea. Received in 1833, it was initially advisory and became a commandment in the 20th century. Compliance is required for a temple recommend. The Word of Wisdom is one of the most publicly visible LDS practices.</div>
+      <div class="vc-topic"><span>Word of Wisdom</span><span>Health</span><span>Lifestyle</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 132 eternal marriage celestial marriage plural marriage new and everlasting covenant">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 132:19–20</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"And again, verily I say unto you, if a man marry a wife by my word… sealed by the Holy Spirit of promise… shall inherit thrones, kingdoms, principalities, and powers, dominions… which glory shall be a fulness and a continuation of the seeds forever and ever."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The revelation on eternal marriage — that marriages sealed in the temple are not "till death do you part" but eternal covenants extending into the next life. Also contains the controversial command on plural marriage, now discontinued but still part of the scriptural canon.</div>
+      <div class="vc-topic"><span>Eternal Marriage</span><span>Temple</span><span>Exaltation</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 121:36 rights priesthood inseparably connected rights powers heaven">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 121:36</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"…the rights of the priesthood are inseparably connected with the powers of heaven, and that the powers of heaven cannot be controlled nor handled only upon the principles of righteousness."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Received while Joseph Smith was imprisoned in Liberty Jail. It defines how priesthood authority is legitimately exercised — through persuasion, long-suffering, gentleness, and love. Priesthood used in unrighteous dominion becomes void. This passage is foundational to LDS leadership ethics.</div>
+      <div class="vc-topic"><span>Priesthood</span><span>Leadership</span><span>Righteousness</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 128:15 baptism dead they without us cannot be made perfect">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 128:15</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"…they without us cannot be made perfect — neither can we without our dead be made perfect…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The theological explanation for why the LDS Church maintains the world's largest genealogical database and performs proxy ordinances for the deceased. The living and the dead are bound together in a chain of redemption — no one reaches perfection alone.</div>
+      <div class="vc-topic"><span>Baptism for the Dead</span><span>Family History</span><span>Temple</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 13 aaronic priesthood john the baptist conferred upon us">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 13</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"Upon you my fellow servants, in the name of Messiah I confer the Priesthood of Aaron, which holds the keys of the ministering of angels, and of the gospel of repentance, and of baptism by immersion for the remission of sins…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The words spoken by John the Baptist when he appeared to Joseph Smith and Oliver Cowdery in 1829 and restored the Aaronic Priesthood — the beginning of the formal restoration of priesthood authority that LDS holds was lost in the ancient apostasy.</div>
+      <div class="vc-topic"><span>Priesthood</span><span>Restoration</span><span>John the Baptist</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 93:33-34 spirit body soul resurrection">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 93:33–34</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"For man is spirit. The elements are eternal, and spirit and element, inseparably connected, receive a fulness of joy; And when separated, man cannot receive a fulness of joy."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Defines the LDS view of the soul as the union of spirit and body. The resurrection (permanent reunification of spirit and body) is therefore not incidental but essential — a body is required for a fullness of joy and for exaltation. This makes the physical world and physical experience spiritually significant.</div>
+      <div class="vc-topic"><span>Soul</span><span>Resurrection</span><span>Body</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 138 vision redemption dead gospel preached spirit world joseph f smith">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 138 (Vision of the Redemption of the Dead)</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"I perceived that the Lord went not in person among the wicked and the disobedient… But behold, from among the righteous, he organized his forces and appointed messengers… to carry the light of the gospel to them that were in darkness…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Received by President Joseph F. Smith in 1918 (added to canon in 1976). It explains what happened when Christ "preached to the spirits in prison" (1 Peter 3:19) — he organized missionary work in the spirit world. This is the scriptural backbone for the LDS belief that everyone will have a fair chance to hear the gospel, even after death.</div>
+      <div class="vc-topic"><span>Spirit World</span><span>Salvation</span><span>Missionary Work</span></div>
+    </div>
+
+    <div class="verse-card dc" data-source="dc" data-text="d&c 4 field white already harvest sickle thrust serve god">
+      <div class="vc-top"><span class="vc-ref">D&amp;C 4:1–2</span><span class="vc-badge dc">D&amp;C</span></div>
+      <div class="vc-verse">"Now behold, a marvelous work is about to come forth among the children of men. Therefore, O ye that embark in the service of God, see that ye serve him with all your heart, might, mind and strength…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Given to Joseph Smith Sr. in 1829, this short revelation is the de facto mission call of the LDS Church. Every missionary in the world memorizes it. "Heart, might, mind and strength" is the canonical description of whole-soul consecration to God's work.</div>
+      <div class="vc-topic"><span>Missionary Work</span><span>Consecration</span><span>Service</span></div>
+    </div>
+
+  </div><!-- /grid-dc -->
+
+
+  <!-- ══════════════════════════════════════════
+       PEARL OF GREAT PRICE
+  ══════════════════════════════════════════ -->
+  <div class="section-head pgp" data-section="pgp"><i class="fa-solid fa-star"></i> Pearl of Great Price</div>
+  <div class="verse-grid" id="grid-pgp">
+
+    <div class="verse-card pgp" data-source="pgp" data-text="moses 1:39 work glory god immortality eternal life man">
+      <div class="vc-top"><span class="vc-ref">Moses 1:39</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"For behold, this is my work and my glory — to bring to pass the immortality and eternal life of man."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> God's own declared purpose, revealed to Moses. One of the most memorized verses in all of LDS scripture. It frames the entire plan of salvation as God's deliberate, active project — and implies that God's glory is inseparably tied to our eternal wellbeing.</div>
+      <div class="vc-topic"><span>Plan of Salvation</span><span>Nature of God</span><span>Eternal Life</span></div>
+    </div>
+
+    <div class="verse-card pgp" data-source="pgp" data-text="joseph smith history 1:15-20 first vision god father son appear pillar light">
+      <div class="vc-top"><span class="vc-ref">Joseph Smith — History 1:15–17</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"…I saw a pillar of light exactly over my head, above the brightness of the sun, which descended gradually until it fell upon me… When the light rested upon me I saw two Personages, whose brightness and glory defy all description, standing above me in the air. One of them spake unto me, calling me by name and said, pointing to the other — This is My Beloved Son. Hear Him!"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The First Vision — the founding event of the entire LDS movement. In a single moment, God the Father and Jesus Christ appeared as two separate, glorified, physical beings, dismantling the Nicene Trinity (one substance) and launching the Restoration. Every distinctive LDS doctrine flows downstream from what was revealed here.</div>
+      <div class="vc-topic"><span>First Vision</span><span>Restoration</span><span>Godhead</span><span>Joseph Smith</span></div>
+    </div>
+
+    <div class="verse-card pgp" data-source="pgp" data-text="abraham 3:22-23 pre-mortal existence noble great ones intelligences before born">
+      <div class="vc-top"><span class="vc-ref">Abraham 3:22–23</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"Now the Lord had shown unto me, Abraham, the intelligences that were organized before the world was; and among all these there were many of the noble and great ones… Abraham, thou art one of them; thou wast chosen before thou wast born."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The scriptural foundation for the LDS doctrine of pre-mortal existence — that all humans lived as spirit children of God before birth on earth. This shapes LDS understanding of identity ("you chose to come here"), foreordination, spiritual gifts, and the purpose of mortal life as a continuation, not a beginning.</div>
+      <div class="vc-topic"><span>Pre-Mortal Life</span><span>Plan of Salvation</span><span>Foreordination</span></div>
+    </div>
+
+    <div class="verse-card pgp" data-source="pgp" data-text="articles of faith 1-13 believe god atonement organization gospel principles">
+      <div class="vc-top"><span class="vc-ref">Articles of Faith 1:1–13</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"1. We believe in God, the Eternal Father, and in His Son, Jesus Christ, and in the Holy Ghost. 2. We believe that men will be punished for their own sins, and not for Adam's transgression. 3. We believe that through the Atonement of Christ, all mankind may be saved…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Written by Joseph Smith in 1842, the 13 Articles of Faith are the closest thing LDS has to a creed — a concise public summary of belief. Children memorize all 13. They explicitly reject inherited guilt from Adam (Article 2), affirm freedom of worship (Article 11), and assert belief in continuing scripture and revelation (Articles 8, 9). Article 10 includes the gathering of Israel and Zion in America.</div>
+      <div class="vc-topic"><span>Core Beliefs</span><span>Creed</span><span>Articles of Faith</span></div>
+    </div>
+
+    <div class="verse-card pgp" data-source="pgp" data-text="moses 7:18 zion one heart one mind no poor among them">
+      <div class="vc-top"><span class="vc-ref">Moses 7:18</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"And the Lord called his people Zion, because they were of one heart and one mind, and dwelt in righteousness; and there was no poor among them."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The definition of Zion in LDS theology — a community of unity and equality where poverty is eliminated through consecration. This vision shapes LDS welfare programs, fast offerings, and the law of consecration. The dream of building a literal Zion society has motivated LDS geographic gathering since the 19th century.</div>
+      <div class="vc-topic"><span>Zion</span><span>Community</span><span>Welfare</span></div>
+    </div>
+
+    <div class="verse-card pgp" data-source="pgp" data-text="joseph smith history 1:33 moroni messenger sent god name book written gold plates">
+      <div class="vc-top"><span class="vc-ref">Joseph Smith — History 1:33–34</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"He called me by name, and said unto me that he was a messenger sent from the presence of God to me… that God had a work for me to do… He said there was a book deposited, written upon gold plates, giving an account of the former inhabitants of this continent…"</div>
+      <div class="vc-why"><strong>Why it matters:</strong> Moroni's first appearance to Joseph Smith in 1823 — announcing the existence of the gold plates that would become the Book of Mormon. Also the first appearance of the resurrected Moroni, who would visit Smith annually for four years before delivering the plates in 1827.</div>
+      <div class="vc-topic"><span>Book of Mormon</span><span>Moroni</span><span>Restoration</span></div>
+    </div>
+
+    <div class="verse-card pgp" data-source="pgp" data-text="abraham 3:26 second estate add glory those who keep">
+      <div class="vc-top"><span class="vc-ref">Abraham 3:26</span><span class="vc-badge pgp">Pearl of Great Price</span></div>
+      <div class="vc-verse">"And they who keep their second estate shall have glory added upon their heads for ever and ever."</div>
+      <div class="vc-why"><strong>Why it matters:</strong> The "first estate" is pre-mortal life; the "second estate" is mortality. Those who faithfully pass through mortality will receive "glory added upon their heads for ever and ever" — the scriptural basis for the LDS doctrine of eternal progression and exaltation. It frames mortality as a test with eternal upward consequences, not merely a waiting room.</div>
+      <div class="vc-topic"><span>Exaltation</span><span>Plan of Salvation</span><span>Eternal Progression</span></div>
+    </div>
+
+  </div><!-- /grid-pgp -->
+
+  <div class="no-results" id="no-results">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    No verses match your search. Try a different keyword or reference.
+  </div>
+
+</main>
+
+<footer>
+  Scripture text is from the King James Bible and the official LDS editions of the Book of Mormon, Doctrine &amp; Covenants, and Pearl of Great Price. This page is for educational purposes. &copy; 2026
+</footer>
+
+<script>
+  /* Nav toggle (mobile) */
+  document.querySelectorAll('.nav-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.closest('.nav-group');
+      const isActive = group.classList.contains('active');
+      document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('active'));
+      if (!isActive) group.classList.add('active');
+    });
+  });
+
+  /* Filter + search */
+  const cards = Array.from(document.querySelectorAll('.verse-card'));
+  const sections = { bible: document.getElementById('grid-bible'), bom: document.getElementById('grid-bom'), dc: document.getElementById('grid-dc'), pgp: document.getElementById('grid-pgp') };
+  const sectionHeads = Array.from(document.querySelectorAll('.section-head[data-section]'));
+  const noResults = document.getElementById('no-results');
+  let activeFilter = 'all';
+  let activeSearch = '';
+
+  function applyFilters() {
+    let anyVisible = false;
+    cards.forEach(card => {
+      const src = card.dataset.source;
+      const txt = (card.dataset.text + ' ' + card.textContent).toLowerCase();
+      const matchFilter = activeFilter === 'all' || src === activeFilter;
+      const matchSearch = !activeSearch || txt.includes(activeSearch);
+      const show = matchFilter && matchSearch;
+      card.hidden = !show;
+      if (show) anyVisible = true;
+    });
+
+    /* Show/hide section heads based on whether their grid has visible cards */
+    sectionHeads.forEach(head => {
+      const sec = head.dataset.section;
+      const grid = sections[sec];
+      const hasVisible = Array.from(grid.querySelectorAll('.verse-card')).some(c => !c.hidden);
+      head.style.display = hasVisible ? '' : 'none';
+    });
+
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  document.getElementById('scripture-search').addEventListener('input', e => {
+    activeSearch = e.target.value.trim().toLowerCase();
+    applyFilters();
+  });
+</script>
+{% endblock %}

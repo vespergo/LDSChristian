@@ -1,0 +1,316 @@
+---
+title: "April 2026 General Conference — LDS"
+navPage: conference
+navGroup: lds-faith
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #1a3a6b 0%, #0a1e3a 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+    header .date-badge { display: inline-block; margin-top: 0.9rem; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; padding: 0.3rem 1rem; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; font-size: 1rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    /* Stats row */
+    .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .stat-box { flex: 1; min-width: 130px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1rem; text-align: center; }
+    .stat-box .num { font-size: 2.2rem; font-weight: 700; display: block; color: var(--blue); }
+    .stat-box .lbl { font-family: system-ui, sans-serif; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .section-head { font-size: 1.2rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .section-head::after { content:''; flex:1; height:2px; background:var(--blue); opacity:0.15; border-radius:2px; }
+
+    /* Theme panels */
+    .theme { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 1.8rem; overflow: hidden; }
+    .theme-header { padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 0.9rem; }
+    .theme-header.t1 { background: linear-gradient(135deg, #1a4f8a, #0d2f57); color: #fff; }
+    .theme-header.t2 { background: linear-gradient(135deg, #5a3a1a, #2a1808); color: #fff; }
+    .theme-header.t3 { background: linear-gradient(135deg, #2d7a4f, #133827); color: #fff; }
+    .th-num { font-family: system-ui, sans-serif; font-size: 2rem; font-weight: 800; opacity: 0.35; flex-shrink: 0; line-height: 1; }
+    .th-title { }
+    .th-title h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.1rem; }
+    .th-title .th-sub { font-family: system-ui, sans-serif; font-size: 0.8rem; opacity: 0.75; }
+    .theme-body { padding: 1.4rem 1.6rem; }
+    .theme-body p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 1rem; }
+    .theme-body p strong { color: var(--text); }
+
+    /* Quote cards inside theme */
+    .quote-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.9rem; margin-top: 1.1rem; }
+    .quote-card { background: var(--bg); border-radius: 8px; padding: 1rem 1.1rem; border-left: 3px solid var(--gold); }
+    .quote-card.t1 { border-left-color: #4a7fc0; }
+    .quote-card.t2 { border-left-color: var(--gold); }
+    .quote-card.t3 { border-left-color: var(--green); }
+    .quote-card blockquote { font-style: italic; font-size: 0.9rem; color: var(--text); line-height: 1.6; margin-bottom: 0.4rem; }
+    .quote-card cite { font-family: system-ui, sans-serif; font-size: 0.75rem; color: var(--muted); font-style: normal; font-weight: 600; }
+
+    /* Speakers for this theme */
+    .speakers-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+    .speaker-pill { font-family: system-ui, sans-serif; font-size: 0.74rem; background: #eceae4; color: var(--text); border-radius: 999px; padding: 0.22rem 0.7rem; font-weight: 600; }
+
+    /* Full talk index */
+    .session-block { margin-bottom: 1.8rem; }
+    .session-label { font-family: system-ui, sans-serif; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); background: #e8eef7; border-radius: 6px; padding: 0.3rem 0.8rem; display: inline-block; margin-bottom: 0.8rem; }
+    .talk-list { list-style: none; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .talk-list li { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.5rem; padding: 0.7rem 1.1rem; border-bottom: 1px solid #eceae4; font-size: 0.91rem; }
+    .talk-list li:last-child { border-bottom: none; }
+    .talk-list li .talk-title { color: var(--text); font-weight: 600; }
+    .talk-list li .talk-speaker { font-family: system-ui, sans-serif; font-size: 0.79rem; color: var(--muted); white-space: nowrap; }
+    .talk-list li a { color: inherit; text-decoration: none; }
+    .talk-list li a:hover .talk-title { text-decoration: underline; color: var(--blue); }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .stats-row { gap: 0.6rem; } .talk-list li { grid-template-columns: 1fr; } .talk-list li .talk-speaker { margin-top: 0.1rem; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-microphone-lines"></i></span>
+  <h1>General Conference — April 2026</h1>
+  <p>Twice a year, the Church of Jesus Christ of Latter-day Saints gathers its global membership to hear teachings from the First Presidency, Apostles, and other leaders. This page summarizes the top themes from April 2026.</p>
+  <span class="date-badge"><i class="fa-regular fa-calendar"></i> &nbsp;April 4–5, 2026 &nbsp;·&nbsp; Salt Lake City, Utah</span>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>What is General Conference?</strong> Held every April and October, General Conference is a worldwide broadcast from the Conference Center in Salt Lake City. Members watch or listen from their homes and meetinghouses around the world. Talks are delivered by the church's highest leaders and are considered authoritative guidance for the membership. The April 2026 conference coincided with Easter weekend, which shaped its message profoundly.
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-box"><span class="num">37</span><span class="lbl">Total Talks</span></div>
+    <div class="stat-box"><span class="num">4</span><span class="lbl">Sessions</span></div>
+    <div class="stat-box"><span class="num">2</span><span class="lbl">Days</span></div>
+    <div class="stat-box"><span class="num">1</span><span class="lbl">Solemn Assembly</span></div>
+  </div>
+
+  <!-- Top 3 themes -->
+  <div class="section-head"><i class="fa-solid fa-ranking-star"></i> &nbsp;Top 3 Themes Across Speakers</div>
+
+  <!-- Theme 1 -->
+  <div class="theme">
+    <div class="theme-header t1">
+      <span class="th-num">1</span>
+      <div class="th-title">
+        <h3>Jesus Christ as the Answer to Every Need</h3>
+        <span class="th-sub">The dominant message — present in virtually every talk</span>
+      </div>
+    </div>
+    <div class="theme-body">
+      <p>If April 2026 had a single heartbeat, it was this: <strong>Jesus Christ is not one solution among many — He is the only solution.</strong> Speaker after speaker redirected attention away from self-help, worry, and distraction, and toward the Savior as the specific remedy for whatever a person faces. Elder Renlund framed it most bluntly — life has an overwhelming number of concerns, and the answer is to "keep your eye on the ball" by focusing on Christ. Elder Wunderli challenged a common perception that discipleship is an added burden, insisting instead that removing Christ from your life does not lighten the load but leaves you without the only One who can carry it. Elder Kearon argued that service in Church callings — however inconvenient — is participation in Christ's own redemptive work, not merely religious obligation.</p>
+      <p>The breadth of this theme was striking: it appeared in talks on marriage (Andersen), on ministering (Yee), on character development (Christofferson), on grief (Mutombo), and on peace (Eyring). The conference did not offer Jesus Christ as a topic within Christianity — it offered Him as the organizing principle of human life.</p>
+      <div class="quote-grid">
+        <div class="quote-card t1">
+          <blockquote>"All means everyone. If everyone, then anyone. If anyone, then even one. And if even one, then even you."</blockquote>
+          <cite>— Elder Dale G. Renlund, <em>Because of Jesus Christ</em></cite>
+        </div>
+        <div class="quote-card t1">
+          <blockquote>"Jesus Christ is not the weight; He is our relief."</blockquote>
+          <cite>— Elder David J. Wunderli, <em>Jesus Christ Is Not Our Burden; He Is Our Relief</em></cite>
+        </div>
+        <div class="quote-card t1">
+          <blockquote>"Life is better — everything is better — when we are about His business."</blockquote>
+          <cite>— Elder Patrick Kearon, <em>About His Business</em></cite>
+        </div>
+      </div>
+      <div class="speakers-row">
+        <span class="speaker-pill">Renlund</span>
+        <span class="speaker-pill">Wunderli</span>
+        <span class="speaker-pill">Kearon</span>
+        <span class="speaker-pill">Christofferson</span>
+        <span class="speaker-pill">Mutombo</span>
+        <span class="speaker-pill">Holmes</span>
+        <span class="speaker-pill">Eyring</span>
+        <span class="speaker-pill">Oaks</span>
+        <span class="speaker-pill">Soares</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2 -->
+  <div class="theme">
+    <div class="theme-header t2">
+      <span class="th-num">2</span>
+      <div class="th-title">
+        <h3>The Resurrection Is Real — and It Changes Everything</h3>
+        <span class="th-sub">Easter weekend gave the conference an unmistakable focus on Christ's victory over death</span>
+      </div>
+    </div>
+    <div class="theme-body">
+      <p>April 2026's General Conference fell on Easter weekend, and the leaders seized it. <strong>The bodily Resurrection of Jesus Christ was not treated as background doctrine but as fresh, urgent, life-changing news.</strong> Elder Rasband described the Resurrection as "the most powerful, far-reaching, and sacred event in all human history," and pointed to it as the basis for hope in reuniting with deceased loved ones. President Uchtdorf opened the Sunday session by standing at the empty tomb with Mary Magdalene and calling members to become personal witnesses of the Risen Christ — not merely belief-holders, but people who have encountered Him.</p>
+      <p>The Easter framing also set up a consistent emotional arc across Sunday's talks: suffering is real, but Sunday will come. Elder Gong closed the conference season with the Emmaus road story, noting that the disciples did not recognize Christ walking beside them until the breaking of bread — and inviting members to look for the Risen Lord in their own ordinary moments. Elder Renlund linked the Resurrection directly to justice: because Christ rose, every unfairness in life can ultimately be made right.</p>
+      <div class="quote-grid">
+        <div class="quote-card t2">
+          <blockquote>"He lives! Today. At this moment."</blockquote>
+          <cite>— President Dieter F. Uchtdorf, <em>Encounter at the Empty Tomb</em></cite>
+        </div>
+        <div class="quote-card t2">
+          <blockquote>"Because I live, ye shall live also."</blockquote>
+          <cite>— Jesus Christ, quoted by Elder Ronald A. Rasband, <em>He Is Risen</em></cite>
+        </div>
+        <div class="quote-card t2">
+          <blockquote>"As we walk by faith with the Lord, abiding in Him, and He in us, we come to know He lives."</blockquote>
+          <cite>— Elder Gerrit W. Gong, <em>'Tis Eastertide: No One Walks Alone</em></cite>
+        </div>
+      </div>
+      <div class="speakers-row">
+        <span class="speaker-pill">Uchtdorf</span>
+        <span class="speaker-pill">Rasband</span>
+        <span class="speaker-pill">Gong</span>
+        <span class="speaker-pill">Renlund</span>
+        <span class="speaker-pill">Cook</span>
+        <span class="speaker-pill">Hall</span>
+        <span class="speaker-pill">Oaks (Sunday)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3 -->
+  <div class="theme">
+    <div class="theme-header t3">
+      <span class="th-num">3</span>
+      <div class="th-title">
+        <h3>Covenants as the Path of Discipleship</h3>
+        <span class="th-sub">Covenants, endurance, and the covenant relationship with God as lived religion</span>
+      </div>
+    </div>
+    <div class="theme-body">
+      <p>Running alongside the Easter message was a consistent emphasis on <strong>covenants — not as a checklist but as the ongoing, living relationship through which disciples are transformed.</strong> Elder Mutombo gave one of the conference's most personal talks, describing the loss of four children while his testimony of eternal marriage and covenant faithfulness deepened rather than shattered. Elder Andersen taught that eternal marriage is not a destination reached at the altar but a lifelong "journey of becoming" — a covenant continually renewed through sacrifice, forgiveness, and clinging to the Spirit. Elder Bednar reframed "enduring to the end" as spiritual metamorphosis: the goal is not grim persistence but the gradual transformation of character through charity, covenants, and the Holy Ghost.</p>
+      <p>Elder Gong's Emmaus road talk threaded covenants through the Resurrection narrative itself: the disciples recognized the Risen Christ precisely in the covenantal act of breaking bread. Elder Cook tied Easter, priesthood keys, and temple covenants into a single address. The pattern across speakers: covenants are not an institutional feature of the LDS Church — they are the mechanism by which a person comes to know and become like Jesus Christ.</p>
+      <div class="quote-grid">
+        <div class="quote-card t3">
+          <blockquote>"Following Christ is not a casual or occasional practice. It is a continuous commitment and way of life."</blockquote>
+          <cite>— Elder Thierry K. Mutombo, <em>The Joy of a Covenant Relationship with God</em></cite>
+        </div>
+        <div class="quote-card t3">
+          <blockquote>"Eternal marriage is an eternal journey of becoming who God desires us to become."</blockquote>
+          <cite>— Elder Neil L. Andersen, <em>Eternal Marriage Is an Eternal Journey</em></cite>
+        </div>
+        <div class="quote-card t3">
+          <blockquote>"Charity ultimately possesses us — reshaping our very character and desires."</blockquote>
+          <cite>— Elder David A. Bednar, <em>All Who Have Endured Valiantly</em></cite>
+        </div>
+      </div>
+      <div class="speakers-row">
+        <span class="speaker-pill">Mutombo</span>
+        <span class="speaker-pill">Andersen</span>
+        <span class="speaker-pill">Bednar</span>
+        <span class="speaker-pill">Gong</span>
+        <span class="speaker-pill">Cook</span>
+        <span class="speaker-pill">Christofferson</span>
+        <span class="speaker-pill">Gilbert</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full talk index -->
+  <div class="section-head"><i class="fa-solid fa-list"></i> &nbsp;All 37 Talks</div>
+
+  <div class="session-block">
+    <span class="session-label">Saturday Morning Session</span>
+    <ul class="talk-list">
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/11oaks?lang=eng" target="_blank"><span class="talk-title">Introduction</span></a><span class="talk-speaker">Dallin H. Oaks</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/12christofferson?lang=eng" target="_blank"><span class="talk-title">Solemn Assembly</span></a><span class="talk-speaker">D. Todd Christofferson</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/13kearon?lang=eng" target="_blank"><span class="talk-title">About His Business</span></a><span class="talk-speaker">Patrick Kearon</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/14yee?lang=eng" target="_blank"><span class="talk-title">Ministering — "That Ye Love One Another; as I Have Loved You"</span></a><span class="talk-speaker">Kristin M. Yee</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/15gilbert?lang=eng" target="_blank"><span class="talk-title">Come Home</span></a><span class="talk-speaker">Clark G. Gilbert</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/16bednar?lang=eng" target="_blank"><span class="talk-title">All Who Have Endured Valiantly</span></a><span class="talk-speaker">David A. Bednar</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/17teh?lang=eng" target="_blank"><span class="talk-title">Follow the Prophet; He Knows the Way</span></a><span class="talk-speaker">Michael John U. Teh</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/18becerra?lang=eng" target="_blank"><span class="talk-title">Tithing — Putting God First</span></a><span class="talk-speaker">Jorge T. Becerra</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/19eyring?lang=eng" target="_blank"><span class="talk-title">Prayers for Peace</span></a><span class="talk-speaker">Henry B. Eyring</span></li>
+    </ul>
+  </div>
+
+  <div class="session-block">
+    <span class="session-label">Saturday Afternoon Session</span>
+    <ul class="talk-list">
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/21christofferson?lang=eng" target="_blank"><span class="talk-title">Sustaining of General Authorities, Area Seventies, and General Officers</span></a><span class="talk-speaker">D. Todd Christofferson</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/22larson?lang=eng" target="_blank"><span class="talk-title">Church Auditing Department Report, 2025</span></a><span class="talk-speaker">Jared B. Larson</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/23stevenson?lang=eng" target="_blank"><span class="talk-title">Lost Luggage, Redeemed Souls</span></a><span class="talk-speaker">Gary E. Stevenson</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/24ortega?lang=eng" target="_blank"><span class="talk-title">Christ — Author and Finisher of Our Faith</span></a><span class="talk-speaker">Eduardo F. Ortega</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/25wu?lang=eng" target="_blank"><span class="talk-title">"I Will Give Away All My Sins to Know Thee"</span></a><span class="talk-speaker">Wan-Liang Wu</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/26wunderli?lang=eng" target="_blank"><span class="talk-title">Jesus Christ Is Not Our Burden; He Is Our Relief</span></a><span class="talk-speaker">David J. Wunderli</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/27causse?lang=eng" target="_blank"><span class="talk-title">Love All; Love Each</span></a><span class="talk-speaker">Gérald Caussé</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/28holmes?lang=eng" target="_blank"><span class="talk-title">Jesus Christ Is the Way</span></a><span class="talk-speaker">Brian J. Holmes</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/29matswagothata?lang=eng" target="_blank"><span class="talk-title">He Knows You by Name</span></a><span class="talk-speaker">Clement M. Matswagothata</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/210soares?lang=eng" target="_blank"><span class="talk-title">Jesus Christ — the True Vine</span></a><span class="talk-speaker">Ulisses Soares</span></li>
+    </ul>
+  </div>
+
+  <div class="session-block">
+    <span class="session-label">Sunday Morning Session</span>
+    <ul class="talk-list">
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/41uchtdorf?lang=eng" target="_blank"><span class="talk-title">Encounter at the Empty Tomb</span></a><span class="talk-speaker">Dieter F. Uchtdorf</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/42freeman?lang=eng" target="_blank"><span class="talk-title">Best Days and Worst Days</span></a><span class="talk-speaker">Emily Belle Freeman</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/43larreal?lang=eng" target="_blank"><span class="talk-title">I Feel My Savior's Love</span></a><span class="talk-speaker">Pedro X. Larreal</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/44rowe?lang=eng" target="_blank"><span class="talk-title">Choose Jesus Christ as Your Guide</span></a><span class="talk-speaker">Edward B. Rowe</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/45rasband?lang=eng" target="_blank"><span class="talk-title">He Is Risen</span></a><span class="talk-speaker">Ronald A. Rasband</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/46renlund?lang=eng" target="_blank"><span class="talk-title">Because of Jesus Christ</span></a><span class="talk-speaker">Dale G. Renlund</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/47mutombo?lang=eng" target="_blank"><span class="talk-title">The Joy of a Covenant Relationship with God</span></a><span class="talk-speaker">Thierry K. Mutombo</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/48walker?lang=eng" target="_blank"><span class="talk-title">A Peculiar Treasure</span></a><span class="talk-speaker">Alan R. Walker</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/49oaks?lang=eng" target="_blank"><span class="talk-title">Alive in Christ</span></a><span class="talk-speaker">Dallin H. Oaks</span></li>
+    </ul>
+  </div>
+
+  <div class="session-block">
+    <span class="session-label">Sunday Afternoon Session</span>
+    <ul class="talk-list">
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/51christofferson?lang=eng" target="_blank"><span class="talk-title">The Character of Christ</span></a><span class="talk-speaker">D. Todd Christofferson</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/52wong?lang=eng" target="_blank"><span class="talk-title">Remember, Remember</span></a><span class="talk-speaker">Chi Hong (Sam) Wong</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/53hall?lang=eng" target="_blank"><span class="talk-title">I Glory in My Jesus</span></a><span class="talk-speaker">Aaron T. Hall</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/54porter?lang=eng" target="_blank"><span class="talk-title">"Here Am I, Send Me"</span></a><span class="talk-speaker">Susan H. Porter</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/55andersen?lang=eng" target="_blank"><span class="talk-title">Eternal Marriage Is an Eternal Journey</span></a><span class="talk-speaker">Neil L. Andersen</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/56cook?lang=eng" target="_blank"><span class="talk-title">Keys, Covenants, and Easter</span></a><span class="talk-speaker">Quentin L. Cook</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/57wakolo?lang=eng" target="_blank"><span class="talk-title">Come unto Christ — Together</span></a><span class="talk-speaker">Taniela B. Wakolo</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/58gong?lang=eng" target="_blank"><span class="talk-title">'Tis Eastertide: No One Walks Alone</span></a><span class="talk-speaker">Gerrit W. Gong</span></li>
+      <li><a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04/59oaks?lang=eng" target="_blank"><span class="talk-title">Closing Remarks</span></a><span class="talk-speaker">Dallin H. Oaks</span></li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  Talk summaries are based on published texts from <a href="https://www.churchofjesuschrist.org/study/general-conference/2026/04?lang=eng" target="_blank" style="color:var(--blue);">churchofjesuschrist.org</a>. This page is for educational purposes. &copy; 2026
+</footer>
+{% endblock %}

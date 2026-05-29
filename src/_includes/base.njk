@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+  {% block pageStyles %}{% endblock %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="home"><i class="fa-solid fa-cross"></i> Home</a>
+  <div class="nav-group{% if navGroup == 'comparisons' %} active{% endif %}">
+    <button class="nav-toggle">Comparisons <i class="fa-solid fa-chevron-down nav-caret"></i></button>
+    <div class="nav-dropdown">
+      <a href="catholic.html"{% if navPage == 'catholic' %} class="active"{% endif %}>vs. Roman Catholic</a>
+      <a href="orthodox.html"{% if navPage == 'orthodox' %} class="active"{% endif %}>vs. Eastern Orthodox</a>
+      <a href="protestant.html"{% if navPage == 'protestant' %} class="active"{% endif %}>vs. Protestant</a>
+      <a href="closest.html"{% if navPage == 'closest' %} class="active"{% endif %}>Which Is Closest to LDS?</a>
+    </div>
+  </div>
+  <div class="nav-group{% if navGroup == 'lds-faith' %} active{% endif %}">
+    <button class="nav-toggle">The LDS Faith <i class="fa-solid fa-chevron-down nav-caret"></i></button>
+    <div class="nav-dropdown">
+      <a href="history.html"{% if navPage == 'history' %} class="active"{% endif %}>History &amp; Origins</a>
+      <a href="practices.html"{% if navPage == 'practices' %} class="active"{% endif %}>Practices &amp; Worship</a>
+      <a href="mission.html"{% if navPage == 'mission' %} class="active"{% endif %}>Serving a Mission</a>
+      <a href="are-lds-christian.html"{% if navPage == 'are-lds-christian' %} class="active"{% endif %}>Are LDS Christian?</a>
+      <a href="conference.html"{% if navPage == 'conference' %} class="active"{% endif %}>General Conference</a>
+      <a href="first-vision.html"{% if navPage == 'first-vision' %} class="active"{% endif %}>Joseph's First Vision</a>
+      <a href="temple.html"{% if navPage == 'temple' %} class="active"{% endif %}>The Temple</a>
+      <a href="patriarchal-blessings.html"{% if navPage == 'patriarchal-blessings' %} class="active"{% endif %}>Patriarchal Blessings</a>
+      <a href="old-testament-temples.html"{% if navPage == 'old-testament-temples' %} class="active"{% endif %}>Old Testament Temples</a>
+      <a href="testimony.html"{% if navPage == 'testimony' %} class="active"{% endif %}>How to Gain a Testimony</a>
+      <a href="joseph-smith.html"{% if navPage == 'joseph-smith' %} class="active"{% endif %}>The Prophet Joseph Smith</a>
+      <a href="word-of-wisdom.html"{% if navPage == 'word-of-wisdom' %} class="active"{% endif %}>The Word of Wisdom</a>
+    </div>
+  </div>
+  <div class="nav-group{% if navGroup == 'reference' %} active{% endif %}">
+    <button class="nav-toggle">Reference <i class="fa-solid fa-chevron-down nav-caret"></i></button>
+    <div class="nav-dropdown">
+      <a href="faq.html"{% if navPage == 'faq' %} class="active"{% endif %}>FAQ</a>
+      <a href="glossary.html"{% if navPage == 'glossary' %} class="active"{% endif %}>Glossary</a>
+      <a href="scriptures.html"{% if navPage == 'scriptures' %} class="active"{% endif %}>Key Scriptures</a>
+    </div>
+  </div>
+  <div class="nav-group{% if navGroup == 'stories' %} active{% endif %}">
+    <button class="nav-toggle">Interesting Stories <i class="fa-solid fa-chevron-down nav-caret"></i></button>
+    <div class="nav-dropdown">
+      <a href="ark-of-the-covenant.html"{% if navPage == 'ark-of-the-covenant' %} class="active"{% endif %}>Ark of the Covenant</a>
+    </div>
+  </div>
+  <a href="lessons.html" class="nav-item">Lessons for Kids</a>
+</nav>
+
+{% block content %}{% endblock %}
+
+<script>
+  document.querySelectorAll('.nav-toggle').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.nav-group').classList.toggle('active'));
+  });
+</script>
+{% block pageScript %}{% endblock %}
+</body>
+</html>

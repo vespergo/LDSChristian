@@ -1,0 +1,295 @@
+---
+title: "The Prophet Joseph Smith – LDS Faith"
+navPage: joseph-smith
+navGroup: lds-faith
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #4a2a0a 0%, #1e0e00 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; font-size: 1rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    .section-head { font-size: 1.2rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .section-head::after { content:''; flex:1; height:2px; background:var(--blue); opacity:0.15; border-radius:2px; }
+
+    .narrative { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem 1.7rem; margin-bottom: 1.5rem; }
+    .narrative p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 0.8rem; }
+    .narrative p:last-child { margin-bottom: 0; }
+    .narrative p strong { color: var(--text); }
+
+    .quote-block { background: #fdf6e8; border-left: 4px solid var(--gold); border-radius: var(--radius); padding: 1.3rem 1.6rem; margin-bottom: 2rem; font-style: italic; color: #4a3200; font-size: 0.97rem; line-height: 1.8; }
+    .quote-block cite { display: block; margin-top: 0.6rem; font-style: normal; font-size: 0.82rem; color: var(--muted); font-family: system-ui, sans-serif; }
+
+    /* Timeline */
+    .timeline { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+    .timeline-item { display: grid; grid-template-columns: 5rem 1fr; gap: 1.1rem; padding: 0.85rem 0; border-bottom: 1px solid #eceae4; align-items: start; }
+    .timeline-item:last-child { border-bottom: none; }
+    .tl-year { font-family: system-ui, sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--gold); background: #fdf6e8; border-radius: 4px; padding: 0.2rem 0.4rem; text-align: center; margin-top: 0.1rem; }
+    .tl-body h4 { font-size: 0.96rem; color: var(--text); margin-bottom: 0.15rem; }
+    .tl-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* Restoration pillars */
+    .pillar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.1rem; margin-bottom: 2.5rem; }
+    .pillar-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.4rem; border-top: 4px solid var(--blue); }
+    .pillar-card .p-icon { font-size: 1.6rem; color: var(--blue); margin-bottom: 0.4rem; display: block; }
+    .pillar-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .pillar-card p { font-size: 0.89rem; color: var(--muted); line-height: 1.6; }
+
+    /* Views grid */
+    .views-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2.5rem; }
+    .view-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.5rem; }
+    .view-box h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+    .view-box.lds h3 { color: var(--blue); }
+    .view-box.critic h3 { color: var(--red); }
+    .view-box p { font-size: 0.89rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.5rem; }
+    .view-box p:last-child { margin-bottom: 0; }
+
+    /* Objections / responses */
+    .objection-list { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+    .obj-item { padding: 0.9rem 0; border-bottom: 1px solid #eceae4; }
+    .obj-item:last-child { border-bottom: none; }
+    .obj-q { font-size: 0.96rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+    .obj-q i { color: var(--red); margin-top: 0.15rem; flex-shrink: 0; }
+    .obj-a { font-size: 0.89rem; color: var(--muted); line-height: 1.65; padding-left: 1.5rem; }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .views-grid { grid-template-columns: 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-star"></i></span>
+  <h1>The Prophet Joseph Smith</h1>
+  <p>His life, the First Vision, the Restoration he launched, his role as founder and prophet, and how mainstream Christians view him — including the major objections and LDS responses.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>The most consequential figure in American religious history.</strong> Joseph Smith (1805–1844) founded a movement that has grown to over 17 million members worldwide, produced a new body of scripture, and advanced theological claims so distinctive that they remain deeply controversial. To Latter-day Saints, he is God's chosen instrument of restoration. To mainstream Christians, he is at best a sincere but mistaken visionary; at worst, a fraud. Engaging seriously with his life and claims is unavoidable for anyone studying the LDS faith.
+  </div>
+
+  <!-- Early life -->
+  <div class="section-head"><i class="fa-solid fa-seedling"></i> &nbsp;Early Life and Background</div>
+  <div class="narrative">
+    <p><strong>Born December 23, 1805,</strong> in Sharon, Vermont, Joseph Smith Jr. was the fourth of nine children of Joseph Smith Sr. and Lucy Mack Smith. The family was poor and moved frequently — Vermont, New Hampshire, New York — struggling to farm marginal land. His father dabbled in folk magic and treasure-seeking, practices common in early nineteenth-century rural America, and the family's religiosity was sincere but unaffiliated with any single denomination.</p>
+    <p><strong>The Burned-over District.</strong> When Joseph was about ten, the family settled near Palmyra in western New York — a region so frequently swept by religious revivals that it was later called the "Burned-over District." Methodist, Presbyterian, Baptist, and other preachers competed energetically for converts, and the young Joseph was caught in the crossfire of competing claims, each insisting its version of Christianity was the correct one.</p>
+    <p><strong>Formal education was limited.</strong> Joseph attended school only sporadically; his literacy was functional but not polished. The production of the Book of Mormon — a 580-page work of theological complexity and narrative scope — is cited by believers as evidence of divine assistance, and by skeptics as evidence of dictation from other sources or a more capable mind than his schooling would suggest.</p>
+  </div>
+
+  <!-- The First Vision -->
+  <div class="section-head"><i class="fa-solid fa-sun"></i> &nbsp;The First Vision (1820)</div>
+  <div class="narrative">
+    <p><strong>The founding event.</strong> In the spring of 1820, according to Joseph's later account, the fourteen-year-old boy prayed in a grove of trees near his family's farm, asking God which church was true. He reported a vision of two personages — God the Father and Jesus Christ — who told him that all existing churches had gone astray and that he would be the instrument of a restoration.</p>
+    <p><strong>The answer that changed everything.</strong> The message he claimed to receive was not merely "join this church" or "reform that one" — it was categorical: no existing church possessed the full authority or truth of the original gospel. This claim of a universal apostasy, requiring complete restoration rather than reformation, is the theological cornerstone of the entire LDS movement and what separates it most sharply from all Protestant denominations.</p>
+  </div>
+  <div class="quote-block">
+    "I was answered that I must join none of them, for they were all wrong; and the Personage who addressed me said that all their creeds were an abomination in his sight; that those professors were all corrupt..."
+    <cite>— Joseph Smith–History 1:19, the 1838 account canonized in the Pearl of Great Price</cite>
+  </div>
+  <div class="narrative">
+    <p>For a more detailed treatment of the multiple accounts of the First Vision and their historical and theological significance, see the <a href="first-vision.html" style="color:var(--blue);">First Vision page</a>.</p>
+  </div>
+
+  <!-- Timeline of his life -->
+  <div class="section-head"><i class="fa-solid fa-timeline"></i> &nbsp;Key Events of Joseph Smith's Life</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="tl-year">1805</div>
+      <div class="tl-body">
+        <h4>Birth in Vermont</h4>
+        <p>Born December 23 in Sharon, Windsor County, Vermont. Fourth of nine children in a struggling farming family.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1820</div>
+      <div class="tl-body">
+        <h4>The First Vision</h4>
+        <p>Claims a vision of God the Father and Jesus Christ in a grove near Palmyra, New York. Told not to join any existing church. Regarded by LDS members as the opening event of the Restoration.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1823</div>
+      <div class="tl-body">
+        <h4>Moroni's Visits</h4>
+        <p>Joseph reports visits from an angel named Moroni, who tells him of gold plates buried in a nearby hill (Cumorah) containing a record of ancient peoples of the American continent.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1827</div>
+      <div class="tl-body">
+        <h4>Receives the Plates</h4>
+        <p>On September 22, Joseph claims to receive the gold plates from Moroni. He begins the process of "translating" them, using a seer stone and/or the Urim and Thummim (special interpreting instruments).</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1829</div>
+      <div class="tl-body">
+        <h4>Restoration of the Priesthood</h4>
+        <p>Joseph and his scribe Oliver Cowdery report receiving the Aaronic Priesthood from John the Baptist and the Melchizedek Priesthood from Peter, James, and John — angelic beings who conferred the authority to act in God's name.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1830</div>
+      <div class="tl-body">
+        <h4>Book of Mormon Published; Church Organized</h4>
+        <p>The Book of Mormon is published in Palmyra on March 26. The Church of Christ (later renamed the Church of Jesus Christ of Latter-day Saints) is formally organized on April 6 with six members. Joseph is sustained as "seer, translator, prophet, apostle, and elder."</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1831–38</div>
+      <div class="tl-body">
+        <h4>Ohio and Missouri Years</h4>
+        <p>The growing church moves to Kirtland, Ohio, where the first LDS temple is built (1836). Ambitious colonization attempts in Missouri end in violent conflict, mob expulsion, and the notorious "Extermination Order" from Missouri Governor Lilburn Boggs (1838). Joseph is arrested and imprisoned in Liberty Jail for months.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1839–44</div>
+      <div class="tl-body">
+        <h4>Nauvoo, Illinois</h4>
+        <p>The Saints build the city of Nauvoo on the Mississippi. Joseph receives revelations on plural marriage, eternal progression, the nature of God, and proxy baptism for the dead. The Nauvoo Temple is under construction. Joseph runs for U.S. President in 1844 and serves as Nauvoo's mayor.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-year">1844</div>
+      <div class="tl-body">
+        <h4>Martyrdom</h4>
+        <p>On June 27, Joseph and his brother Hyrum are shot and killed by a mob at Carthage Jail, Illinois, while awaiting trial on charges of treason. Joseph is 38 years old. Brigham Young subsequently leads the majority of the church westward to Utah. Joseph is regarded by LDS members as a martyr who sealed his testimony with his blood.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Restoration he launched -->
+  <div class="section-head"><i class="fa-solid fa-rotate-right"></i> &nbsp;The Restoration: What Joseph Smith Claimed to Restore</div>
+  <p style="font-size:0.95rem; color:var(--muted); margin-bottom:1.2rem; line-height:1.7;">Joseph did not claim to reform Christianity — he claimed to restore what had been entirely lost since the early apostolic age. These are the central pillars of that Restoration.</p>
+  <div class="pillar-grid">
+    <div class="pillar-card">
+      <span class="p-icon"><i class="fa-solid fa-book-bible"></i></span>
+      <h3>New Scripture</h3>
+      <p>The Book of Mormon, Doctrine &amp; Covenants, and Pearl of Great Price are presented as revealed scripture alongside the Bible, restoring God's word to fullness. Joseph claimed to translate the Book of Mormon from ancient gold plates by the gift and power of God.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="p-icon"><i class="fa-solid fa-key"></i></span>
+      <h3>Priesthood Authority</h3>
+      <p>Claiming ordination by angelic messengers (John the Baptist; Peter, James, and John), Joseph restored the Aaronic and Melchizedek priesthoods — the authority to perform saving ordinances. No existing church, he taught, possessed this authority.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="p-icon"><i class="fa-solid fa-place-of-worship"></i></span>
+      <h3>Temple Ordinances</h3>
+      <p>Joseph introduced a complex system of temple ordinances — washings, anointings, the endowment ceremony, and eternal sealings — which he taught were the original saving rites of God's people, lost during the apostasy and now restored.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="p-icon"><i class="fa-solid fa-people-group"></i></span>
+      <h3>Living Prophets and Apostles</h3>
+      <p>Joseph restored the office of apostle and prophet as continuing, necessary offices in the church — not just titles applied to biblical figures. He organized a Quorum of the Twelve Apostles and a First Presidency to govern the church under prophetic direction.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="p-icon"><i class="fa-solid fa-water"></i></span>
+      <h3>Baptism for the Dead</h3>
+      <p>In 1840, Joseph introduced the practice of proxy baptism for deceased ancestors — allowing living members to be baptized on behalf of those who died without hearing the gospel. This is now the primary activity in LDS temples and drives the church's vast genealogical research program.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="p-icon"><i class="fa-solid fa-infinity"></i></span>
+      <h3>Eternal Progression</h3>
+      <p>Joseph's later revelations introduced the doctrine of eternal progression — that God was once as humans are, and humans may become as God is. This understanding of divine potential for humanity distinguishes LDS theology most sharply from all other Christian traditions.</p>
+    </div>
+  </div>
+
+  <!-- Mainstream Christian views -->
+  <div class="section-head"><i class="fa-solid fa-scale-balanced"></i> &nbsp;How Mainstream Christians View Joseph Smith</div>
+  <div class="views-grid">
+    <div class="view-box critic">
+      <h3><i class="fa-solid fa-triangle-exclamation"></i> Common Critical Perspectives</h3>
+      <p><strong>False prophet.</strong> Most evangelical and fundamentalist Protestants classify Joseph Smith as a false prophet on the basis of Galatians 1:8–9 ("if we or an angel from heaven preach any other gospel...let him be anathema") and Deuteronomy 13 and 18. His claims to new revelation beyond Scripture are seen as definitively disqualifying.</p>
+      <p><strong>Historical problems.</strong> Critics point to anachronisms in the Book of Mormon (horses, steel, chariots, wheat, etc., in pre-Columbian America), the multiple accounts of the First Vision, the translation of the Book of Abraham (which many Egyptologists say does not match the papyrus), and Joseph's practice of plural marriage without initially disclosing it to his wife.</p>
+      <p><strong>Character concerns.</strong> Critics cite Joseph's relationships with other men's wives, financial controversies, the destruction of the Nauvoo Expositor press, and his claim to serve simultaneously as prophet, mayor, general, and presidential candidate as evidence of dangerous accumulation of power.</p>
+    </div>
+    <div class="view-box lds">
+      <h3><i class="fa-solid fa-star"></i> LDS Perspective</h3>
+      <p><strong>A prophet like Moses.</strong> Latter-day Saints understand Joseph on the model of biblical prophets — flawed human instruments used by God regardless of personal imperfections. They note that Moses killed a man, David committed adultery, Peter denied Christ, and Paul persecuted Christians before becoming apostles.</p>
+      <p><strong>Fruits of the work.</strong> The LDS response to historical objections is often to point to the spiritual fruits: millions of transformed lives, a global church built largely on volunteer service, a distinctive moral culture, and the personal testimonies of members who have prayed and received a spiritual witness of Joseph's prophetic calling.</p>
+      <p><strong>Complexity acknowledged.</strong> The church's Gospel Topics Essays (published 2013–2015) openly acknowledge difficult issues including plural marriage, the Book of Abraham, and First Vision accounts — a significant step toward transparency, though critics argue the essays minimize the most serious concerns.</p>
+    </div>
+  </div>
+
+  <!-- Key objections and LDS responses -->
+  <div class="section-head"><i class="fa-solid fa-comments"></i> &nbsp;Major Objections and LDS Responses</div>
+  <div class="objection-list">
+    <div class="obj-item">
+      <div class="obj-q"><i class="fa-solid fa-circle-question"></i> How could an uneducated farm boy produce the Book of Mormon?</div>
+      <div class="obj-a"><strong>LDS response:</strong> The production of the Book of Mormon in roughly 65 days of dictation (without notes or revision) is itself offered as evidence of divine assistance. Multiple witnesses testified to the existence of physical gold plates. Critics propose sources like the Bible, View of the Hebrews, or unconscious creativity; believers regard these explanations as inadequate to account for the book's depth and consistency.</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-q"><i class="fa-solid fa-circle-question"></i> Doesn't plural marriage disqualify him as a prophet?</div>
+      <div class="obj-a"><strong>LDS response:</strong> Abraham, Jacob, David, and Solomon all practiced polygamy in the Old Testament. Joseph taught that plural marriage was divinely commanded for a season and discontinued under revelation to Wilford Woodruff in 1890. Critics note that Joseph married other men's living wives and teenage girls, and that he initially denied the practice publicly. The church acknowledges these difficult facts in its Gospel Topics Essay on plural marriage.</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-q"><i class="fa-solid fa-circle-question"></i> Why are there no archaeological or genetic traces of Book of Mormon civilizations?</div>
+      <div class="obj-a"><strong>LDS response:</strong> LDS scholars propose various geographical models that limit Book of Mormon events to a smaller region (Mesoamerica is popular), and note that absence of evidence is not always evidence of absence. DNA studies showing East Asian (not Near Eastern) origin for indigenous Americans are addressed by some LDS apologists as consistent with a small founding group absorbed into a larger existing population. Critics find these responses insufficient.</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-q"><i class="fa-solid fa-circle-question"></i> Did the Latter-day Saints not deny priesthood to Black members until 1978?</div>
+      <div class="obj-a"><strong>LDS response:</strong> This is acknowledged plainly in the church's 2013 Gospel Topics Essay "Race and the Priesthood," which states that the ban originated with Brigham Young and was not a revelation from Joseph Smith. The 1978 revelation extending the priesthood to all worthy males is presented as a genuine divine reversal. The essay disavows prior justifications for the ban as mistaken. Critics note that Joseph Smith himself ordained at least one Black man to the priesthood.</div>
+    </div>
+    <div class="obj-item">
+      <div class="obj-q"><i class="fa-solid fa-circle-question"></i> Was Joseph Smith just a product of nineteenth-century American folk religion?</div>
+      <div class="obj-a"><strong>LDS response:</strong> Historians like Terryl Givens and Richard Bushman (author of <em>Rough Stone Rolling</em>, the most thorough sympathetic biography) acknowledge that Joseph drew on and transformed the religious environment of his time — but argue this does not negate his prophetic calling, any more than Isaiah drawing on Near Eastern literary forms negates his. The question is whether something genuinely new and divinely given emerged, not whether cultural influences were present.</div>
+    </div>
+  </div>
+
+  <!-- Legacy -->
+  <div class="section-head"><i class="fa-solid fa-monument"></i> &nbsp;Legacy and Lasting Significance</div>
+  <div class="narrative">
+    <p><strong>Scale of the movement.</strong> The church Joseph founded has grown from six members in 1830 to over 17 million today, with the majority now living outside the United States. It has built one of the largest humanitarian organizations and genealogical databases in the world, and operates over 180 temples globally. Whatever one concludes about his prophetic status, the institutional and cultural impact is undeniable.</p>
+    <p><strong>Theological originality.</strong> Scholars across the theological spectrum — including critics — acknowledge that Joseph Smith produced a genuinely novel theological system. The LDS conceptions of God (embodied, once as humans are), of humanity (eternal intelligences with divine potential), of salvation (a developmental journey through multiple kingdoms), and of scripture (open canon, ongoing revelation) do not derive cleanly from any prior tradition. Whether this originality is prophetic creativity or theological fabrication depends entirely on one's prior commitments.</p>
+    <p><strong>The unavoidable either/or.</strong> LDS scholar Hugh Nibley's formulation remains apt: Joseph Smith was either a prophet of God or the most ambitious fraud in American religious history. The claims are too large for a comfortable middle position. He claimed to speak face to face with God, to translate ancient scripture, to receive priesthood keys from angels, and to restore the only fully authorized church on earth. These claims demand either acceptance or rejection — and that decision, for millions, is the defining choice of their religious lives.</p>
+  </div>
+
+</main>
+
+<footer>
+  This page is for educational and informational purposes. Content is drawn from LDS official sources, Gospel Topics Essays, Richard Bushman's <em>Rough Stone Rolling</em> (2005), and standard American religious history scholarship. &copy; 2026
+</footer>
+{% endblock %}

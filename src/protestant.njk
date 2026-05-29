@@ -1,0 +1,395 @@
+---
+title: "LDS vs. Protestant Christianity"
+navPage: protestant
+navGroup: comparisons
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:   #1a4f8a;
+      --accent: #1a6b3a;
+      --gold:   #c8972b;
+      --green:  #2d7a4f;
+      --bg:     #f5f3ee;
+      --card:   #ffffff;
+      --text:   #1e1e1e;
+      --muted:  #5c5c5c;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #1a5c35 0%, #0a2d18 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 640px; margin: 0 auto; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .section-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: system-ui, sans-serif; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .section-label::after { content: ''; flex: 1; height: 2px; border-radius: 2px; }
+    .section-label.sim { color: var(--green); }
+    .section-label.sim::after { background: var(--green); opacity: 0.3; }
+    .section-label.diff { color: #b04000; }
+    .section-label.diff::after { background: #b04000; opacity: 0.3; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.5rem; margin-bottom: 2rem; font-size: 0.97rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    /* Protestant denominations bar */
+    .denom-bar { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1.4rem; margin-bottom: 2.5rem; }
+    .denom-bar h3 { font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.6rem; }
+    .denom-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .denom-pill { padding: 0.25rem 0.7rem; background: #e8f4ec; color: #1a5c35; border: 1px solid #a8d4b8; border-radius: 999px; font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 600; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.35rem 1.5rem; border-top: 4px solid transparent; transition: transform 0.15s, box-shadow 0.15s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+    .card.sim { border-top-color: var(--green); }
+    .card.diff { border-top-color: #b04000; }
+    .card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .card h3 { font-size: 1.03rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
+    .card .varies { display: inline-block; font-family: system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: #fff3e0; color: #a06000; border-radius: 4px; padding: 0.1rem 0.4rem; margin-bottom: 0.3rem; }
+
+    .scorecard { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .score-box { flex: 1; min-width: 160px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1rem; text-align: center; }
+    .score-box .num { font-size: 2.4rem; font-weight: 700; display: block; }
+    .score-box .lbl { font-family: system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .score-box.sim-box .num { color: var(--green); }
+    .score-box.diff-box .num { color: #b04000; }
+    .score-box.varies-box .num { color: var(--gold); }
+
+    /* The Five Solas comparison */
+    .solas-section { margin-bottom: 3rem; }
+    .solas-section h2 { font-size: 1.25rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin-bottom: 1rem; }
+    .sola-row { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; margin-bottom: 1rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .sola-label { background: #0d2f57; color: #fff; display: flex; align-items: center; justify-content: center; padding: 1rem; text-align: center; font-family: system-ui, sans-serif; }
+    .sola-label .latin { display: block; font-size: 1rem; font-weight: 700; font-style: italic; }
+    .sola-label .english { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; margin-top: 0.2rem; }
+    .sola-col { padding: 0.9rem 1.1rem; font-size: 0.91rem; line-height: 1.6; }
+    .sola-col.prot { background: #f0f8f2; border-left: 3px solid var(--green); }
+    .sola-col.lds { background: #fdf8ef; border-left: 3px solid var(--gold); }
+    .sola-col .col-label { display: block; font-family: system-ui, sans-serif; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .sola-col.prot .col-label { color: #1a5c35; }
+    .sola-col.lds .col-label { color: #a07020; }
+
+    .detail-section { margin-bottom: 3rem; }
+    .detail-section h2 { font-size: 1.25rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin-bottom: 1rem; }
+    .detail-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 1rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .detail-topic { grid-column: 1 / -1; background: #0d2f57; color: #fff; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.55rem 1rem; }
+    .detail-col { padding: 0.9rem 1.1rem; font-size: 0.92rem; line-height: 1.6; }
+    .detail-col.lds { background: #fdf8ef; border-left: 3px solid var(--gold); }
+    .detail-col.other { background: #f0f8f2; border-left: 3px solid var(--green); }
+    .detail-col .col-label { display: block; font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .detail-col.lds .col-label { color: #a07020; }
+    .detail-col.other .col-label { color: #1a5c35; }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 700px) { .sola-row { grid-template-columns: 1fr; } .sola-label { border-radius: 0; } .detail-row { grid-template-columns: 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-book-open"></i></span>
+  <h1>LDS vs. Protestant Christianity</h1>
+  <p>Comparing The Church of Jesus Christ of Latter-day Saints with Protestant Christianity — a broad family of denominations united by the Reformation's core principles, yet diverse in practice and belief.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>Important caveat:</strong> "Protestant" is not a single church — it encompasses Baptist, Methodist, Presbyterian, Lutheran, Anglican, Pentecostal, Evangelical, Reformed, and hundreds more denominations. This page focuses on <em>widely shared Protestant distinctives</em> (especially the Five Solas of the Reformation) while noting where denominations vary.
+  </div>
+
+  <div class="denom-bar">
+    <h3>Major Protestant Traditions Covered</h3>
+    <div class="denom-pills">
+      <span class="denom-pill">Baptist</span>
+      <span class="denom-pill">Methodist</span>
+      <span class="denom-pill">Presbyterian</span>
+      <span class="denom-pill">Lutheran</span>
+      <span class="denom-pill">Anglican / Episcopal</span>
+      <span class="denom-pill">Evangelical</span>
+      <span class="denom-pill">Pentecostal</span>
+      <span class="denom-pill">Reformed / Calvinist</span>
+      <span class="denom-pill">Nondenominational</span>
+    </div>
+  </div>
+
+  <div class="scorecard">
+    <div class="score-box sim-box"><span class="num">8</span><span class="lbl">Key Similarities</span></div>
+    <div class="score-box varies-box"><span class="num">4</span><span class="lbl">Varies by Denomination</span></div>
+    <div class="score-box diff-box"><span class="num">12</span><span class="lbl">Key Differences</span></div>
+  </div>
+
+  <!-- SIMILARITIES -->
+  <div class="section-label sim"><i class="fa-solid fa-check"></i> &nbsp;Similarities</div>
+  <div class="card-grid">
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-hands-praying"></i></span>
+      <h3>Jesus Christ as Personal Savior</h3>
+      <p>Both traditions emphasize a personal relationship with Jesus Christ as Lord and Savior. Calling on Christ's name and accepting Him as one's Savior is central to both evangelical Protestant and LDS expressions of faith.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-book-bible"></i></span>
+      <h3>The Bible as God's Word</h3>
+      <p>Both read and study the Bible as the authoritative word of God. Protestants hold it as the sole infallible authority (sola scriptura); LDS use the King James Bible as scripture, though not as the only scripture.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-sun"></i></span>
+      <h3>Bodily Resurrection of Christ</h3>
+      <p>Both affirm that Jesus literally, physically rose from the dead on the third day. The resurrection is the cornerstone of both faiths and the foundation for belief in personal resurrection and eternal life.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-droplet"></i></span>
+      <h3>Believer's Baptism Emphasis</h3>
+      <p>Many Protestant traditions (Baptist, Evangelical, Pentecostal) baptize only believing adults — not infants — by full immersion. LDS baptism at age 8+ by immersion is structurally closest to these traditions among all Christians.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-bookmark"></i></span>
+      <h3>Sin, Repentance &amp; Forgiveness</h3>
+      <p>Both teach that all humans are sinners in need of repentance, and that God's forgiveness is available through Christ. Personal accountability and moral transformation are shared emphases.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-globe"></i></span>
+      <h3>Evangelism &amp; Missions</h3>
+      <p>Both are strongly missionary-minded. Protestant denominations have sent missionaries globally since the 18th century. LDS fields one of the largest full-time missionary programs in the world (~70,000 missionaries).</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-key"></i></span>
+      <h3>No Mandatory Celibate Clergy</h3>
+      <p>Neither tradition requires clergy to be celibate. Protestant pastors and LDS bishops are typically married men. This contrasts sharply with Catholic and some Orthodox traditions.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-heart"></i></span>
+      <h3>Lay-Centered &amp; Congregational Elements</h3>
+      <p>Both traditions value lay participation in worship and ministry. LDS lay members give talks, hold callings, and lead congregations. Many Protestant traditions (Baptist, Evangelical) emphasize congregational governance and lay ministry.</p>
+    </div>
+
+  </div>
+
+  <!-- VARIES -->
+  <div class="section-label" style="color: var(--gold); margin-bottom: 1.25rem;">
+    <span style="font-size: 0.78rem; font-family: system-ui; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">~ &nbsp;Varies by Protestant Denomination</span>
+    <span style="flex:1; height:2px; background: var(--gold); opacity:0.3; border-radius:2px; display:block;"></span>
+  </div>
+  <div class="card-grid" style="margin-bottom: 3rem;">
+
+    <div class="card">
+      <span class="varies">Varies</span>
+      <span class="card-icon"><i class="fa-solid fa-droplet"></i></span>
+      <h3>Mode of Baptism</h3>
+      <p>Baptists and Evangelicals baptize by full immersion (like LDS). Lutherans, Presbyterians, Methodists, and Anglicans typically baptize infants by sprinkling or pouring — a practice LDS rejects entirely.</p>
+    </div>
+
+    <div class="card">
+      <span class="varies">Varies</span>
+      <span class="card-icon"><i class="fa-solid fa-bread-slice"></i></span>
+      <h3>The Lord's Supper</h3>
+      <p>Lutheran: Real Presence. Reformed/Calvinist: Spiritual Presence. Baptist/Evangelical: purely symbolic memorial. LDS sacrament is also symbolic, most closely resembling the Baptist/Evangelical view.</p>
+    </div>
+
+    <div class="card">
+      <span class="varies">Varies</span>
+      <span class="card-icon"><i class="fa-solid fa-crown"></i></span>
+      <h3>Church Governance</h3>
+      <p>Congregational (Baptist), Presbyterian (elder-led), Episcopal (bishop-led), or Connectional (Methodist). LDS has a hierarchical global structure with apostles, prophets, and bishops — closest to Episcopal in structure.</p>
+    </div>
+
+    <div class="card">
+      <span class="varies">Varies</span>
+      <span class="card-icon"><i class="fa-solid fa-star"></i></span>
+      <h3>Eternal Security ("Once Saved, Always Saved")</h3>
+      <p>Reformed/Calvinist Protestants teach that true believers cannot lose salvation. Arminian Protestants (Methodist, Pentecostal) disagree. LDS explicitly teaches that salvation is conditional and can be lost through serious sin.</p>
+    </div>
+
+  </div>
+
+  <!-- THE FIVE SOLAS -->
+  <div class="solas-section">
+    <h2><i class="fa-solid fa-scroll"></i> &nbsp;The Five Solas of the Reformation: Protestant vs. LDS</h2>
+    <p style="font-size:0.93rem; color:var(--muted); margin-bottom:1.2rem;">The Five Solas were the rallying cries of the Protestant Reformation (16th century). They define what separates Protestants from Catholics — and they also define a clear boundary between Protestantism and LDS theology.</p>
+
+    <div class="sola-row">
+      <div class="sola-label"><span class="latin">Sola Scriptura</span><span class="english">Scripture Alone</span></div>
+      <div class="sola-col prot"><span class="col-label">Protestant</span>The Bible is the sole infallible authority for Christian faith and practice. No church tradition, council, or pope can override Scripture.</div>
+      <div class="sola-col lds"><span class="col-label">LDS</span>Rejects sola scriptura. Four standard works + living prophets all constitute authoritative revelation. The church, not the Bible alone, interprets God's will.</div>
+    </div>
+
+    <div class="sola-row">
+      <div class="sola-label"><span class="latin">Sola Fide</span><span class="english">Faith Alone</span></div>
+      <div class="sola-col prot"><span class="col-label">Protestant</span>Justification (being declared righteous before God) comes through faith alone — not works, sacraments, or merit. Works are the fruit, not the root, of salvation.</div>
+      <div class="sola-col lds"><span class="col-label">LDS</span>Rejects sola fide. "We are saved by grace, after all we can do" (2 Ne. 25:23). Ordinances, covenants, and obedience are necessary alongside faith for exaltation. Works and grace work together.</div>
+    </div>
+
+    <div class="sola-row">
+      <div class="sola-label"><span class="latin">Sola Gratia</span><span class="english">Grace Alone</span></div>
+      <div class="sola-col prot"><span class="col-label">Protestant</span>Salvation is entirely God's gift — humans contribute nothing to their justification. Even faith itself is a gift from God (Reformed tradition). Humans are entirely dependent on grace.</div>
+      <div class="sola-col lds"><span class="col-label">LDS</span>Grace is essential and central, but human agency and effort are co-requisites. General resurrection (grace alone) is free for all; exaltation (highest salvation) requires covenant faithfulness.</div>
+    </div>
+
+    <div class="sola-row">
+      <div class="sola-label"><span class="latin">Solus Christus</span><span class="english">Christ Alone</span></div>
+      <div class="sola-col prot"><span class="col-label">Protestant</span>Christ is the only mediator between God and humans. No saints, priests, Mary, or sacraments mediate salvation — only Christ's atoning work on the cross.</div>
+      <div class="sola-col lds"><span class="col-label">LDS</span>Agrees Christ is the only Savior. Ordinances are His ordained method of applying the Atonement — they do not replace Christ but are seen as His authorized channels of grace.</div>
+    </div>
+
+    <div class="sola-row">
+      <div class="sola-label"><span class="latin">Soli Deo Gloria</span><span class="english">Glory to God Alone</span></div>
+      <div class="sola-col prot"><span class="col-label">Protestant</span>All glory belongs to God alone. Human works, saints, and institutions do not share in God's glory. The purpose of salvation is God's glorification, not human achievement.</div>
+      <div class="sola-col lds"><span class="col-label">LDS</span>Glory to God is central. However, LDS theology also teaches that God's glory is intertwined with the eternal progression and exaltation of His children — "the glory of God is intelligence."</div>
+    </div>
+
+  </div>
+
+  <!-- DIFFERENCES -->
+  <div class="section-label diff"><i class="fa-solid fa-not-equal"></i> &nbsp;Key Differences</div>
+  <div class="card-grid">
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-diagram-project"></i></span>
+      <h3>The Trinity</h3>
+      <p>All major Protestant traditions affirm the Nicene Trinity — one God in three co-equal persons of the same substance. LDS teaches three separate beings. Mainstream Protestants do not recognize LDS as Trinitarian or traditionally Christian.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-book-open"></i></span>
+      <h3>Sola Scriptura vs. Additional Scripture</h3>
+      <p>Protestants hold the 66-book Bible as the closed, final word of God. LDS rejects sola scriptura and accepts four standard works plus living prophets as equal or superior authority to the Bible alone.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-lightbulb"></i></span>
+      <h3>Salvation by Faith Alone vs. Works + Grace</h3>
+      <p>The hallmark Protestant doctrine — justification by faith alone (sola fide) — is explicitly rejected by LDS theology. LDS requires ordinances, covenants, and ongoing faithfulness for full salvation (exaltation).</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-star"></i></span>
+      <h3>Nature of the Afterlife</h3>
+      <p>Protestants generally teach Heaven or Hell. LDS teaches three kingdoms of glory (Celestial, Terrestrial, Telestial) plus Outer Darkness — a far more nuanced and tiered afterlife framework.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-infinity"></i></span>
+      <h3>Pre-mortal Existence</h3>
+      <p>No mainstream Protestant tradition teaches pre-mortal existence. LDS holds that all human spirits lived with Heavenly Father before birth on earth and chose to come to mortality.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-crown"></i></span>
+      <h3>Living Prophet &amp; Continuing Revelation</h3>
+      <p>Protestants hold that the canon is closed and public revelation ended with the Apostles. LDS has a living prophet who can receive new revelation for the whole church and update doctrine.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-place-of-worship"></i></span>
+      <h3>Temple Worship &amp; Ordinances for the Dead</h3>
+      <p>Protestants have no temples, no endowment ceremonies, and no proxy ordinances for the dead. These are entirely unique to LDS theology and practice.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-ring"></i></span>
+      <h3>Eternal Marriage</h3>
+      <p>No Protestant tradition teaches that marriage can be sealed for eternity. Marriage is a covenant that ends at death — confirmed by Jesus' words in Matthew 22:30.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-key"></i></span>
+      <h3>Priesthood Authority</h3>
+      <p>Most Protestant traditions teach the "priesthood of all believers" (1 Pet. 2:9) — no formal ordained priesthood mediates between God and humans. LDS holds that the Melchizedek and Aaronic priesthoods are necessary for saving ordinances.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-rotate-left"></i></span>
+      <h3>The Apostasy &amp; Restoration</h3>
+      <p>LDS teaches that the Protestant Reformation was a <em>step toward</em> the Restoration but fell short because reformers lacked the priesthood authority required. Protestants generally disagree that any restoration was needed.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-mug-hot"></i></span>
+      <h3>Word of Wisdom</h3>
+      <p>LDS members abstain from coffee, tea, alcohol, and tobacco as a religious commandment. While some Protestant denominations discourage alcohol (especially Methodists and some Baptists), no comparable binding health code exists broadly in Protestantism.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+      <h3>Tithing as a Temple Requirement</h3>
+      <p>LDS tithing (10% of income) is required for temple attendance and full church participation. While Protestants encourage tithing, it is rarely a condition for participation in sacraments or church life.</p>
+    </div>
+
+  </div>
+
+  <!-- DEEP DIVE -->
+  <div class="detail-section">
+    <h2><i class="fa-solid fa-table-columns"></i> &nbsp;Topic-by-Topic Deep Dive</h2>
+
+    <div class="detail-row">
+      <div class="detail-topic">Justification &amp; Salvation</div>
+      <div class="detail-col other"><span class="col-label">Protestant</span>Justification = declared righteous before God through faith alone in Christ alone. Works follow salvation as evidence but do not contribute to it. Sanctification (becoming holy) is separate from justification.</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Universal resurrection (general salvation) is free through Christ. Exaltation (Celestial Kingdom, eternal family, becoming like God) requires faith + repentance + ordinances + covenant faithfulness. Grace and works are inseparable.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Scripture &amp; Authority</div>
+      <div class="detail-col other"><span class="col-label">Protestant</span>Bible = 66 books, sole and final authority. Each believer reads and interprets scripture (with guidance). No human institution can add to or override the Bible. The Reformation was about returning to Scripture.</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Bible + Book of Mormon + D&amp;C + Pearl of Great Price = scripture. Living prophets can receive new revelation that supplements or clarifies all previous scripture. The Church itself is the authoritative interpreter.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Nature of God</div>
+      <div class="detail-col other"><span class="col-label">Protestant</span>One God in three co-equal persons (Father, Son, Holy Spirit) of the same divine substance — the Nicene Trinity. God is infinite, eternal, omnipresent spirit with no physical form.</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>God the Father is a glorified, exalted Man with a physical body. Jesus Christ and the Holy Ghost are separate beings. The three are one in purpose, not substance. This Godhead concept was restored, not invented by Nicaea.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Baptism</div>
+      <div class="detail-col other"><span class="col-label">Protestant</span>Baptist/Evangelical: believer's baptism by immersion, no saving efficacy — an act of obedience and public profession. Lutheran/Presbyterian: infant baptism, means of grace. Huge variation on meaning and method.</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Believer's baptism at age 8+ by immersion only. A necessary saving ordinance — not merely symbolic. Performed by Aaronic Priesthood authority. Invalid if not performed by LDS authority.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">The Church</div>
+      <div class="detail-col other"><span class="col-label">Protestant</span>The Church is the universal body of all true believers ("invisible church"). No single denomination is the one true church. Christians across denominations are united in Christ despite organizational differences.</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>The Church of Jesus Christ of Latter-day Saints is the only church with the fullness of the gospel and the restored priesthood authority. Other churches have truth but lack the necessary authority to perform saving ordinances.</div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  Content is for educational purposes. Beliefs are summarized from official church sources and established theological scholarship. &copy; 2026
+</footer>
+{% endblock %}

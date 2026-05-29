@@ -1,0 +1,205 @@
+---
+title: "Frequently Asked Questions about the LDS Church"
+navPage: faq
+navGroup: reference
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:    #1a4f8a;
+      --gold:    #c8972b;
+      --green:   #2d7a4f;
+      --red:     #8a1a1a;
+      --bg:      #f5f3ee;
+      --card:    #ffffff;
+      --text:    #1e1e1e;
+      --muted:   #5c5c5c;
+      --radius:  10px;
+      --shadow:  0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, #1a4f8a 0%, #0d2f57 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 650px; margin: 0 auto; }
+
+    main { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1.6rem; margin-bottom: 2rem; font-size: 1rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    /* Category quick-jump */
+    .jump-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+    .jump-row a { font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 600; text-decoration: none; color: var(--blue); background: var(--card); border: 1px solid #ddd6cc; border-radius: 999px; padding: 0.35rem 0.85rem; transition: background 0.15s, color 0.15s; }
+    .jump-row a:hover { background: var(--blue); color: #fff; }
+
+    .cat-head { font-size: 1.15rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid rgba(26,79,138,0.15); display: flex; align-items: center; gap: 0.5rem; scroll-margin-top: 1rem; }
+
+    /* FAQ items */
+    .faq { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.5rem; margin-bottom: 1rem; }
+    .faq h3 { font-size: 1.02rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; display: flex; gap: 0.5rem; align-items: baseline; }
+    .faq h3 .q { color: var(--gold); font-family: system-ui, sans-serif; font-weight: 700; flex-shrink: 0; }
+    .faq p { font-size: 0.93rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.6rem; }
+    .faq p:last-child { margin-bottom: 0; }
+    .faq p strong { color: var(--text); }
+    .faq .tag { display: inline-block; font-family: system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; margin-bottom: 0.6rem; }
+    .faq .tag.myth { background: #f7d6d6; color: var(--red); }
+    .faq .tag.fact { background: #d6efe2; color: var(--green); }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-circle-question"></i></span>
+  <h1>Frequently Asked Questions</h1>
+  <p>Straight answers to the questions people most often ask about Latter-day Saints — including common misconceptions, addressed in good faith.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>About these answers.</strong> Each answer aims to represent the church's own teaching accurately while noting where mainstream Christianity sees things differently. Where a widespread belief is simply mistaken, it is flagged as a <span style="color:var(--red); font-weight:700;">Myth</span>.
+  </div>
+
+  <div class="jump-row">
+    <a href="#identity">Identity &amp; Beliefs</a>
+    <a href="#scripture">Scripture</a>
+    <a href="#practices">Practices</a>
+    <a href="#history">History &amp; Controversy</a>
+    <a href="#terms">Names &amp; Terms</a>
+  </div>
+
+  <!-- IDENTITY -->
+  <h2 class="cat-head" id="identity"><i class="fa-solid fa-cross"></i> &nbsp;Identity &amp; Beliefs</h2>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Are Mormons Christian?</h3>
+    <p>Latter-day Saints emphatically identify as Christians — Jesus Christ is the center of their worship, scripture, and ordinances, and His name is in the church's title. However, most Catholic, Orthodox, and Protestant bodies do not classify LDS as Christian in the <em>creedal</em> sense, because LDS theology rejects the Nicene Trinity and the closed biblical canon.</p>
+    <p>It's a genuine definitional disagreement rather than a simple yes/no. We devote an entire page to it — see <a href="are-lds-christian.html" style="color:var(--blue);">Are LDS Members Christians?</a></p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Do Latter-day Saints worship Joseph Smith?</h3>
+    <span class="tag myth"><i class="fa-solid fa-xmark"></i> Common Myth</span>
+    <p><strong>No.</strong> Latter-day Saints worship God the Father in the name of Jesus Christ. They regard Joseph Smith as a prophet — a man called to restore the church — in the same way they regard Moses or Peter as prophets. They honor and respect him, but they do not pray to him or worship him.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Do LDS believe in the same Jesus as other Christians?</h3>
+    <p>They believe in the Jesus of the New Testament — born of a virgin, crucified, resurrected, the Savior of the world. The disagreement is theological: LDS teach that Jesus is a being <em>distinct</em> from God the Father (not "one substance" with Him as the Trinity holds) and that He is the literal spirit-brother of all humanity. So both affirm the historical Jesus while differing on His metaphysical relationship to the Father.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Can people really become gods?</h3>
+    <p>LDS theology includes the doctrine of <em>exaltation</em> — that the faithful may grow to become like God and inherit "all that the Father hath." Latter-day Saints stress this means becoming like God in character and glory, always subordinate to and worshipping the Father, not replacing or rivaling Him. Interestingly, Eastern Orthodoxy holds a related concept called <em>theosis</em> — see the <a href="orthodox.html" style="color:var(--blue);">Orthodox comparison</a>.</p>
+  </div>
+
+  <!-- SCRIPTURE -->
+  <h2 class="cat-head" id="scripture"><i class="fa-solid fa-book-bible"></i> &nbsp;Scripture</h2>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Does the Book of Mormon replace the Bible?</h3>
+    <span class="tag myth"><i class="fa-solid fa-xmark"></i> Common Myth</span>
+    <p><strong>No.</strong> Latter-day Saints use the Bible (typically the King James Version) as scripture and read it alongside the Book of Mormon, which they regard as "Another Testament of Jesus Christ" — a companion volume, not a substitute. Their full canon ("the standard works") is the Bible, the Book of Mormon, the Doctrine &amp; Covenants, and the Pearl of Great Price.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> What is the Book of Mormon actually about?</h3>
+    <p>It presents itself as the religious history of groups who migrated from the ancient Near East to the Americas, spanning roughly 600 BC to 400 AD. Its climactic event is a visit by the resurrected Jesus Christ to these peoples. Latter-day Saints believe Joseph Smith translated it from golden plates "by the gift and power of God."</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Why do Latter-day Saints accept scripture beyond the Bible?</h3>
+    <p>Because they believe in <em>continuing revelation</em> — that God still speaks through living prophets and did not stop with the apostolic age. This "open canon" is one of the sharpest differences from mainstream Christianity, which generally holds that the biblical canon is closed and complete.</p>
+  </div>
+
+  <!-- PRACTICES -->
+  <h2 class="cat-head" id="practices"><i class="fa-solid fa-place-of-worship"></i> &nbsp;Practices</h2>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Why can't I go inside an LDS temple?</h3>
+    <p>Regular LDS chapels (meetinghouses) are open to everyone for Sunday worship. Temples are different — they are reserved for sacred ordinances and require a "temple recommend." However, every new temple is opened to the public for tours before it is dedicated. See the <a href="practices.html" style="color:var(--blue);">Practices page</a> for the distinction.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Why don't Mormons drink coffee or alcohol?</h3>
+    <p>They follow a health code called the <em>Word of Wisdom</em>, understood as revelation given to Joseph Smith in 1833. It prohibits alcohol, tobacco, coffee, tea, and illegal drugs, and encourages wholesome eating and moderation.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> What is a mission, and is it required?</h3>
+    <p>Many young Latter-day Saints serve full-time proselytizing missions — about two years for men (from 18) and 18 months for women (from 19), usually funded by themselves or their families. It is strongly encouraged, especially for young men, but is voluntary, not mandatory.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> What are temple garments?</h3>
+    <p>Adults who have received the temple endowment wear a modest undergarment as a private reminder of the covenants they have made with God. They are sometimes sensationalized as "magic underwear," which members find disrespectful — the meaning is symbolic, comparable to other faiths' religious clothing.</p>
+  </div>
+
+  <!-- HISTORY -->
+  <h2 class="cat-head" id="history"><i class="fa-solid fa-scroll"></i> &nbsp;History &amp; Controversy</h2>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Do Mormons practice polygamy?</h3>
+    <span class="tag fact"><i class="fa-solid fa-circle-info"></i> Clarification</span>
+    <p><strong>No — not since 1890.</strong> Plural marriage was practiced by some early members in the 19th century but was officially ended by the church's 1890 Manifesto. Today, practicing polygamy results in excommunication. Small breakaway "fundamentalist" groups (like the FLDS) still practice it, but they are <em>not</em> affiliated with and are disavowed by the Church of Jesus Christ of Latter-day Saints.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> What was the priesthood and temple restriction on Black members?</h3>
+    <p>From the mid-1800s until 1978, the church restricted men of Black African descent from priesthood ordination and both men and women from most temple ordinances. In 1978, church president Spencer W. Kimball announced a revelation extending these blessings to all worthy members regardless of race. In 2013 the church published an essay disavowing the theories once used to justify the restriction.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> How did the church end up in Utah?</h3>
+    <p>Early members faced intense persecution and violence in New York, Ohio, Missouri (where the governor issued an "extermination order" in 1838), and Illinois (where Joseph Smith was killed in 1844). Under Brigham Young, the main body of Saints migrated west in 1846–47 to the then-remote Salt Lake Valley to practice their faith free of mob violence. See the <a href="history.html" style="color:var(--blue);">History page</a>.</p>
+  </div>
+
+  <!-- TERMS -->
+  <h2 class="cat-head" id="terms"><i class="fa-solid fa-tag"></i> &nbsp;Names &amp; Terms</h2>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Is it "Mormon," "LDS," or something else?</h3>
+    <p>The full name is <strong>The Church of Jesus Christ of Latter-day Saints</strong>. "Mormon" (from the Book of Mormon) and "LDS" have been common nicknames for generations, but since 2018 church leaders have asked people to use the full name or "the Church of Jesus Christ," and to refer to members as "Latter-day Saints." Both older terms remain widely understood.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> What's the difference between LDS and the "FLDS"?</h3>
+    <p>They are entirely separate. The <strong>LDS Church</strong> is the mainstream, Salt Lake City–based church of 17+ million members that abandoned polygamy in 1890. The <strong>FLDS</strong> (Fundamentalist Church) is a small breakaway sect that continues plural marriage and has no affiliation with the LDS Church.</p>
+  </div>
+
+  <div class="faq">
+    <h3><span class="q">Q.</span> Is the Community of Christ the same church?</h3>
+    <p>No. The <strong>Community of Christ</strong> (formerly RLDS), based in Independence, Missouri, descends from the same 1830 origin but split after Joseph Smith's death, following his lineal descendants instead of Brigham Young. It is much smaller, more theologically mainstream Protestant, and does not practice the temple ordinances of the Utah-based church. See the <a href="glossary.html" style="color:var(--blue);">Glossary</a> for related terms.</p>
+  </div>
+
+</main>
+
+<footer>
+  This page is for educational and informational purposes. Answers are summarized in good faith and represent multiple perspectives. &copy; 2026
+</footer>
+{% endblock %}

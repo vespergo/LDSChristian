@@ -1,0 +1,325 @@
+---
+title: "LDS vs. Eastern Orthodox Christianity"
+navPage: orthodox
+navGroup: comparisons
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:   #1a4f8a;
+      --accent: #5a2d82;
+      --gold:   #c8972b;
+      --green:  #2d7a4f;
+      --bg:     #f5f3ee;
+      --card:   #ffffff;
+      --text:   #1e1e1e;
+      --muted:  #5c5c5c;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    header { background: linear-gradient(135deg, var(--accent) 0%, #2e1050 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 640px; margin: 0 auto; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    .section-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: system-ui, sans-serif; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .section-label::after { content: ''; flex: 1; height: 2px; border-radius: 2px; }
+    .section-label.sim { color: var(--green); }
+    .section-label.sim::after { background: var(--green); opacity: 0.3; }
+    .section-label.diff { color: var(--accent); }
+    .section-label.diff::after { background: var(--accent); opacity: 0.3; }
+
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.5rem; margin-bottom: 2.5rem; font-size: 0.97rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    .highlight-box { background: #f0eaf8; border: 1px solid #c4a8e0; border-radius: var(--radius); padding: 1.1rem 1.4rem; margin-bottom: 2rem; font-size: 0.95rem; color: var(--text); }
+    .highlight-box strong { color: var(--accent); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.35rem 1.5rem; border-top: 4px solid transparent; transition: transform 0.15s, box-shadow 0.15s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+    .card.sim { border-top-color: var(--green); }
+    .card.diff { border-top-color: var(--accent); }
+    .card.nuanced { border-top-color: var(--gold); }
+    .card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .card h3 { font-size: 1.03rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
+    .card .tag { display: inline-block; font-family: system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15rem 0.5rem; border-radius: 4px; margin-bottom: 0.4rem; }
+    .tag.nuanced { background: #fef3d6; color: #8a6000; }
+
+    .scorecard { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .score-box { flex: 1; min-width: 160px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1rem; text-align: center; }
+    .score-box .num { font-size: 2.4rem; font-weight: 700; display: block; }
+    .score-box .lbl { font-family: system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .score-box.sim-box .num { color: var(--green); }
+    .score-box.diff-box .num { color: var(--accent); }
+    .score-box.close-box .num { color: var(--gold); }
+
+    .detail-section { margin-bottom: 3rem; }
+    .detail-section h2 { font-size: 1.25rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin-bottom: 1rem; }
+    .detail-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 1rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .detail-topic { grid-column: 1 / -1; background: #0d2f57; color: #fff; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.55rem 1rem; }
+    .detail-col { padding: 0.9rem 1.1rem; font-size: 0.92rem; line-height: 1.6; }
+    .detail-col.lds { background: #fdf8ef; border-left: 3px solid var(--gold); }
+    .detail-col.other { background: #f4eefb; border-left: 3px solid var(--accent); }
+    .detail-col .col-label { display: block; font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .detail-col.lds .col-label { color: #a07020; }
+    .detail-col.other .col-label { color: var(--accent); }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .detail-row { grid-template-columns: 1fr; } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-peace"></i></span>
+  <h1>LDS vs. Eastern Orthodox Christianity</h1>
+  <p>Comparing The Church of Jesus Christ of Latter-day Saints with Eastern Orthodoxy — two traditions that share surprising philosophical parallels, yet diverge sharply on theology, worship, and authority.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>Why this comparison is uniquely interesting:</strong> Of all Christian traditions, Eastern Orthodoxy comes closest to LDS thought on one crucial point — the concept of <em>theosis</em> (becoming like God) — yet the two traditions reach this idea through entirely different cosmologies and disagree on almost every other major doctrinal point.
+  </div>
+
+  <div class="highlight-box">
+    <strong>The "Theosis" Connection:</strong> Eastern Orthodoxy teaches <em>theosis</em> — that the faithful can be "partakers of the divine nature" (2 Pet. 1:4) and progressively united with God. LDS teaches <em>exaltation</em> — that the faithful can become like God and inherit all He has. Both draw on early Church Fathers. Neither tradition accepts the other's version of the concept, but scholars frequently note this as the most striking area of overlap.
+  </div>
+
+  <div class="scorecard">
+    <div class="score-box sim-box"><span class="num">8</span><span class="lbl">Key Similarities</span></div>
+    <div class="score-box close-box"><span class="num">3</span><span class="lbl">Superficially Similar</span></div>
+    <div class="score-box diff-box"><span class="num">12</span><span class="lbl">Key Differences</span></div>
+  </div>
+
+  <!-- SIMILARITIES -->
+  <div class="section-label sim"><i class="fa-solid fa-check"></i> &nbsp;Similarities</div>
+  <div class="card-grid">
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-lightbulb"></i></span>
+      <h3>Human Deification / Theosis</h3>
+      <p>Both traditions affirm that human beings can become like God. Orthodox theosis is union <em>with</em> God's energies (not essence). LDS exaltation involves becoming co-heirs with Christ. Both cite early Church Fathers like Irenaeus and Athanasius.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-sun"></i></span>
+      <h3>Physical Resurrection of Christ</h3>
+      <p>Both affirm the literal, bodily resurrection of Jesus Christ as a historical event central to salvation. The resurrected Christ has a physical, glorified body in both theologies.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-droplet"></i></span>
+      <h3>Sacraments / Mysteries as Means of Grace</h3>
+      <p>Both traditions hold that physical rituals convey spiritual grace — not merely symbolize it. Orthodoxy has seven Mysteries; LDS has saving ordinances. Neither tradition accepts a purely symbolic view of ritual.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-scroll"></i></span>
+      <h3>Emphasis on the Early Church</h3>
+      <p>Both look to the early Church and Church Fathers as important sources of truth. LDS sees them as evidence of doctrines that were lost in the Apostasy; Orthodoxy sees them as the continuous living Tradition.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-book-bible"></i></span>
+      <h3>The Bible as Sacred Scripture</h3>
+      <p>Both use the Old and New Testament as foundational scripture. The Orthodox canon includes the Septuagint (broader than Protestant canon). LDS use the Bible alongside additional scriptures.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-bookmark"></i></span>
+      <h3>Sin, Repentance &amp; Ongoing Sanctification</h3>
+      <p>Both emphasize ongoing repentance as a lifelong process, not a one-time event. Salvation is understood as a journey of sanctification rather than a single moment of justification.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-mug-hot"></i></span>
+      <h3>Fasting &amp; Physical Discipline</h3>
+      <p>Both traditions practice fasting as a spiritual discipline. Orthodox Christians follow extensive fasting calendars (up to 180+ days per year). LDS members fast monthly (Fast Sunday) and follow the Word of Wisdom health code.</p>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-globe"></i></span>
+      <h3>Strong Community &amp; Communal Identity</h3>
+      <p>Both traditions foster strong communal identity and mutual care. Membership in the community, not just private belief, is central to both faiths. Both care deeply about family and generational faith.</p>
+    </div>
+
+  </div>
+
+  <!-- SUPERFICIALLY SIMILAR but actually different -->
+  <div class="section-label" style="color: var(--gold); margin-bottom: 1.25rem;">
+    <span style="font-size: 0.78rem; font-family: system-ui; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;"><i class="fa-solid fa-triangle-exclamation"></i> &nbsp;Superficially Similar — but Fundamentally Different</span>
+    <span style="flex:1; height:2px; background: var(--gold); opacity:0.3; border-radius:2px; display:block;"></span>
+  </div>
+  <div class="card-grid" style="margin-bottom: 3rem;">
+
+    <div class="card nuanced">
+      <span class="tag nuanced">Looks Similar</span>
+      <span class="card-icon"><i class="fa-solid fa-lightbulb"></i></span>
+      <h3>Theosis vs. Exaltation</h3>
+      <p>Both speak of becoming "like God," but Orthodox theosis is <em>participation in God's uncreated energies</em> while remaining creatures. LDS exaltation means <em>becoming gods</em> in a literal, ontological sense — creating and governing worlds. These are very different endpoints.</p>
+    </div>
+
+    <div class="card nuanced">
+      <span class="tag nuanced">Looks Similar</span>
+      <span class="card-icon"><i class="fa-solid fa-place-of-worship"></i></span>
+      <h3>Sacred Spaces &amp; Ritual</h3>
+      <p>Orthodox liturgy is highly ritualistic in ornate churches; LDS temples perform solemn ordinances. Both treat worship as something done <em>with the body</em> in consecrated space. But Orthodox liturgy is open to all; LDS temples restrict entry to recommend holders.</p>
+    </div>
+
+    <div class="card nuanced">
+      <span class="tag nuanced">Looks Similar</span>
+      <span class="card-icon"><i class="fa-solid fa-scroll"></i></span>
+      <h3>Apostolic Authority</h3>
+      <p>Both claim their authority comes from Christ's Apostles. But Orthodox apostolic succession is <em>continuous and unbroken</em>; LDS claims that succession was broken (the Apostasy) and required a <em>Restoration</em> — making the two claims mutually exclusive.</p>
+    </div>
+
+  </div>
+
+  <!-- DIFFERENCES -->
+  <div class="section-label diff"><i class="fa-solid fa-not-equal"></i> &nbsp;Differences</div>
+  <div class="card-grid">
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-diagram-project"></i></span>
+      <h3>The Trinity vs. The Godhead</h3>
+      <p>Orthodoxy holds to the Nicene Trinity — one God, three co-equal persons sharing one divine essence (<em>ousia</em>). LDS teaches three separate beings united in purpose. Orthodoxy views the LDS position as tritheism.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-book-open"></i></span>
+      <h3>Closed vs. Open Canon</h3>
+      <p>Orthodox Tradition is closed — scripture and Holy Tradition together constitute the final deposit of faith. LDS has an open canon with ongoing revelation and four standard works (plus living prophets).</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-crown"></i></span>
+      <h3>Ecumenical Councils</h3>
+      <p>Orthodoxy considers seven Ecumenical Councils (325–787 AD) as authoritative and infallible definitions of Christian doctrine. LDS rejects the councils as products of apostasy and human philosophy corrupting revealed truth.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-star"></i></span>
+      <h3>Pre-mortal Existence</h3>
+      <p>LDS teaches all human souls existed as spirit children of Heavenly Father before birth. Orthodoxy, following creedal Christianity, holds that souls are created by God and have no pre-mortal existence.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-key"></i></span>
+      <h3>Nature of God (Physical Body)</h3>
+      <p>LDS teaches God the Father has a perfected physical body of flesh and bones. Orthodox theology holds that God is pure spirit — incorporeal, boundless, and incomprehensible in His essence.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-ring"></i></span>
+      <h3>Eternal Marriage &amp; Family</h3>
+      <p>LDS celestial marriage is sealed for eternity. Orthodoxy, while treating marriage as a sacramental Mystery and blessing it with a "crowning" ceremony, does not teach that marriage extends beyond death.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-star"></i></span>
+      <h3>The Afterlife</h3>
+      <p>LDS: Three kingdoms of glory + Outer Darkness. Orthodoxy: Heaven (union with God) or Hell (separation from God), with some Orthodox theologians open to universal salvation (apocatastasis). No tiered heavenly kingdoms.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-droplet"></i></span>
+      <h3>Liturgical Worship vs. Sacrament Meeting</h3>
+      <p>Orthodox Divine Liturgy is ancient (Liturgy of St. John Chrysostom), highly formal, chanted, and incense-filled — lasting 1.5–3 hours. LDS sacrament meetings are informal, congregational, and centered on talks and the sacrament (about 1 hour).</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-image"></i></span>
+      <h3>Icons vs. No Graven Images</h3>
+      <p>Icons (sacred images) are central to Orthodox worship — venerated (not worshipped) as windows into heaven. LDS meetinghouses and temples have no icons or religious images; the tradition is aniconic (image-free).</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-rotate-left"></i></span>
+      <h3>The Great Apostasy</h3>
+      <p>LDS holds that the Church fell into total apostasy after the original Apostles died, requiring restoration. Orthodoxy holds that the Church Christ founded has never apostatized — it is the unbroken continuation of the early Church.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-place-of-worship"></i></span>
+      <h3>Temple Proxy Work</h3>
+      <p>LDS performs baptisms and ordinances for deceased ancestors by proxy. Orthodoxy has no concept of proxy ordinances — salvation for the dead is not accessible through living surrogates.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-crown"></i></span>
+      <h3>Living Prophet</h3>
+      <p>LDS is led by a living prophet who can receive new revelation for the entire church. Orthodoxy is governed by the Holy Synod of bishops; no single figure holds prophetic authority to add new doctrine.</p>
+    </div>
+
+  </div>
+
+  <!-- DEEP DIVE -->
+  <div class="detail-section">
+    <h2><i class="fa-solid fa-table-columns"></i> &nbsp;Topic-by-Topic Deep Dive</h2>
+
+    <div class="detail-row">
+      <div class="detail-topic">Theosis vs. Exaltation</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Exaltation: faithful saints become gods, inheriting all the Father has, creating and ruling worlds, with eternal family relationships. God was once as we are; we may become as He is ("eternal progression").</div>
+      <div class="detail-col other"><span class="col-label">Eastern Orthodox</span>Theosis: humans participate in God's <em>uncreated energies</em> (not His essence), becoming by grace what God is by nature. Humans are always creatures — they partake of divinity without becoming a separate God. The Creator-creature distinction is eternal.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Nature of God</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>God the Father is a glorified, exalted Man with a physical body. He is not omnipresent in body but in Spirit. He is the literal Father of our spirits in the pre-mortal existence.</div>
+      <div class="detail-col other"><span class="col-label">Eastern Orthodox</span>God is Trinity — entirely incorporeal, incomprehensible in essence, yet fully knowable in His energies. Apophatic (negative) theology is central: we know more what God is NOT than what He IS. God is eternal, without beginning or change.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Scripture &amp; Tradition</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Four standard works as scripture; living prophets can receive new scripture. "We believe the Bible to be the word of God as far as it is translated correctly."</div>
+      <div class="detail-col other"><span class="col-label">Eastern Orthodox</span>Holy Scripture exists <em>within</em> Holy Tradition — you cannot separate them. The Church gave us the Bible; the Church interprets the Bible. The Ecumenical Councils are the authoritative voice of the Spirit-guided Church.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Worship Style</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Simple, lay-led sacrament meetings. No liturgy, no incense, no icons, no robes in regular meetings. Temple ceremonies are private, sacred, and covenant-based. Hymns and congregational prayer.</div>
+      <div class="detail-col other"><span class="col-label">Eastern Orthodox</span>Ancient liturgy (Chrysostom, Basil) performed in ornate churches. Incense, chanting, icons, fasting before communion, prostrations, and elaborate vestments. The liturgy itself is considered theologically formative.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Soteriology (How We're Saved)</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>General salvation (resurrection) for all through Christ. Exaltation requires faith, repentance, baptism, Holy Ghost, endowment, sealing, and enduring to end. Degrees of glory reflect faithfulness.</div>
+      <div class="detail-col other"><span class="col-label">Eastern Orthodox</span>Salvation is theosis — ongoing transformation by grace. Sacraments (Mysteries) are the means. Christ assumed human nature to heal it; Christians participate in His divine life. Hell is real but God forces no one; some Orthodox lean toward hopeful universalism.</div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  Content is for educational purposes. Beliefs are summarized from official church sources and established theological scholarship. &copy; 2026
+</footer>
+{% endblock %}

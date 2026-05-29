@@ -1,0 +1,391 @@
+---
+title: "LDS vs. Catholic Christianity"
+navPage: catholic
+navGroup: comparisons
+---
+{% extends "base.njk" %}
+
+{% block pageStyles %}
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:   #1a4f8a;
+      --accent: #8b1a2e;
+      --gold:   #c8972b;
+      --green:  #2d7a4f;
+      --bg:     #f5f3ee;
+      --card:   #ffffff;
+      --text:   #1e1e1e;
+      --muted:  #5c5c5c;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    /* Nav */
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a.home { color: #fff; font-weight: 700; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a.home:hover { background: rgba(255,255,255,0.1); }
+    .nav-item { color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group { position: relative; display: flex; align-items: stretch; }
+    .nav-toggle { background: none; border: none; cursor: pointer; color: #cde; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 600; padding: 0 0.9rem; min-height: 2.8rem; display: flex; align-items: center; gap: 0.35rem; transition: background 0.15s, color 0.15s; }
+    .nav-toggle:hover, .nav-group:hover .nav-toggle, .nav-group:focus-within .nav-toggle { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-group.active .nav-toggle { color: #fff; background: rgba(255,255,255,0.14); }
+    .nav-caret { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-group:hover .nav-caret, .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #112a4a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 8px 8px; min-width: 210px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 200; }
+    .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { display: block; }
+    .nav-dropdown a { display: block; color: #cde; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.83rem; padding: 0.6rem 1.1rem; transition: background 0.12s, color 0.12s; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-dropdown a.active { color: #ffd080; font-weight: 700; }
+
+    /* Header */
+    header { background: linear-gradient(135deg, var(--accent) 0%, #4a0d1a 100%); color: #fff; text-align: center; padding: 3rem 1.5rem 2.2rem; }
+    header .icon { font-size: 2.8rem; display: block; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 700; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; opacity: 0.82; max-width: 600px; margin: 0 auto; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    /* Section labels */
+    .section-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; font-family: system-ui, sans-serif; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .section-label::after { content: ''; flex: 1; height: 2px; border-radius: 2px; }
+    .section-label.sim { color: var(--green); }
+    .section-label.sim::after { background: var(--green); opacity: 0.3; }
+    .section-label.diff { color: var(--accent); }
+    .section-label.diff::after { background: var(--accent); opacity: 0.3; }
+
+    /* Intro */
+    .intro-banner { background: var(--card); border-left: 4px solid var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.5rem; margin-bottom: 2.5rem; font-size: 0.97rem; color: var(--muted); }
+    .intro-banner strong { color: var(--text); }
+
+    /* Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.35rem 1.5rem; border-top: 4px solid transparent; transition: transform 0.15s, box-shadow 0.15s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+    .card.sim { border-top-color: var(--green); }
+    .card.diff { border-top-color: var(--accent); }
+    .card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .card h3 { font-size: 1.03rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
+
+    /* Two-column detail rows */
+    .detail-section { margin-bottom: 3rem; }
+    .detail-section h2 { font-size: 1.25rem; font-family: system-ui, sans-serif; font-weight: 700; color: var(--blue); margin-bottom: 1rem; }
+    .detail-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 0.2rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .detail-row + .detail-row { margin-top: 1rem; }
+    .detail-topic { grid-column: 1 / -1; background: #0d2f57; color: #fff; font-family: system-ui, sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.55rem 1rem; }
+    .detail-col { padding: 0.9rem 1.1rem; font-size: 0.92rem; line-height: 1.6; }
+    .detail-col.lds { background: #fdf8ef; border-left: 3px solid var(--gold); }
+    .detail-col.other { background: #fdf0f2; border-left: 3px solid var(--accent); }
+    .detail-col .col-label { display: block; font-family: system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .detail-col.lds .col-label { color: #a07020; }
+    .detail-col.other .col-label { color: var(--accent); }
+
+    /* Scorecard */
+    .scorecard { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .score-box { flex: 1; min-width: 160px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1rem; text-align: center; }
+    .score-box .num { font-size: 2.4rem; font-weight: 700; display: block; }
+    .score-box .lbl { font-family: system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .score-box.sim-box .num { color: var(--green); }
+    .score-box.diff-box .num { color: var(--accent); }
+    .score-box.unique-box .num { color: var(--blue); }
+
+    /* Expander */
+    .card.sim { cursor: default; }
+    .expander { margin-top: 0.8rem; border-top: 1px solid #e4dfd8; padding-top: 0.7rem; }
+    .expander summary { list-style: none; cursor: pointer; font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); display: flex; align-items: center; gap: 0.4rem; user-select: none; }
+    .expander summary::-webkit-details-marker { display: none; }
+    .expander summary .exp-icon { transition: transform 0.2s; display: inline-block; font-size: 0.7rem; }
+    .expander[open] summary .exp-icon { transform: rotate(90deg); }
+    .expander-body { margin-top: 0.7rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .exp-col { border-radius: 6px; padding: 0.65rem 0.8rem; font-size: 0.85rem; line-height: 1.55; }
+    .exp-col.lds-exp { background: #fdf8ef; border-left: 3px solid var(--gold); }
+    .exp-col.cat-exp { background: #fdf0f2; border-left: 3px solid var(--accent); }
+    .exp-col strong { display: block; font-family: system-ui, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.25rem; }
+    .exp-col.lds-exp strong { color: #a07020; }
+    .exp-col.cat-exp strong { color: var(--accent); }
+    @media (max-width: 500px) { .expander-body { grid-template-columns: 1fr; } }
+
+    footer { text-align: center; font-family: system-ui, sans-serif; font-size: 0.82rem; color: var(--muted); padding: 1.5rem; border-top: 1px solid #ddd8d0; }
+    @media (max-width: 600px) { .detail-row { grid-template-columns: 1fr; } .detail-col.other { border-left: 3px solid var(--accent); } }
+  </style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <span class="icon"><i class="fa-solid fa-feather"></i></span>
+  <h1>LDS vs. Roman Catholic Christianity</h1>
+  <p>Comparing The Church of Jesus Christ of Latter-day Saints with the Roman Catholic Church — two traditions that both claim apostolic authority and a structured sacramental system.</p>
+</header>
+
+<main>
+
+  <div class="intro-banner">
+    <strong>Context:</strong> Both the LDS Church and Roman Catholicism are highly structured, hierarchical, and sacrament-centered faiths that reject the Protestant concept of <em>sola scriptura</em>. Both claim a direct line of authority from Jesus Christ. Yet their theology, scripture, and cosmology differ dramatically.
+  </div>
+
+  <!-- Scorecard -->
+  <div class="scorecard">
+    <div class="score-box sim-box"><span class="num">9</span><span class="lbl">Key Similarities</span></div>
+    <div class="score-box diff-box"><span class="num">13</span><span class="lbl">Key Differences</span></div>
+    <div class="score-box unique-box"><span class="num">3</span><span class="lbl">Unique LDS Only</span></div>
+  </div>
+
+  <!-- SIMILARITIES -->
+  <div class="section-label sim"><i class="fa-solid fa-check"></i> &nbsp;Similarities</div>
+  <div class="card-grid">
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-sitemap"></i></span>
+      <h3>Centralized Hierarchical Authority</h3>
+      <p>Both churches are led by a central figure with global authority — the Pope (Catholic) and the Prophet/President (LDS) — supported by a college of bishops/apostles. Both reject congregational self-governance.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Led by a living Prophet and President, supported by the Quorum of the Twelve Apostles and First Presidency. Area Presidencies, stake presidents, and bishops form a global hierarchy. All positions are lay — unpaid at the local level.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Led by the Pope (Bishop of Rome), considered Peter's successor. The College of Cardinals advises and elects popes. Bishops lead dioceses; priests lead parishes. A professional, celibate, ordained clergy at every level.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-droplet"></i></span>
+      <h3>Sacraments / Ordinances</h3>
+      <p>Both traditions emphasize that specific physical rituals are necessary for salvation — not just belief alone. Catholics have seven sacraments; LDS have saving ordinances including baptism, confirmation, endowment, and sealing.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Saving ordinances: baptism, confirmation (gift of the Holy Ghost), Aaronic and Melchizedek priesthood ordination (men), temple endowment, celestial marriage sealing, and proxy ordinances for the dead. Each requires proper priesthood authority.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Seven sacraments: Baptism, Confirmation, Eucharist, Penance, Anointing of the Sick, Holy Orders, and Matrimony. Each conveys actual grace. Only ordained priests can perform most sacraments. "Ex opere operato" — valid regardless of minister's worthiness.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-shield-halved"></i></span>
+      <h3>Apostolic Authority Claim</h3>
+      <p>Both claim their authority traces back to Jesus Christ and His original Apostles. Catholics assert unbroken apostolic succession; LDS claim that authority was restored through Joseph Smith after a period of apostasy.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Joseph Smith claimed the Melchizedek Priesthood was restored by Peter, James, and John, and the Aaronic Priesthood by John the Baptist — both as resurrected beings appearing to him. Authority is thus not a succession but a divine re-commissioning.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Apostolic succession: an unbroken chain of ordained bishops stretching from the original Apostles to today. The Pope holds the "keys" given to Peter (Matt. 16:18-19). No gap or restoration — the Church claims continuous authority since Pentecost.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-book-bible"></i></span>
+      <h3>The Bible as Scripture</h3>
+      <p>Both use the Old and New Testament as foundational scripture, though the Catholic canon includes the Deuterocanonical books and LDS use additional texts beyond the Bible.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Uses the King James Version. Article of Faith 8: "We believe the Bible to be the word of God as far as it is translated correctly." Additional scriptures — Book of Mormon, D&amp;C, Pearl of Great Price — are equal or companion volumes, not subordinate to the Bible.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Uses the 73-book canon (including Tobit, Judith, 1–2 Maccabees, Sirach, Wisdom, Baruch, and additions to Daniel/Esther). Scripture interpreted through Sacred Tradition and the Magisterium. The Vulgate (Latin) has historical primacy; modern translations approved by Rome are used in liturgy.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-sun"></i></span>
+      <h3>Resurrection &amp; Afterlife</h3>
+      <p>Both affirm the physical resurrection of Christ, the bodily resurrection of all people, and divine judgment that determines one's eternal state.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Christ's resurrection was literal and bodily — He appeared with a glorified physical body. All people will be resurrected. After judgment, souls are assigned to the Celestial, Terrestrial, or Telestial Kingdom (or Outer Darkness). The resurrection is a universal gift of grace.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>The bodily resurrection of Christ is the foundation of faith. All the dead will rise at the Final Judgment. Souls go to Heaven (possibly via Purgatory) or Hell. The resurrection of the body is creedal ("the resurrection of the dead" — Apostles' Creed).</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-heart"></i></span>
+      <h3>Mary, Mother of Jesus</h3>
+      <p>Both traditions have deep reverence for Mary. LDS theology affirms her as the literal mother of the Son of God. Catholics hold additional doctrines (Immaculate Conception, Assumption) not shared by LDS.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Mary is honored as the literal mother of Jesus Christ, who is the Son of God the Father. She was a righteous and chosen woman. LDS theology does not teach the Immaculate Conception, perpetual virginity, or Assumption. No prayers are directed to her.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Mary holds four dogmatic titles: Theotokos (God-bearer), Immaculate Conception (born without original sin), Perpetual Virginity, and Bodily Assumption into Heaven. She is venerated as Queen of Heaven and Co-redemptrix (informal title). Catholics ask for her intercession.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-place-of-worship"></i></span>
+      <h3>Sacred Physical Spaces</h3>
+      <p>Both traditions maintain sacred buildings set apart for worship and ritual. Catholic cathedrals and LDS temples both serve as spaces for the most solemn acts of their respective faiths.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Temples are distinct from meetinghouses and reserved for members with a current temple recommend (requires tithing, worthiness interview). Ordinances performed inside include endowments, sealings, and proxy baptisms. Non-members and unworthy members may not enter.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Cathedrals, basilicas, and parish churches are open to all visitors. The most sacred element is the tabernacle containing the consecrated Eucharist. Major rites (ordinations, pontifical Masses) occur in cathedrals. Shrines and pilgrimage sites hold special sacred status.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-people-group"></i></span>
+      <h3>Lay &amp; Ordained Ministry</h3>
+      <p>Both churches distinguish between ordained clergy/priesthood holders and lay members, with specific roles, training, and authority for each. Both ordain men to leadership positions.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>All worthy adult males hold the Aaronic or Melchizedek Priesthood. Local leaders (bishops, etc.) are unpaid laymen serving part-time alongside secular careers. General Authorities receive modest living allowances. Women do not hold the priesthood but serve in Relief Society, Primary, and Young Women leadership.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>Ordained clergy: deacons, priests, and bishops. Priests are celibate (Latin Rite). Deacons may be married (permanent diaconate). Women are not ordained but serve in many lay roles, religious orders (sisters/nuns), and Church administration. Canon Law governs all ordinations.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card sim">
+      <span class="card-icon"><i class="fa-solid fa-bookmark"></i></span>
+      <h3>Sin, Repentance &amp; Confession</h3>
+      <p>Both teach that sin requires repentance and some form of confession. Catholics confess to a priest who pronounces absolution; LDS members may confess serious sins to a bishop for guidance and restoration.</p>
+      <details class="expander">
+        <summary><i class="fa-solid fa-chevron-right exp-icon"></i> Compare in detail</summary>
+        <div class="expander-body">
+          <div class="exp-col lds-exp"><strong>LDS</strong>Repentance involves recognition, remorse, confession (to God directly; to bishop for serious sins), restitution, and forsaking the sin. The bishop is a "common judge" who can restrict temple privileges during the repentance process. No formal absolution formula — the Holy Ghost witnesses forgiveness.</div>
+          <div class="exp-col cat-exp"><strong>Catholic</strong>The Sacrament of Penance (Reconciliation): confession to a priest, contrition, assignment of penance, and absolution — "I absolve you from your sins in the name of the Father, and of the Son, and of the Holy Spirit." Mortal sins must be confessed before receiving Communion. The seal of confession is inviolable.</div>
+        </div>
+      </details>
+    </div>
+
+  </div>
+
+  <!-- DIFFERENCES -->
+  <div class="section-label diff"><i class="fa-solid fa-not-equal"></i> &nbsp;Differences</div>
+  <div class="card-grid">
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-diagram-project"></i></span>
+      <h3>The Trinity vs. The Godhead</h3>
+      <p>Catholicism affirms the Nicene Trinity — one God in three co-equal, co-eternal persons of the same substance. LDS teaches the Godhead as three <em>separate</em> beings of one purpose, not one substance.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-book-open"></i></span>
+      <h3>Canon of Scripture</h3>
+      <p>Catholics recognize 73 books (including 7 Deuterocanonical). LDS recognizes the Bible + Book of Mormon + Doctrine &amp; Covenants + Pearl of Great Price. Both reject the Protestant 66-book canon as complete.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-crown"></i></span>
+      <h3>Source of Authority</h3>
+      <p>Catholic authority flows through an unbroken line of popes from Peter. LDS authority was <em>restored</em> after a total apostasy — meaning the Catholic line is considered broken and invalid.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-bread-slice"></i></span>
+      <h3>Eucharist vs. Sacrament</h3>
+      <p>Catholics believe in transubstantiation — the bread and wine literally become the body and blood of Christ. LDS sacrament (bread and water) is symbolic, commemorating Christ's Atonement without physical transformation.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-key"></i></span>
+      <h3>Celibate vs. Married Clergy</h3>
+      <p>Catholic priests take a vow of celibacy. LDS bishops, stake presidents, and the Prophet are typically married family men — marriage and family are central to LDS priesthood leadership.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-star"></i></span>
+      <h3>Purgatory vs. Spirit World</h3>
+      <p>Catholics teach Purgatory — a state of purification before Heaven. LDS teaches a Spirit World where the dead await resurrection and can receive ordinances performed vicariously on earth.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-ring"></i></span>
+      <h3>Eternal Marriage</h3>
+      <p>LDS celestial marriage sealed in the temple endures forever. Catholic marriage ("till death do us part") is a sacrament that ends at death; the Church cannot seal marriages for eternity.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-rotate-left"></i></span>
+      <h3>Saints &amp; Intercession</h3>
+      <p>Catholics pray <em>to</em> saints as intercessors before God. LDS members honor faithful Saints but do not pray to them — prayer is directed only to God the Father in the name of Jesus Christ.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-star-of-david"></i></span>
+      <h3>Immaculate Conception &amp; Mariology</h3>
+      <p>Catholics hold several dogmas about Mary unique to Catholicism (Immaculate Conception, Perpetual Virginity, Assumption, Co-Redemptrix). LDS theology honors Mary but holds none of these dogmas.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-star"></i></span>
+      <h3>Three Degrees of Glory</h3>
+      <p>LDS afterlife includes three distinct heavenly kingdoms plus Outer Darkness. Catholic afterlife is Heaven, Purgatory, or Hell — with no tiered heavenly kingdoms.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-lightbulb"></i></span>
+      <h3>Human Potential / Exaltation</h3>
+      <p>LDS teaches that the faithful may become like God (exaltation). Catholicism, while teaching beatific vision, maintains an infinite Creator-creature distinction — humans never become divine beings.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-place-of-worship"></i></span>
+      <h3>Temple Ordinances for the Dead</h3>
+      <p>LDS members perform proxy baptisms and other ordinances for deceased ancestors in temples. No Catholic equivalent exists — the dead cannot receive sacraments by proxy.</p>
+    </div>
+
+    <div class="card diff">
+      <span class="card-icon"><i class="fa-solid fa-infinity"></i></span>
+      <h3>Pre-mortal Existence</h3>
+      <p>LDS doctrine holds that all spirits existed before mortality as children of God. Catholic teaching holds that souls are created at the moment of conception with no prior existence.</p>
+    </div>
+
+  </div>
+
+  <!-- DEEP DIVE COMPARISON -->
+  <div class="detail-section">
+    <h2><i class="fa-solid fa-table-columns"></i> &nbsp;Topic-by-Topic Deep Dive</h2>
+
+    <div class="detail-row">
+      <div class="detail-topic">Nature of God</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>God the Father is a perfected, resurrected being with a physical body. The Son and Holy Ghost are separate beings. Together they form the Godhead — united in will and purpose, not in substance.</div>
+      <div class="detail-col other"><span class="col-label">Catholic</span>One God in three co-equal, co-eternal, consubstantial persons (Father, Son, Holy Spirit). Defined at Nicaea (325 AD) and Constantinople (381 AD). God has no physical body.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Scripture &amp; Tradition</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Scripture = Bible + Book of Mormon + D&amp;C + Pearl of Great Price. Living prophets can add new scripture. Personal and institutional revelation are ongoing.</div>
+      <div class="detail-col other"><span class="col-label">Catholic</span>Scripture (73 books) + Sacred Tradition together constitute the deposit of faith. The Magisterium (Pope + bishops) authoritatively interprets both. Public revelation closed with the death of the last Apostle.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Salvation &amp; Justification</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Salvation comes through grace <em>and</em> works — faith, repentance, baptism, receiving the Holy Ghost, enduring to the end, and keeping covenants. Degree of glory corresponds to faithfulness.</div>
+      <div class="detail-col other"><span class="col-label">Catholic</span>Salvation is by grace, mediated through the sacraments. Faith, good works, and cooperation with grace are necessary. Justification can be lost through mortal sin and restored through confession.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">Priesthood &amp; Clergy</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>All worthy male members hold the priesthood (Aaronic or Melchizedek). Local leaders (bishops, stake presidents) are unpaid and serve part-time. General Authorities are paid.</div>
+      <div class="detail-col other"><span class="col-label">Catholic</span>Ordained clergy only (deacon, priest, bishop) hold sacerdotal authority. Priests are celibate. The Pope holds supreme authority. Lay members cannot perform sacraments.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">The Afterlife</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Spirit World → Resurrection → Judgment → assignment to Celestial, Terrestrial, or Telestial Kingdom (or Outer Darkness). The Celestial Kingdom has three sub-levels; exaltation is the highest.</div>
+      <div class="detail-col other"><span class="col-label">Catholic</span>Death → Particular Judgment → Heaven, Purgatory, or Hell → Final Judgment at end of time. Purgatory is temporary purification. Heaven is the beatific vision of God forever.</div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-topic">The Eucharist / Sacrament</div>
+      <div class="detail-col lds"><span class="col-label">LDS</span>Bread and water blessed and passed weekly in sacrament meeting. Symbolic — commemorates Christ's body and blood. Renews baptismal covenants. No physical transformation occurs.</div>
+      <div class="detail-col other"><span class="col-label">Catholic</span>Bread and wine consecrated at Mass become the true body and blood of Christ (transubstantiation). The Eucharist is the "source and summit" of Catholic life. Celebrated at every Mass.</div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  Content is for educational purposes. Beliefs are summarized from official church sources and established theological scholarship. &copy; 2026
+</footer>
+{% endblock %}

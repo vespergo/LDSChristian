@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson – January 2026: Introduction to the Old Testament</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:   #1a4f8a;
+      --gold:   #c8972b;
+      --green:  #2d7a4f;
+      --red:    #8a1a1a;
+      --bg:     #f5f3ee;
+      --card:   #ffffff;
+      --text:   #1e1e1e;
+      --muted:  #5c5c5c;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.09);
+    }
+    body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .topnav { background: #0d2f57; padding: 0 1.5rem; display: flex; align-items: stretch; flex-wrap: wrap; min-height: 2.8rem; }
+    .topnav a { color: #fff; text-decoration: none; font-family: system-ui, sans-serif; font-size: 0.85rem; padding: 0 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: background 0.15s; }
+    .topnav a:hover { background: rgba(255,255,255,0.1); }
+    .lesson-hero { background: linear-gradient(135deg, #0d2f57 0%, #1a4f8a 100%); color: #fff; padding: 3rem 1.5rem 2.5rem; text-align: center; }
+    .lesson-hero .month-label { font-family: system-ui, sans-serif; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.5rem; }
+    .lesson-hero h1 { font-size: clamp(1.5rem,4vw,2.4rem); margin-bottom: 0.75rem; }
+    .lesson-hero .date-range { font-family: system-ui, sans-serif; font-size: 0.9rem; opacity: 0.75; }
+    .content { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    .story-wrap { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start; margin-bottom: 2.5rem; }
+    @media(max-width:660px){ .story-wrap { grid-template-columns: 1fr; } }
+    .story-text h2 { font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--blue); }
+    .story-text p { margin-bottom: 1rem; }
+    .picture-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .picture-card img { width: 100%; display: block; }
+    .picture-card .caption { font-size: 0.78rem; color: var(--muted); padding: 0.5rem 0.75rem; font-family: system-ui, sans-serif; }
+    .picture-placeholder { background: linear-gradient(135deg, #c8972b22, #1a4f8a22); height: 220px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+    .section-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.75rem; }
+    .section-card h2 { font-size: 1.2rem; margin-bottom: 0.9rem; color: var(--blue); border-bottom: 2px solid var(--bg); padding-bottom: 0.5rem; }
+    .q-list { list-style: none; padding: 0; }
+    .q-list li { background: var(--bg); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.6rem; display: flex; gap: 0.75rem; align-items: start; }
+    .q-list li::before { content: '?'; background: var(--gold); color: #fff; border-radius: 50%; min-width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; font-family: system-ui; font-weight: 700; font-size: 0.85rem; margin-top: 0.05rem; flex-shrink: 0; }
+    .scripture { background: #f0f4f8; border-left: 4px solid var(--blue); padding: 0.75rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 0.75rem; }
+    .scripture .ref { font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--blue); margin-bottom: 0.25rem; }
+    .scripture .verse { font-style: italic; font-size: 0.95rem; }
+    .christ-box { background: linear-gradient(135deg, #e8f0fb 0%, #f5f3ee 100%); border: 2px solid var(--blue); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.75rem; }
+    .christ-box h2 { color: var(--blue); font-size: 1.2rem; margin-bottom: 0.75rem; }
+    .activity-box { background: linear-gradient(135deg, #e8f5ee 0%, #f5f3ee 100%); border: 2px solid var(--green); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.75rem; }
+    .activity-box h2 { color: var(--green); font-size: 1.2rem; margin-bottom: 0.75rem; }
+    .lesson-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 2px solid #ddd; }
+    .lesson-nav a { background: var(--blue); color: #fff; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-family: system-ui, sans-serif; font-size: 0.9rem; transition: background 0.15s; }
+    .lesson-nav a:hover { background: #0d2f57; }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a href="index.html">Home</a>
+    <a href="lessons.html">Lessons for Kids</a>
+  </nav>
+
+  <div class="lesson-hero">
+    <p class="month-label">January 2026</p>
+    <h1>Introduction to the Old Testament</h1>
+    <p class="date-range">December 29 – January 4</p>
+  </div>
+
+  <main class="content">
+
+    <div class="story-wrap">
+      <div class="story-text">
+        <h2>The Story</h2>
+        <p>Imagine a library with 39 books, written over more than a thousand years, by dozens of different people — shepherds, kings, farmers, prophets, and poets. That is the Old Testament. It is the oldest part of our scriptures, and it tells the long, remarkable story of God's relationship with His children.</p>
+        <p>At first glance the Old Testament can feel far away — strange names, ancient places, customs we don't recognize. But look closer and you find the same questions we ask today: Does God hear me? Why do good people suffer? How do I know what's right? Every major story in the Old Testament is really about these questions — and God's answers to them.</p>
+        <p>The most important thing to understand is this: the Old Testament is not just history. It is prophecy. From beginning to end, it is pointing forward — to Jesus Christ. Every sacrifice was a symbol of His sacrifice. Every prophet who delivered God's people was a shadow of Him. Every promise God made to Israel is ultimately fulfilled in the Savior. Once you see that, the Old Testament becomes one of the most exciting books you'll ever read.</p>
+      </div>
+      <div class="picture-card">
+        <div class="picture-placeholder">📜</div>
+        <p class="caption">The Old Testament contains 39 books written over more than 1,000 years by prophets, kings, and poets — all pointing toward Jesus Christ.</p>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>Let's Talk About It</h2>
+      <ul class="q-list">
+        <li>What is your favorite Bible story you've already heard? What do you love about it?</li>
+        <li>Why do you think God asked people to write down His words and keep them for thousands of years?</li>
+        <li>How do you think prophets felt when God spoke to them? What would you do if God spoke to you?</li>
+        <li>What is a covenant? Can you think of a promise or covenant you've made — with God or with someone you love?</li>
+        <li>How can learning about the Old Testament help us know Jesus Christ better?</li>
+      </ul>
+    </div>
+
+    <div class="section-card">
+      <h2>Key Scriptures</h2>
+      <div class="scripture">
+        <p class="ref">John 5:39</p>
+        <p class="verse">"Search the scriptures; for in them ye think ye have eternal life: and they are they which testify of me."</p>
+      </div>
+      <div class="scripture">
+        <p class="ref">2 Nephi 11:4</p>
+        <p class="verse">"Behold, my soul delighteth in proving unto my people the truth of the coming of Christ; for, for this end hath the law of Moses been given; and all things which have been given of God from the beginning of the world, unto man, are the typifying of him."</p>
+      </div>
+      <div class="scripture">
+        <p class="ref">Helaman 8:16</p>
+        <p class="verse">"Yea, did he not bear record that the Son of God should come? And as he lifted up the brazen serpent in the wilderness, even so shall he be lifted up who should come."</p>
+      </div>
+    </div>
+
+    <div class="christ-box">
+      <h2>✝ How This Points to Jesus Christ</h2>
+      <p>The Old Testament is really one long preparation for Jesus Christ. Every animal sacrifice was a symbol of His atoning sacrifice. Every prophet who was rejected foreshadowed His rejection. Every miracle of deliverance — from Egypt, from the desert, from enemies — was a preview of the ultimate deliverance He would bring. Jesus Himself said the scriptures "testify of me." When we read the Old Testament with eyes open to Christ, every page comes alive.</p>
+    </div>
+
+    <div class="activity-box">
+      <h2>🎨 Activity: Bible Timeline</h2>
+      <p>Draw a long horizontal line across a big piece of paper. This is your timeline. Mark these events from left to right:</p>
+      <ol style="padding-left:1.4rem; margin-top:0.5rem;">
+        <li style="margin-bottom:0.4rem"><strong>Creation</strong> — Draw the earth and sun</li>
+        <li style="margin-bottom:0.4rem"><strong>Noah</strong> — Draw a rainbow and ark</li>
+        <li style="margin-bottom:0.4rem"><strong>Abraham</strong> — Draw a tent and stars</li>
+        <li style="margin-bottom:0.4rem"><strong>Moses</strong> — Draw the Ten Commandments</li>
+        <li style="margin-bottom:0.4rem"><strong>David</strong> — Draw a crown and harp</li>
+        <li style="margin-bottom:0.4rem"><strong>Isaiah</strong> — Draw a scroll</li>
+        <li style="margin-bottom:0.4rem"><strong>Jesus Christ</strong> — Draw a star ✦</li>
+      </ol>
+      <p style="margin-top:0.75rem;">Talk about how all the stories are connected. All roads lead to Jesus.</p>
+    </div>
+
+    <div class="lesson-nav">
+      <span></span>
+      <a href="lesson-feb.html">February: Moses &amp; Abraham →</a>
+    </div>
+
+  </main>
+</body>
+</html>
